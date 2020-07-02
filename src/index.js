@@ -1,17 +1,28 @@
-import React from 'react';
+import App from './components/App';
+import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from 'react';
+import store from './store';
+import Home from './components/Home';
+import Login from './components/Login';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+import 'bootstrap/dist/css/bootstrap.css';
+import 'font-awesome/css/font-awesome.min.css';
+import 'jquery/dist/jquery.js';
+import 'popper.js/dist/umd/popper.js';
+import 'bootstrap/dist/js/bootstrap.js';
+
+ReactDOM.render((
+  <Provider store={store}>
+    <div className="container">
+      <Router history={hashHistory}>
+        <Route path="/" component={App}>
+          <IndexRoute component={Home} />
+          <Route path="login" component={Login} />
+        </Route>
+      </Router>
+    </div>
+  </Provider>
+), document.getElementById('root'));

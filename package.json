@@ -1,34 +1,31 @@
 {
-  "name": "mal-web",
+  "name": "react-redux-realworld-example-app",
   "version": "0.1.0",
   "private": true,
+  "devDependencies": {
+    "css-loader": "^3.6.0",
+    "react-scripts": "0.6.1"
+  },
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "@popperjs/core": "^2.4.2",
+    "bootstrap": "^4.5.0",
+    "font-awesome": "^4.7.0",
+    "history": "^4.3.0",
+    "jquery": "^3.5.1",
+    "marked": "^0.3.6",
+    "popper.js": "^1.16.1",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "react-redux": "^4.4.5",
+    "react-router": "^2.8.1",
+    "redux": "^3.6.0",
+    "superagent": "^2.3.0",
+    "superagent-promise": "^1.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   }
 }

@@ -1,0 +1,30 @@
+/* 
+    NAV BAR 
+*/
+
+.navbar-top {
+    padding: 0px;
+}
+
+.nav-button {
+    width: 100px;
+    height: 25px;
+    margin-left: 10px;
+    padding: 0px;
+}
+
+.navbar .nav-item:not(:last-child) {
+    margin-right: 35px;
+}
+
+.dropdown-toggle::after {
+    transition: transform 0.15s linear;
+}
+
+.show.dropdown .dropdown-toggle::after {
+    transform: translateY(3px);
+}
+
+.dropdown-menu {
+    margin-top: 0;
+}

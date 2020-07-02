@@ -4,7 +4,8 @@
   "private": true,
   "devDependencies": {
     "css-loader": "^3.6.0",
-    "react-scripts": "0.6.1"
+    "react-scripts": "0.6.1",
+    "webpack": "^4.43.0"
   },
   "dependencies": {
     "@popperjs/core": "^2.4.2",

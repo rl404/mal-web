@@ -10,9 +10,9 @@ import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.min.css';
-import 'jquery/dist/jquery.js';
+import 'jquery/dist/jquery.min.js';
 import 'popper.js/dist/umd/popper.js';
-import 'bootstrap/dist/js/bootstrap.js';
+import 'bootstrap/dist/js/bootstrap.min.js';
 
 ReactDOM.render((
   <Provider store={store}>

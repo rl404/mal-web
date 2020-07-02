@@ -1,4 +1,4 @@
-import Banner from './Banner';
+import MiniHeader from '../MiniHeader';
 import MainView from './MainView';
 import React from 'react';
 import agent from '../../agent';
@@ -23,10 +23,8 @@ class Home extends React.Component {
   render() {
     return (
       <div className="home-page">
-
-        {/* <Banner appName={this.props.appName} /> */}
-
-        <div className="container page">
+        <div className="container">
+          <MiniHeader appName="aasd" />
           <div className="row">
             <MainView />
 
@@ -39,7 +37,6 @@ class Home extends React.Component {
             </div>
           </div>
         </div>
-
       </div>
     );
   }

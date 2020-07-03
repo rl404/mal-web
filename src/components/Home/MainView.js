@@ -1,31 +1,24 @@
-import ArticleList from '../ArticleList';
+import SeasonalList from './Seasonal';
 import React from 'react';
 import { connect } from 'react-redux';
 
 const mapStateToProps = state => ({
-  articles: state.articles
+  data: state.animeSeasonal
 });
 
 const MainView = props => {
   return (
-    <div className="col-md-9">
-      <div className="feed-toggle">
-        <ul className="nav nav-pills outline-active">
-
-        <li className="nav-item">
-          <a
-            href=""
-            className="nav-link active">
-            Global Feed
-          </a>
-        </li>
-
-        </ul>
+    <div className="container">
+      <div className="row">
+        <div className="col-md-9 border-right">
+          <SeasonalList 
+            data={props.data} 
+          />
+        </div>
+        <div className="col-md-3">
+          asd
       </div>
-
-      <ArticleList
-        articles={props.articles} 
-      />
+      </div>
     </div>
   );
 };

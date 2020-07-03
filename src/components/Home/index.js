@@ -1,10 +1,13 @@
-import MiniHeader from '../MiniHeader';
+import MiniHeader from '../Header/MiniHeader';
 import MainView from './MainView';
 import React from 'react';
 import agent from '../../agent';
 import { connect } from 'react-redux';
 
-const Promise = global.Promise;
+import $ from 'jquery'
+import { getCurrentSeason } from '../../utils/date.js';
+
+// const Promise = global.Promise;
 
 const mapStateToProps = state => ({
   appName: state.appName
@@ -17,26 +20,16 @@ const mapDispatchToProps = dispatch => ({
 
 class Home extends React.Component {
   componentWillMount() {
-    this.props.onLoad(agent.Articles.all())
+    var year = new Date().getFullYear();
+    var season = getCurrentSeason()
+    this.props.onLoad(agent.Seasonal.current(year, season))
   }
 
   render() {
     return (
       <div className="home-page">
-        <div className="container">
-          <MiniHeader appName="aasd" />
-          <div className="row">
-            <MainView />
-
-            <div className="col-md-3">
-              <div className="sidebar">
-
-                <p>Popular Tags</p>
-
-              </div>
-            </div>
-          </div>
-        </div>
+        <MiniHeader title="Welcome to MyAnimeList.net!" />
+        <MainView />
       </div>
     );
   }

@@ -3,8 +3,7 @@ import _superagent from 'superagent';
 
 const superagent = superagentPromise(_superagent, global.Promise);
 
-// const API_ROOT = 'https://mal-api.rl404.com';
-const API_ROOT = '';
+const API_ROOT = 'https://mal-api.rl404.com/v1';
 
 const responseBody = res => res.body;
 
@@ -13,11 +12,11 @@ const requests = {
     superagent.get(`${API_ROOT}${url}`).then(responseBody)
 };
 
-const Articles = {
-  all: page =>
-    requests.get(`/articles?limit=10`)
+const Seasonal = {
+  current: (year, season) =>
+    requests.get(`/season?year=` + year + `&season=` + season)
 };
 
 export default {
-  Articles
+  Seasonal
 };

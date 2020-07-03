@@ -1,117 +1,39 @@
 /* 
-    COLOR THEME
+    HOME
 */
 
-:root {
-    --mal-primary: #2e51a2;
-    --mal-primary-light: #e1e7f5;
-    --mal-primary-hover: #5a79c1;
+#home-seasonal {
+    padding-top: 10px;
 }
 
-/* 
-    NAV BAR 
-*/
-
-#navbar-top {
-    padding: 0px;
-}
-
-.nav-button {
-    width: 100px;
-    height: 25px;
-    margin-left: 10px;
-    padding: 0px;
-}
-
-.nav-button#nav-button-login {
-    border-color: var(--mal-primary);
-    border-width: 2px;
-    color: var(--mal-primary);
+#home-seasonal-title {
     font-weight: bold;
 }
 
-.nav-button#nav-button-login:hover {
-    background: var(--mal-primary-light);
+@media (max-width: 768px) {
+    .carousel-inner .carousel-item>div {
+        display: none;
+    }
+    .carousel-inner .carousel-item>div:first-child {
+        display: block;
+    }
 }
 
-.nav-button#nav-button-signup {
-    background: var(--mal-primary);
-    color: white;
-    font-weight: bold;
+.carousel-inner .carousel-item.active, .carousel-inner .carousel-item-next, .carousel-inner .carousel-item-prev {
+    display: flex;
 }
 
-.nav-button#nav-button-signup:hover {
-    background: var(--mal-primary-hover);
-    border-color: var(--mal-primary-hover);
+/* display 3 */
+
+@media (min-width: 768px) {
+    .carousel-inner .carousel-item-right.active, .carousel-inner .carousel-item-next {
+        transform: translateX(33.333%);
+    }
+    .carousel-inner .carousel-item-left.active, .carousel-inner .carousel-item-prev {
+        transform: translateX(-33.333%);
+    }
 }
 
-#navbar-bottom {
-    background-color: var(--mal-primary);
-    padding: 0px;
-    font-size: 13px;
-}
-
-#navbar-bottom .dropdown-toggle {
-    color: white;
-    padding-left: 20px;
-    padding-right: 20px;
-    font-weight: bold;
-}
-
-#navbar-bottom .dropdown-toggle:hover {
-    color: black;
-    background-color: var(--mal-primary-light);
-}
-
-#navbar-bottom .dropdown-menu a {
-    color: black;
-    font-size: 11px;
-}
-
-#navbar-bottom .dropdown:hover>.dropdown-menu {
-    display: block;
-    margin-top: -0.5px;
-    background-color: var(--mal-primary-light);
-    border: 0px;
-    border-radius: 0;
-    padding: 0px;
-}
-
-#navbar-bottom .dropdown-menu .dropdown-item:hover {
-    background-color: var(--mal-primary);
-    color: white;
-}
-
-#navbar-bottom form .input-group, #navbar-bottom form .input-group select, #navbar-bottom form .input-group input, #navbar-bottom form .input-group button {
-    height: 20px;
-    padding: 0px;
-    font-size: 11px;
-}
-
-#navbar-bottom form .input-group {
-    padding-right: 10px;
-}
-
-#navbar-bottom form .input-group select {
-    width: 90px;
-    padding-left: 10px;
-    padding-right: 25px;
-    background-color: white;
-    background-image: url(/images/icon-triangles.png);
-    background-size: 8px auto;
-    background-position: 74px 6px;
-    border-radius: 0.25rem 0 0 0.25rem;
-}
-
-#navbar-bottom form .input-group input {
-    padding-left: 10px;
-    width: 286px;
-    border: 0px;
-}
-
-#navbar-bottom form .input-group button {
-    width: 20px;
-    background: var(--mal-primary-light);
-    color: var(--mal-primary);
-    border: 0px;
+.carousel-inner .carousel-item-right, .carousel-inner .carousel-item-left {
+    transform: translateX(0);
 }

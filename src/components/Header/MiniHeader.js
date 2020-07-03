@@ -1,10 +1,10 @@
 import React from 'react';
 
-const MiniHeader = ({ appName }) => {
+const MiniHeader = ({ title }) => {
   return (
-    <div className="mini-header">
+    <div className="container" id="mini-header">
         <h1>
-          {appName.toLowerCase()}
+          {title}
         </h1>
     </div>
   );

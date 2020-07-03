@@ -4,10 +4,10 @@ import React from 'react';
 class Header extends React.Component {
   render() {
     return (
-      <div>
+      <div id="navbar-header">
         <nav className="navbar navbar-light" id="navbar-top">
           <Link to="/" className="navbar-brand">
-            <img src="/mal-logo-xsmall.png" alt={this.props.appName.toLowerCase()} />
+            <img src="/images/mal-logo-xsmall.png" alt={this.props.appName.toLowerCase()} />
           </Link>
           <form className="form-inline">
             <Link to="" className="btn btn-outline-primary btn-sm nav-button" id="nav-button-login">

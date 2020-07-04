@@ -4,7 +4,6 @@ import React from 'react';
 import agent from '../../agent';
 import { connect } from 'react-redux';
 
-import $ from 'jquery'
 import { getCurrentSeason } from '../../utils/date.js';
 
 // const Promise = global.Promise;

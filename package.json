@@ -1,5 +1,5 @@
 {
-  "name": "react-redux-realworld-example-app",
+  "name": "mal-web",
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
@@ -17,7 +17,6 @@
     "popper.js": "^1.16.1",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
-    "react-multi-carousel": "^2.5.5",
     "react-redux": "^4.4.5",
     "react-router": "^2.8.1",
     "redux": "^3.6.0",

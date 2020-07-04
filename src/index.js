@@ -9,7 +9,6 @@ import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.min.css';
-// import 'jquery';
 // import 'popper.js/dist/umd/popper.js';
 // import 'bootstrap/dist/js/bootstrap.bundle.js';
 

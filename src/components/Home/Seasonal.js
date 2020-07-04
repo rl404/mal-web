@@ -30,29 +30,17 @@ const SeasonalList = props => {
           </Link>
         </div>
       </div>
-      <div className="row mx-auto my-auto">
-        <div id="recipeCarousel" className="carousel slide w-100" data-ride="carousel">
-          <div className="carousel-inner w-100" role="listbox">
-            {
-              data.map(anime => {
-                if (isCurrentSeason(anime.startDate) && anime.type === 'TV') {
-                  return (
-                    <SeasonalAnime anime={anime} key={anime.id} />
-                  )
-                }
-                return []
-              })
-            }
-          </div>
-          <a className="carousel-control-prev w-auto" href="#recipeCarousel" role="button" data-slide="prev">
-            <span className="carousel-control-prev-icon bg-dark border border-dark rounded-circle" aria-hidden="true"></span>
-            <span className="sr-only">Previous</span>
-          </a>
-          <a className="carousel-control-next w-auto" href="#recipeCarousel" role="button" data-slide="next">
-            <span className="carousel-control-next-icon bg-dark border border-dark rounded-circle" aria-hidden="true"></span>
-            <span className="sr-only">Next</span>
-          </a>
-        </div>
+      <div className="row">
+          {
+            data.map(anime => {
+              if (isCurrentSeason(anime.startDate) && anime.type === 'TV') {
+                return (
+                  <SeasonalAnime anime={anime} key={anime.id} />
+                )
+              }
+              return []
+            })
+          }
       </div>
     </div >
   );
@@ -63,12 +51,6 @@ export default SeasonalList;
 const SeasonalAnime = props => {
   const anime = props.anime;
   return (
-    <div className="carousel-item">
-      <div className="col-md-4">
-        <div className="card card-body">
-          <img className="img-fluid" src={anime.image} alt={anime.title} />
-        </div>
-      </div>
-    </div>
+      <img src={anime.image} alt={anime.title} />
   );
 }

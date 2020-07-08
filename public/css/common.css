@@ -7,7 +7,7 @@
     --primary-light: #e1e7f5;
     --primary-hover: #5a79c1;
     --primary-blend: #9caed9;
-    --border-color: #bebebe;
+    --border-color: #dee2e6;
 }
 
 /* 
@@ -182,6 +182,11 @@
 /* 
     BORDER
 */
+
+.border-side {
+    border-right: 1px solid var(--border-color);
+    border-left: 1px solid var(--border-color);
+}
 
 .border-bottom {
     border-bottom: 1px solid var(--border-color);

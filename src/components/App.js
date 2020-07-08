@@ -1,15 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Container } from 'react-bootstrap';
+import { Route } from 'react-router-dom';
 
 import Header from './Header/Header';
+import Home from './Home';
 import Footer from './Footer/Footer';
-
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
-
-library.add(faSearch)
 
 const mapStateToProps = state => ({
   appName: state.appName
@@ -21,8 +17,8 @@ class App extends React.Component {
       <div>
         <Container>
           <Header appName={this.props.appName} />
-          {this.props.children}
-          </Container>
+          <Route path="" component={Home} />
+        </Container>
         <Footer />
       </div>
     );

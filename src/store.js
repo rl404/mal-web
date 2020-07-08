@@ -6,7 +6,7 @@ const defaultState = {
   animeSeasonal: null
 };
 
-const reducer = function(state = defaultState, action) {
+const reducer = function (state = defaultState, action) {
   switch (action.type) {
     case 'HOME_PAGE_LOADED':
       return { ...state, animeSeasonal: action.payload.data };

@@ -3,34 +3,41 @@ import { connect } from 'react-redux';
 import agent from '../../agent';
 import { Container, Row, Col } from 'react-bootstrap';
 import SeasonalList from './Seasonal';
+import TopAiring from './TopAiring';
 import { getCurrentSeason } from '../../utils/utils.js';
 
 const mapStateToProps = state => ({
-  data: state.animeSeasonal
+  animeSeasonal: state.homeSeasonal,
+  topAiring: state.homeTopAiring,
 });
 
 const mapDispatchToProps = dispatch => ({
-  onLoad: (payload) =>
-    dispatch({ type: 'HOME_PAGE_LOADED', payload }),
+  loadSeasonal: (payload) => dispatch({
+    type: 'HOME_SEASONAL', payload
+  }),
+  loadTopAiring: (payload) => dispatch({
+    type: 'HOME_TOP_AIRING', payload
+  }),
 })
 
 class MainView extends React.Component {
   componentWillMount() {
     var year = new Date().getFullYear();
-    var season = getCurrentSeason()
-    this.props.onLoad(agent.Seasonal.current(year, season))
-  }
+    var season = getCurrentSeason();
+    this.props.loadSeasonal(agent.Seasonal.current(year, season));
+    this.props.loadTopAiring(agent.Top.anime(1, 1));
+  };
 
   render() {
     return (
       <Container className="border-side">
         <Row>
           <Col md={9} className="border-right">
-            <SeasonalList data={this.props.data} />
+            <SeasonalList data={this.props.animeSeasonal} />
           </Col>
           <Col md={3}>
-            asd
-        </Col>
+            <TopAiring data={this.props.topAiring} />
+          </Col>
         </Row>
       </Container>
     );

@@ -3,13 +3,16 @@ import { promiseMiddleware } from './middleware';
 
 const defaultState = {
   appName: 'MyAnimeList',
-  animeSeasonal: null
+  homeSeasonal: null,
+  homeTopAiring: null,
 };
 
 const reducer = function (state = defaultState, action) {
   switch (action.type) {
-    case 'HOME_PAGE_LOADED':
-      return { ...state, animeSeasonal: action.payload.data };
+    case 'HOME_SEASONAL':
+      return { ...state, homeSeasonal: action.payload.data };
+    case 'HOME_TOP_AIRING':
+      return { ...state, homeTopAiring: action.payload.data };
     default:
   }
   return state;

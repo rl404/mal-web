@@ -17,6 +17,12 @@ const Seasonal = {
     requests.get(`/season?year=` + year + `&season=` + season)
 };
 
+const Top = {
+  anime: (type, page) =>
+    requests.get(`/top/anime?type=` + type + `&page=` + page)
+}
+
 export default {
-  Seasonal
+  Seasonal,
+  Top
 };

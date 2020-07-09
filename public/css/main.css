@@ -2,17 +2,25 @@
     HOME
 */
 
-#home-seasonal {
+.home-page .content {
+    font-size: 11px;
+}
+
+.home-page table td {
+    border: 0px;
+}
+
+.home-page .content p {
+    margin: 0px;
+    margin-top: 5px;
+}
+
+#home-seasonal, #home-news {
     padding-top: 10px;
 }
 
-#home-seasonal-title {
+#home-seasonal-title, #home-news-title {
     font-weight: bold;
-}
-
-#home-seasonal-more a {
-    color: var(--primary);
-    font-size: 12px;
 }
 
 #home-seasonal .react-multi-carousel-list {
@@ -111,17 +119,6 @@
     margin-top: 10px;
 }
 
-#home-top-airing table .add a {
-    color: var(--primary);
-    font-size: 10px;
-    background-color: var(--button-bg);
-    padding: 1px 3px 1px 3px;
-    transition: ease-in-out .3s;
-}
-
-#home-top-airing table .add a:hover {
-    color: white;
-    background-color: var(--primary);
-    text-decoration: none;
-    transition: ease-in-out .3s;
+.home-page .img-col {
+    width: 60px;
 }

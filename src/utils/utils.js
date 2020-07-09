@@ -1,3 +1,4 @@
+import moment from 'moment';
 
 export function getSeason(month) {
     if (month >= 1 && month < 4) {
@@ -43,4 +44,8 @@ export function isCurrentSeason(date) {
 
 export function capitalize(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+export function timeSince(str) {
+    return moment(str).subtract(7, 'h').fromNow()
 }

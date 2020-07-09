@@ -3,10 +3,15 @@ import { promiseMiddleware } from './middleware';
 
 const defaultState = {
   appName: 'MyAnimeList',
+
+  // Home
   homeSeasonal: null,
   homeTopAiring: null,
   homeTopUpcoming: null,
   homePopular: null,
+  homeNews: null,
+  homeArticle: null,
+  homeReview: null,
 };
 
 const reducer = function (state = defaultState, action) {
@@ -19,6 +24,12 @@ const reducer = function (state = defaultState, action) {
       return { ...state, homeTopUpcoming: action.payload.data };
     case 'HOME_POPULAR':
       return { ...state, homePopular: action.payload.data };
+    case 'HOME_NEWS':
+      return { ...state, homeNews: action.payload.data };
+    case 'HOME_ARTICLE':
+      return { ...state, homeArticle: action.payload.data };
+    case 'HOME_REVIEW':
+      return { ...state, homeReview: action.payload.data };
     default:
   }
   return state;

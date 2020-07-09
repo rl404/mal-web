@@ -6,27 +6,28 @@ import SeasonalList from './Seasonal';
 import TopList from './TopList';
 import { getCurrentSeason } from '../../utils/utils.js';
 import { AnimeTopType } from '../../constant.js';
+import News from './News';
+import Article from './Article';
+import Review from './Review';
 
 const mapStateToProps = state => ({
   animeSeasonal: state.homeSeasonal,
   topAiring: state.homeTopAiring,
   topUpcoming: state.homeTopUpcoming,
   popular: state.homePopular,
+  news: state.homeNews,
+  article: state.homeArticle,
+  review: state.homeReview,
 });
 
 const mapDispatchToProps = dispatch => ({
-  loadSeasonal: (payload) => dispatch({
-    type: 'HOME_SEASONAL', payload
-  }),
-  loadTopAiring: (payload) => dispatch({
-    type: 'HOME_TOP_AIRING', payload
-  }),
-  loadTopUpcoming: (payload) => dispatch({
-    type: 'HOME_TOP_UPCOMING', payload
-  }),
-  loadPopular: (payload) => dispatch({
-    type: 'HOME_POPULAR', payload
-  }),
+  loadSeasonal: (payload) => dispatch({type: 'HOME_SEASONAL', payload}),
+  loadTopAiring: (payload) => dispatch({type: 'HOME_TOP_AIRING', payload}),
+  loadTopUpcoming: (payload) => dispatch({type: 'HOME_TOP_UPCOMING', payload}),
+  loadPopular: (payload) => dispatch({type: 'HOME_POPULAR', payload}),
+  loadNews: (payload) => dispatch({type: 'HOME_NEWS', payload}),
+  loadArticle: (payload) => dispatch({type: 'HOME_ARTICLE', payload}),
+  loadReview: (payload) => dispatch({type: 'HOME_REVIEW', payload}),
 })
 
 class MainView extends React.Component {
@@ -37,10 +38,13 @@ class MainView extends React.Component {
     this.props.loadTopAiring(agent.Top.anime(AnimeTopType["airing"], 1));
     this.props.loadTopUpcoming(agent.Top.anime(AnimeTopType["upcoming"], 1));
     this.props.loadPopular(agent.Top.anime(AnimeTopType["popular"], 1));
+    this.props.loadNews(agent.News.list("", ""));
+    this.props.loadArticle(agent.Article.list("", ""));
+    this.props.loadReview(agent.Review.list("anime", ""));
   };
 
   render() {
-    var topAiringData, topUpcomingData, popularData
+    var topAiringData, topUpcomingData, popularData, newsData, articleData, reviewData
     if (this.props.topAiring) {
       topAiringData = this.props.topAiring.slice(0, 5)
     }
@@ -50,12 +54,24 @@ class MainView extends React.Component {
     if (this.props.popular) {
       popularData = this.props.popular.slice(0, 10)
     }
+    if (this.props.news) {
+      newsData = this.props.news.slice(0, 4)
+    }
+    if (this.props.article) {
+      articleData = this.props.article.slice(0, 4)
+    }
+    if (this.props.review) {
+      reviewData = this.props.review.slice(0, 4)
+    }
 
     return (
       <Container className="border-side">
         <Row>
           <Col md={9} className="border-right">
             <SeasonalList data={this.props.animeSeasonal} />
+            <News data={newsData} />
+            <Article data={articleData} />
+            <Review data={reviewData} />
           </Col>
           <Col md={3}>
             <TopList title="Top Airing Anime" data={topAiringData} />

@@ -22,7 +22,25 @@ const Top = {
     requests.get(`/top/anime?type=` + type + `&page=` + page)
 }
 
+const News = {
+  list: (tag, page) =>
+    requests.get(`/news?tag=` + tag + `&page=` + page)
+}
+
+const Article = {
+  list: (tag, page) =>
+    requests.get(`/featured?tag=` + tag + `&page=` + page)
+}
+
+const Review = {
+  list: (type, page) =>
+    requests.get(`/reviews/` + type + `?page=` + page)
+}
+
 export default {
   Seasonal,
-  Top
+  Top,
+  News,
+  Article,
+  Review
 };

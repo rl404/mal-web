@@ -49,11 +49,11 @@ export default class SeasonalList extends React.Component {
     return (
       <div id="home-seasonal">
         <Row className="border-bottom">
-          <Col id="home-seasonal-title">
+          <Col className="font-weight-bold">
             {capitalize(getCurrentSeason())} {new Date().getFullYear()} Anime
           </Col>
-          <Col className="text-right" id="home-seasonal-more">
-            <Link to=''>
+          <Col className="text-right">
+            <Link to='' className="view-more">
               View More
             </Link>
           </Col>

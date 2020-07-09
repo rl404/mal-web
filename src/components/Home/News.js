@@ -44,7 +44,7 @@ export default class News extends React.Component {
                           </Link>
                         </td>
                         <td className="content">
-                          <Link to="" className="title"  className="font-weight-bold">{news.title}</Link>
+                          <Link to="" className="font-weight-bold">{news.title}</Link>
                           <p>
                             {news.content.substring(0, 250)}...
                             <Link to="">read more</Link>

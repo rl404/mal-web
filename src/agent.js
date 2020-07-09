@@ -37,10 +37,16 @@ const Review = {
     requests.get(`/reviews/` + type + `?page=` + page)
 }
 
+const Recommendation = {
+  list: (type, page) =>
+    requests.get(`/recommendations/` + type + `?page=` + page)
+}
+
 export default {
   Seasonal,
   Top,
   News,
   Article,
-  Review
+  Review,
+  Recommendation
 };

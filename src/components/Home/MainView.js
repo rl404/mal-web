@@ -9,6 +9,7 @@ import { AnimeTopType } from '../../constant.js';
 import News from './News';
 import Article from './Article';
 import Review from './Review';
+import Recommendation from './Recommendation';
 
 const mapStateToProps = state => ({
   animeSeasonal: state.homeSeasonal,
@@ -18,6 +19,7 @@ const mapStateToProps = state => ({
   news: state.homeNews,
   article: state.homeArticle,
   review: state.homeReview,
+  recommendation: state.homeRecommendation,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -28,6 +30,7 @@ const mapDispatchToProps = dispatch => ({
   loadNews: (payload) => dispatch({type: 'HOME_NEWS', payload}),
   loadArticle: (payload) => dispatch({type: 'HOME_ARTICLE', payload}),
   loadReview: (payload) => dispatch({type: 'HOME_REVIEW', payload}),
+  loadRecommendation: (payload) => dispatch({type: 'HOME_RECOMMENDATION', payload}),
 })
 
 class MainView extends React.Component {
@@ -41,10 +44,11 @@ class MainView extends React.Component {
     this.props.loadNews(agent.News.list("", ""));
     this.props.loadArticle(agent.Article.list("", ""));
     this.props.loadReview(agent.Review.list("anime", ""));
+    this.props.loadRecommendation(agent.Recommendation.list("anime", ""));
   };
 
   render() {
-    var topAiringData, topUpcomingData, popularData, newsData, articleData, reviewData
+    var topAiringData, topUpcomingData, popularData, newsData, articleData, reviewData, recommendationData
     if (this.props.topAiring) {
       topAiringData = this.props.topAiring.slice(0, 5)
     }
@@ -63,6 +67,9 @@ class MainView extends React.Component {
     if (this.props.review) {
       reviewData = this.props.review.slice(0, 4)
     }
+    if (this.props.recommendation) {
+      recommendationData = this.props.recommendation.slice(0, 4)
+    }
 
     return (
       <Container className="border-side">
@@ -72,6 +79,7 @@ class MainView extends React.Component {
             <News data={newsData} />
             <Article data={articleData} />
             <Review data={reviewData} />
+            <Recommendation data={recommendationData} />
           </Col>
           <Col md={3}>
             <TopList title="Top Airing Anime" data={topAiringData} />

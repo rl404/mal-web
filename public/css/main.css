@@ -121,4 +121,5 @@
 
 .home-page .img-col {
     width: 60px;
+    flex: none;
 }

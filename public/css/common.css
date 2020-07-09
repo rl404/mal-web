@@ -187,6 +187,7 @@ a {
     text-align: center;
     color: var(--primary-blend);
     padding: 10px;
+    font-size: 12px;
 }
 
 /* 
@@ -248,4 +249,16 @@ a {
     object-fit: cover;
     border: 1px solid var(--border-color);
     padding: 1px;
+}
+
+/* 
+    SPACE
+*/
+
+.no-padding {
+    padding: 0px;
+}
+
+.no-margin {
+    margin: 0px;
 }

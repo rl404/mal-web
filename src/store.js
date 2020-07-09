@@ -12,6 +12,7 @@ const defaultState = {
   homeNews: null,
   homeArticle: null,
   homeReview: null,
+  homeRecommendation: null,
 };
 
 const reducer = function (state = defaultState, action) {
@@ -30,6 +31,8 @@ const reducer = function (state = defaultState, action) {
       return { ...state, homeArticle: action.payload.data };
     case 'HOME_REVIEW':
       return { ...state, homeReview: action.payload.data };
+    case 'HOME_RECOMMENDATION':
+      return { ...state, homeRecommendation: action.payload.data };
     default:
   }
   return state;

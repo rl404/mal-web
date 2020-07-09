@@ -52,10 +52,10 @@ export default class SeasonalList extends React.Component {
           <Col id="home-seasonal-title">
             {capitalize(getCurrentSeason())} {new Date().getFullYear()} Anime
           </Col>
-          <Col className="text-right">
+          <Col className="text-right" id="home-seasonal-more">
             <Link to=''>
               View More
-          </Link>
+            </Link>
           </Col>
         </Row>
         <Row>

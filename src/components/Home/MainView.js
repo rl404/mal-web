@@ -3,12 +3,15 @@ import { connect } from 'react-redux';
 import agent from '../../agent';
 import { Container, Row, Col } from 'react-bootstrap';
 import SeasonalList from './Seasonal';
-import TopAiring from './TopAiring';
+import TopList from './TopList';
 import { getCurrentSeason } from '../../utils/utils.js';
+import { AnimeTopType } from '../../constant.js';
 
 const mapStateToProps = state => ({
   animeSeasonal: state.homeSeasonal,
   topAiring: state.homeTopAiring,
+  topUpcoming: state.homeTopUpcoming,
+  popular: state.homePopular,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -18,6 +21,12 @@ const mapDispatchToProps = dispatch => ({
   loadTopAiring: (payload) => dispatch({
     type: 'HOME_TOP_AIRING', payload
   }),
+  loadTopUpcoming: (payload) => dispatch({
+    type: 'HOME_TOP_UPCOMING', payload
+  }),
+  loadPopular: (payload) => dispatch({
+    type: 'HOME_POPULAR', payload
+  }),
 })
 
 class MainView extends React.Component {
@@ -25,10 +34,23 @@ class MainView extends React.Component {
     var year = new Date().getFullYear();
     var season = getCurrentSeason();
     this.props.loadSeasonal(agent.Seasonal.current(year, season));
-    this.props.loadTopAiring(agent.Top.anime(1, 1));
+    this.props.loadTopAiring(agent.Top.anime(AnimeTopType["airing"], 1));
+    this.props.loadTopUpcoming(agent.Top.anime(AnimeTopType["upcoming"], 1));
+    this.props.loadPopular(agent.Top.anime(AnimeTopType["popular"], 1));
   };
 
   render() {
+    var topAiringData, topUpcomingData, popularData
+    if (this.props.topAiring) {
+      topAiringData = this.props.topAiring.slice(0, 5)
+    }
+    if (this.props.topUpcoming) {
+      topUpcomingData = this.props.topUpcoming.slice(0, 5)
+    }
+    if (this.props.popular) {
+      popularData = this.props.popular.slice(0, 10)
+    }
+
     return (
       <Container className="border-side">
         <Row>
@@ -36,7 +58,9 @@ class MainView extends React.Component {
             <SeasonalList data={this.props.animeSeasonal} />
           </Col>
           <Col md={3}>
-            <TopAiring data={this.props.topAiring} />
+            <TopList title="Top Airing Anime" data={topAiringData} />
+            <TopList title="Top Upcoming Anime" data={topUpcomingData} />
+            <TopList title="Most Popular Anime" data={popularData} />
           </Col>
         </Row>
       </Container>

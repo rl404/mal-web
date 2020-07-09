@@ -5,6 +5,8 @@ const defaultState = {
   appName: 'MyAnimeList',
   homeSeasonal: null,
   homeTopAiring: null,
+  homeTopUpcoming: null,
+  homePopular: null,
 };
 
 const reducer = function (state = defaultState, action) {
@@ -13,6 +15,10 @@ const reducer = function (state = defaultState, action) {
       return { ...state, homeSeasonal: action.payload.data };
     case 'HOME_TOP_AIRING':
       return { ...state, homeTopAiring: action.payload.data };
+    case 'HOME_TOP_UPCOMING':
+      return { ...state, homeTopUpcoming: action.payload.data };
+    case 'HOME_POPULAR':
+      return { ...state, homePopular: action.payload.data };
     default:
   }
   return state;

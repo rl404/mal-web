@@ -49,3 +49,19 @@ export function capitalize(string) {
 export function timeSince(str) {
     return moment(str).subtract(7, 'h').fromNow()
 }
+
+export function slugify(str) {
+    return str
+        .toString()
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-zA-Z0-9]\s+/g,' ')
+        .replace(/\s+/g, "-")
+}
+
+export function parseTime(str, fmt) {
+    if (moment(str).year()=== 1) {
+        return ""
+    }
+    return moment(str).format(fmt);
+}

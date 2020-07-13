@@ -123,3 +123,49 @@
     width: 60px;
     flex: none;
 }
+
+/* 
+    ANIME
+*/
+
+.anime-page #anime-left {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 11px;
+}
+
+.anime-page .img-cover {
+    width: 100%;
+}
+
+.anime-page .hover-primary:hover, .anime-page .hover-primary:hover a {
+    color: white;
+    background-color: var(--primary);
+    text-decoration: none;
+    width: 100%;
+}
+
+.anime-page .add-to-list {
+    padding: 2px 3px 2px 3px;
+    border-bottom: 1px solid var(--border-secondary);
+    font-size: 11px;
+}
+
+.anime-page .title-border {
+    border-bottom: 1px solid var(--border-dark);
+}
+
+.anime-page h2 {
+    font-weight: bold;
+    font-size: 12px;
+    padding: 3px 0px 3px 0px;
+}
+
+.anime-page .category-detail {
+    margin-bottom: 5px;
+}
+
+.anime-page .category-detail .category-name {
+    color: var(--dark);
+    font-weight: bold;
+}

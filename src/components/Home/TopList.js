@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Table, Image } from 'react-bootstrap';
+import { slugify }from '../../utils/utils';
 
 export default class TopList extends React.Component {
   render() {
@@ -32,9 +33,13 @@ export default class TopList extends React.Component {
                 return (
                   <tr key={anime.id}>
                     <td className="table-no text-center">{index + 1}</td>
-                    <td><Image src={anime.image} alt={anime.title} /></td>
+                    <td>
+                      <Link to={{ pathname: `/anime/${anime.id}/` + slugify(anime.title) }}>
+                        <Image src={anime.image} alt={anime.title} />
+                      </Link>
+                    </td>
                     <td className="table-content">
-                      <Link className="title" to="">{anime.title}</Link>
+                      <Link className="title" to={{ pathname: `/anime/${anime.id}/` + slugify(anime.title) }}>{anime.title}</Link>
                       <p className="sub-title">
                         {anime.type}, {anime.episode} eps, scored {anime.score}
                         <br />

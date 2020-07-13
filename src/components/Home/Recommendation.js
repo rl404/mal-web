@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col, Table, Image } from 'react-bootstrap';
-import { timeSince } from '../../utils/utils';
+import { timeSince, slugify } from '../../utils/utils';
 
 export default class Recommendation extends React.Component {
   render() {
@@ -41,26 +41,26 @@ export default class Recommendation extends React.Component {
                         <td>
                           <Row className="no-margin">
                             <Col md={1} className="no-padding img-col">
-                              <Link to="">
+                              <Link to={{ pathname: `/anime/${recommendation.source.liked.id}/` + slugify(recommendation.source.liked.title) }}>
                                 <Image src={recommendation.source.liked.image} alt={recommendation.source.liked.title} className="img-thumbnail" />
                               </Link>
                             </Col>
                             <Col md={5} className="content no-padding">
                               <p>
                                 If you liked <br />
-                                <Link to="" className="font-weight-bold">{recommendation.source.liked.title}</Link><br />
+                                <Link to={{ pathname: `/anime/${recommendation.source.liked.id}/` + slugify(recommendation.source.liked.title) }} className="font-weight-bold">{recommendation.source.liked.title}</Link><br />
                                 <span className="add"><Link to="">add</Link></span>
                               </p>
                             </Col>
                             <Col md={1} className="no-padding img-col">
-                              <Link to="">
+                              <Link to={{ pathname: `/anime/${recommendation.source.recommended.id}/` + slugify(recommendation.source.recommended.title) }}>
                                 <Image src={recommendation.source.recommended.image} alt={recommendation.source.recommended.title} className="img-thumbnail" />
                               </Link>
                             </Col>
                             <Col md={5} className="content no-padding">
                               <p>
                                 ...then you might like <br />
-                                <Link to="" className="font-weight-bold">{recommendation.source.recommended.title}</Link><br />
+                                <Link to={{ pathname: `/anime/${recommendation.source.recommended.id}/` + slugify(recommendation.source.recommended.title) }} className="font-weight-bold">{recommendation.source.recommended.title}</Link><br />
                                 <span className="add"><Link to="">add</Link></span>
                               </p>
                             </Col>
@@ -70,6 +70,8 @@ export default class Recommendation extends React.Component {
                               {recommendation.content.substring(0, 200)}...
                               <Link to="">read more</Link>
                             </p>
+                          </Row>
+                          <Row className="content no-margin">
                             <p className="blend-text">
                               Anime rec by <Link to="">{recommendation.username}</Link> - {timeSince(recommendation.date)}
                             </p>

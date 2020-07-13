@@ -13,10 +13,14 @@ const defaultState = {
   homeArticle: null,
   homeReview: null,
   homeRecommendation: null,
+
+  // Anime
+  animeDetail: null,
 };
 
 const reducer = function (state = defaultState, action) {
   switch (action.type) {
+    // Home.
     case 'HOME_SEASONAL':
       return { ...state, homeSeasonal: action.payload.data };
     case 'HOME_TOP_AIRING':
@@ -33,6 +37,10 @@ const reducer = function (state = defaultState, action) {
       return { ...state, homeReview: action.payload.data };
     case 'HOME_RECOMMENDATION':
       return { ...state, homeRecommendation: action.payload.data };
+
+    // Anime.
+    case 'ANIME_DETAIL':
+      return { ...state, animeDetail: action.payload.data };
     default:
   }
   return state;

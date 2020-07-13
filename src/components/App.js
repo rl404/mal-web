@@ -5,6 +5,7 @@ import { Route } from 'react-router-dom';
 
 import Header from './Header/Header';
 import Home from './Home';
+import Anime from './Anime';
 import Footer from './Footer/Footer';
 
 const mapStateToProps = state => ({
@@ -17,7 +18,8 @@ class App extends React.Component {
       <div>
         <Container>
           <Header appName={this.props.appName} />
-          <Route path="" component={Home} />
+          <Route exact path="/" component={Home} />
+          <Route path="/anime/:id/:name?" component={Anime} />
         </Container>
         <Footer />
       </div>

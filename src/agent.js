@@ -3,7 +3,7 @@ import _superagent from 'superagent';
 
 const superagent = superagentPromise(_superagent, global.Promise);
 
-const API_ROOT = 'https://mal-api.rl404.com/v1';
+const API_ROOT = process.env.REACT_APP_MAL_API;
 
 const responseBody = res => res.body;
 
@@ -11,6 +11,21 @@ const requests = {
   get: url =>
     superagent.get(`${API_ROOT}${url}`).then(responseBody)
 };
+
+const Anime = {
+  detail: (id) => requests.get(`/anime/` + id),
+  video: (id, page) => requests.get(`/anime/` + id + `/videos?page=` + page),
+  episode: (id, page) => requests.get(`/anime/` + id + `/episodes?page=` + page),
+  review: (id, page) => requests.get(`/anime/` + id + `/reviews?page=` + page),
+  recommendation: (id) => requests.get(`/anime/` + id + `/recommendations`),
+  stats: (id, page) => requests.get(`/anime/` + id + `/stats?page=` + page),
+  character: (id) => requests.get(`/anime/` + id + `/characters`),
+  staff: (id) => requests.get(`/anime/` + id + `/staff`),
+  news: (id) => requests.get(`/anime/` + id + `/news`),
+  article: (id) => requests.get(`/anime/` + id + `/featured`),
+  picture: (id) => requests.get(`/anime/` + id + `/pictures`),
+  more: (id) => requests.get(`/anime/` + id + `/more-info`),
+}
 
 const Seasonal = {
   current: (year, season) =>
@@ -43,6 +58,7 @@ const Recommendation = {
 }
 
 export default {
+  Anime,
   Seasonal,
   Top,
   News,

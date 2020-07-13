@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Row, Col, Card } from 'react-bootstrap';
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { capitalize, isCurrentSeason, getCurrentSeason } from '../../utils/utils.js';
+import { capitalize, isCurrentSeason, getCurrentSeason, slugify } from '../../utils/utils';
 
 const responsive = {
   desktop: {
@@ -65,8 +65,8 @@ export default class SeasonalList extends React.Component {
                 data.map(anime => {
                   if (isCurrentSeason(anime.startDate) && anime.type === 'TV') {
                     return (
-                      <Link to="" key={anime.id}>
-                        <Card href="">
+                      <Link to={{ pathname: `/anime/${anime.id}/`+ slugify(anime.title) }} key={anime.id}>
+                        <Card>
                           <Card.Img src={anime.image} alt={anime.title} />
                           <Card.ImgOverlay>
                             <Card.Text>{anime.title}</Card.Text>

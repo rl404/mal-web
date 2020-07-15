@@ -1,0 +1,13 @@
+version: "2.4"
+
+services:
+  malweb:
+    container_name: malweb
+    image: malweb:0.1.0
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:80
+    tty: true
+    env_file: ./.env

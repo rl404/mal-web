@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col, Table, Image } from 'react-bootstrap';
-import { timeSince, slugify } from '../../utils/utils';
+import { timeSince, slugify, ellipsis } from '../../utils/utils';
 
 export default class Recommendation extends React.Component {
   render() {
@@ -20,11 +20,11 @@ export default class Recommendation extends React.Component {
 
     return (
       <div id="home-recommendation">
-        <Row className="border-bottom">
-          <Col className="font-weight-bold">
+        <Row className="border-bottom font-12">
+          <Col md={9} xs={7} className="font-weight-bold">
             Latest Anime Recommendations
           </Col>
-          <Col className="text-right">
+          <Col md={3} xs={5} className="text-right">
             <Link to='' className="view-more">
               View More
             </Link>
@@ -67,7 +67,7 @@ export default class Recommendation extends React.Component {
                           </Row>
                           <Row className="content no-margin">
                             <p>
-                              {recommendation.content.substring(0, 200)}...
+                              {ellipsis(recommendation.content, 200)}
                               <Link to="">read more</Link>
                             </p>
                           </Row>

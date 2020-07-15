@@ -45,7 +45,7 @@ const NavBottom = () => {
         <Navbar.Toggle aria-controls="navbar-bottom-collapse" />
         <Navbar.Collapse id="navbar-bottom-collapse">
           <Nav className="mr-auto">
-            <NavDropdown title="Anime">
+            <NavDropdown title="Anime" renderMenuOnMount>
               <NavDropdown.Item href="">Anime Search</NavDropdown.Item>
               <NavDropdown.Item href="">Top Anime</NavDropdown.Item>
               <NavDropdown.Item href="">Seasonal Anime</NavDropdown.Item>
@@ -54,7 +54,7 @@ const NavBottom = () => {
               <NavDropdown.Item href="">Recommendations</NavDropdown.Item>
               <NavDropdown.Item href="">2020 Challenge</NavDropdown.Item>
             </NavDropdown>
-            <NavDropdown title="Manga">
+            <NavDropdown title="Manga" renderMenuOnMount>
               <NavDropdown.Item href="" className="dropdown-item">Manga Search</NavDropdown.Item>
               <NavDropdown.Item href="" className="dropdown-item">Top Manga</NavDropdown.Item>
               <NavDropdown.Item href="" className="dropdown-item">Manga Store</NavDropdown.Item>
@@ -62,27 +62,27 @@ const NavBottom = () => {
               <NavDropdown.Item href="" className="dropdown-item">Recommendations</NavDropdown.Item>
               <NavDropdown.Item href="" className="dropdown-item">2020 Challenge</NavDropdown.Item>
             </NavDropdown>
-            <NavDropdown title="Community">
+            <NavDropdown title="Community" renderMenuOnMount>
               <NavDropdown.Item href="" className="dropdown-item">Forums</NavDropdown.Item>
               <NavDropdown.Item href="" className="dropdown-item">Clubs</NavDropdown.Item>
               <NavDropdown.Item href="" className="dropdown-item">Blogs</NavDropdown.Item>
               <NavDropdown.Item href="" className="dropdown-item">Users</NavDropdown.Item>
               <NavDropdown.Item href="" className="dropdown-item">Discord Chat</NavDropdown.Item>
             </NavDropdown>
-            <NavDropdown title="Industry">
+            <NavDropdown title="Industry" renderMenuOnMount>
               <NavDropdown.Item href="" className="dropdown-item">News</NavDropdown.Item>
               <NavDropdown.Item href="" className="dropdown-item">Featured Articles</NavDropdown.Item>
               <NavDropdown.Item href="" className="dropdown-item">People</NavDropdown.Item>
               <NavDropdown.Item href="" className="dropdown-item">Characters</NavDropdown.Item>
             </NavDropdown>
-            <NavDropdown title="Watch">
+            <NavDropdown title="Watch" renderMenuOnMount>
               <NavDropdown.Item href="" className="dropdown-item">Episode Videos</NavDropdown.Item>
               <NavDropdown.Item href="" className="dropdown-item">Promotional Videos</NavDropdown.Item>
             </NavDropdown>
-            <NavDropdown title="Read">
+            <NavDropdown title="Read" renderMenuOnMount>
               <NavDropdown.Item href="" className="dropdown-item">Manga Store</NavDropdown.Item>
             </NavDropdown>
-            <NavDropdown title="Help">
+            <NavDropdown title="Help" renderMenuOnMount>
               <NavDropdown.Item href="" className="dropdown-item">About</NavDropdown.Item>
               <NavDropdown.Item href="" className="dropdown-item">Supporting</NavDropdown.Item>
               <NavDropdown.Item href="" className="dropdown-item">Advertising</NavDropdown.Item>

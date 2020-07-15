@@ -9,25 +9,26 @@ const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: 1200 },
     items: 4,
-    partialVisibilityGutter: 40
+    partialVisibilityGutter: 10
   },
   desktop_small: {
-    breakpoint: { max: 1200, min: 1024 },
-    items: 4,
-    partialVisibilityGutter: 5
+    breakpoint: { max: 1200, min: 990 },
+    items: 3,
+    partialVisibilityGutter: 30
   },
   tablet: {
-    breakpoint: { max: 1024, min: 990 },
-    items: 3,
-    partialVisibilityGutter: 60
-  },
-  tablet_small: {
-    breakpoint: { max: 990, min: 464 },
-    items: 3,
+    breakpoint: { max: 990, min: 767 },
+    items: 2,
+    partialVisibilityGutter: 50
   },
   phone: {
-    breakpoint: { max: 464, min: 0 },
+    breakpoint: { max: 767, min: 575 },
     items: 2,
+    partialVisibilityGutter: 70
+  },
+  phone_small: {
+    breakpoint: { max: 575, min: 0 },
+    items: 2
   }
 };
 
@@ -48,11 +49,11 @@ export default class SeasonalList extends React.Component {
 
     return (
       <div id="home-seasonal">
-        <Row className="border-bottom">
-          <Col className="font-weight-bold">
+        <Row className="border-bottom font-12">
+          <Col md={9} xs={7} className="font-weight-bold">
             {capitalize(getCurrentSeason())} {new Date().getFullYear()} Anime
           </Col>
-          <Col className="text-right">
+          <Col md={3} xs={5} className="text-right">
             <Link to='' className="view-more">
               View More
             </Link>

@@ -78,7 +78,7 @@ export default class Left extends React.Component {
         </Row>
         <Row>
           <Col>
-            {stats("Score", data.score, false, data.voter)}
+            {stats("Score", data.score.toFixed(2), false, data.voter)}
             {stats("Ranked", data.rank, true)}
             {stats("Popularity", data.popularity, true)}
             {stats("Members", data.member)}

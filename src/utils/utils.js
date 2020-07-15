@@ -65,3 +65,10 @@ export function parseTime(str, fmt) {
     }
     return moment(str).format(fmt);
 }
+
+export function ellipsis(str, limit) {
+    if (str.length > limit) {
+        str = str.substring(0, limit) + "..."
+    }
+    return str
+}

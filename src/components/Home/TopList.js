@@ -41,7 +41,7 @@ export default class TopList extends React.Component {
                     <td className="table-content">
                       <Link className="title" to={{ pathname: `/anime/${anime.id}/` + slugify(anime.title) }}>{anime.title}</Link>
                       <p className="sub-title">
-                        {anime.type}, {anime.episode} eps, scored {anime.score}
+                        {anime.type}, {anime.episode} eps, scored {anime.score.toFixed(2)}
                         <br />
                         {anime.member.toLocaleString()} members
                       </p>

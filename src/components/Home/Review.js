@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col, Table, Image } from 'react-bootstrap';
-import { timeSince } from '../../utils/utils';
+import { timeSince, ellipsis } from '../../utils/utils';
 
 export default class Review extends React.Component {
   render() {
@@ -20,11 +20,11 @@ export default class Review extends React.Component {
 
     return (
       <div id="home-review">
-        <Row className="border-bottom">
-          <Col className="font-weight-bold">
+        <Row className="border-bottom font-12">
+          <Col md={9} xs={7} className="font-weight-bold">
             Latest Anime Reviews
           </Col>
-          <Col className="text-right">
+          <Col md={3} xs={5} className="text-right">
             <Link to='' className="view-more">
               View More
             </Link>
@@ -47,7 +47,7 @@ export default class Review extends React.Component {
                           <Link to="" className="font-weight-bold">{review.source.title}</Link>  <span className="add"><Link to="">add</Link></span>
                           <span className="blend-text float-right">Overall Rating: {review.score.overall}</span>
                           <p>
-                            {review.review.substring(0, 350)}...
+                            {ellipsis(review.review, 350)}
                             <Link to="">read more</Link>
                           </p>
                           <p>

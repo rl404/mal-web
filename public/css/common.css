@@ -16,10 +16,16 @@
     --light-bg: #efefef;
     --button-bg: #d6dce4;
     --dark: #444;
+    --focus-bg: #f6f6f6;
+    --focus-border: #ebebeb;
 }
 
 a {
     color: var(--primary);
+}
+
+body {
+    font-family: Verdana, Helvetica, sans-serif;
 }
 
 /* 
@@ -67,9 +73,13 @@ a {
 
 #navbar-bottom .dropdown-toggle {
     color: white;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
     font-weight: bold;
+}
+
+#navbar-bottom .dropdown-toggle::after {
+    display: none;
 }
 
 #navbar-bottom .dropdown-toggle:hover {
@@ -90,9 +100,18 @@ a {
     padding: 0px;
 }
 
+#navbar-bottom .dropdown-menu .dropdown-item {
+    padding: 8px 5px;
+    font-size: 11px;
+}
+
 #navbar-bottom .dropdown-menu .dropdown-item:hover {
     background-color: var(--primary);
     color: white;
+}
+
+#navbar-bottom .nav-item:hover .dropdown-menu {
+    display: block !important;
 }
 
 #navbar-bottom form .input-group, #navbar-bottom form .input-group select, #navbar-bottom form .input-group input, #navbar-bottom form .input-group button {
@@ -169,7 +188,7 @@ a {
     background: transparent;
     border: none;
     line-height: 7px;
-} 
+}
 
 #footer .list-group-item a {
     color: white;
@@ -216,6 +235,10 @@ a {
 /* 
     TEXT
 */
+
+.font-12 {
+    font-size: 12px;
+}
 
 .blend-text {
     color: var(--sub-header);
@@ -272,4 +295,24 @@ a {
 
 .padding-bottom-10 {
     padding-bottom: 10px;
+}
+
+.padding-top-10 {
+    padding-top: 10px;
+}
+
+/* 
+    BREADCRUMB
+*/
+
+.breadcrumb {
+    padding: 10px 0px;
+    font-size: 12px;
+    background: none;
+    margin: 0px;
+    border: none;
+}
+
+.breadcrumb .separator {
+    padding: 0px 10px;
 }

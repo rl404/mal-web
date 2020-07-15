@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col, Table, Image } from 'react-bootstrap';
-import { timeSince } from '../../utils/utils';
+import { timeSince, ellipsis } from '../../utils/utils';
 
 export default class News extends React.Component {
   render() {
@@ -20,11 +20,11 @@ export default class News extends React.Component {
 
     return (
       <div id="home-news">
-        <Row className="border-bottom">
-          <Col className="font-weight-bold">
+        <Row className="border-bottom font-12">
+          <Col md={9} xs={7} className="font-weight-bold">
             Anime & Manga News
           </Col>
-          <Col className="text-right">
+          <Col md={3} xs={5} className="text-right">
             <Link to='' className="view-more">
               View More
             </Link>
@@ -46,11 +46,11 @@ export default class News extends React.Component {
                         <td className="content">
                           <Link to="" className="font-weight-bold">{news.title}</Link>
                           <p>
-                            {news.content.substring(0, 250)}...
+                            {ellipsis(news.content, 250)}
                             <Link to="">read more</Link>
                           </p>
                           <p>
-                            <span className="blend-text">{timeSince(news.date)} by <Link to="">{news.username}</Link> | <Link to="">Discuss ({news.comment} comments)</Link></span>
+                            <span className="blend-text">{timeSince(news.date)} by <Link to="">{news.username}</Link> | <Link to="">Discuss ({news.comment.toLocaleString()} comments)</Link></span>
                           </p>
                         </td>
                       </tr>

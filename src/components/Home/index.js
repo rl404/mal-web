@@ -77,14 +77,14 @@ class Home extends React.Component {
         <MiniHeader title="Welcome to MyAnimeList.net!" />
         <Container className="border-side">
           <Row>
-            <Col md={9} className="border-right">
+            <Col md={8} className="border-right">
               <SeasonalList data={this.props.animeSeasonal} />
               <News data={newsData} />
               <Article data={articleData} />
               <Review data={reviewData} />
               <Recommendation data={recommendationData} />
             </Col>
-            <Col md={3}>
+            <Col md={4}>
               <TopList title="Top Airing Anime" data={topAiringData} />
               <TopList title="Top Upcoming Anime" data={topUpcomingData} />
               <TopList title="Most Popular Anime" data={popularData} />

@@ -20,11 +20,11 @@ export default class Article extends React.Component {
 
     return (
       <div id="home-article">
-        <Row className="border-bottom">
-          <Col className="font-weight-bold">
+        <Row className="border-bottom font-12">
+          <Col md={9} xs={7} className="font-weight-bold">
             Featured Articles
           </Col>
-          <Col className="text-right">
+          <Col md={3} xs={5} className="text-right">
             <Link to='' className="view-more">
               View More
             </Link>
@@ -47,7 +47,7 @@ export default class Article extends React.Component {
                           <Link to="" className="font-weight-bold">{article.title}</Link>
                           <p>{article.summary}</p>
                           <p>
-                            <span className="blend-text">{timeSince(article.date)} by <Link to="">{article.username}</Link> | <span className="font-weight-bold">{article.view}</span> views {getBadge(article)}
+                            <span className="blend-text">{timeSince(article.date)} by <Link to="">{article.username}</Link> | <span className="font-weight-bold">{article.view.toLocaleString()}</span> views {getBadge(article)}
                             </span>
                           </p>
                         </td>

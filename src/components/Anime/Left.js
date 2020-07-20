@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Image, Col } from 'react-bootstrap';
 import { parseTime } from '../../utils/utils';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlusCircle, faCamera } from '@fortawesome/free-solid-svg-icons';
 
 export default class Left extends React.Component {
   render() {
@@ -16,7 +18,7 @@ export default class Left extends React.Component {
       <div id="anime-left">
         <Row>
           <Col>
-            <Image src={data.cover} alt={data.title} className="img-border img-cover" />
+            {cover(data)}
           </Col>
         </Row>
         <br />
@@ -88,6 +90,24 @@ export default class Left extends React.Component {
       </div>
     )
   }
+}
+
+const cover = data => {
+  if (data.cover === "") {
+    return (
+      <Link className="empty-cover">
+        <span>
+          <FontAwesomeIcon icon={faCamera} />
+          <FontAwesomeIcon icon={faPlusCircle} /><br />
+          <span>Add Picture</span>
+        </span>
+      </Link>
+    )
+  }
+
+  return (
+    <Image src={data.cover} alt={data.title} className="img-border img-cover" />
+  )
 }
 
 const animeType = (data) => {

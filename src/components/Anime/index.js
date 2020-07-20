@@ -18,8 +18,16 @@ class Anime extends React.Component {
   animeID = this.props.match.params.id
   animeName = this.props.match.params.name
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.loadDetail(agent.Anime.detail(this.animeID));
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.location.key !== this.props.location.key) {
+      this.animeID = this.props.match.params.id
+      this.animeName = this.props.match.params.name
+      this.props.loadDetail(agent.Anime.detail(this.animeID));
+    }
   }
 
   render() {
@@ -73,7 +81,7 @@ class Anime extends React.Component {
                   asd
                 </Tab>
               </Tabs>
-          </Col>
+            </Col>
           </Row>
         </Container>
       </div>

@@ -12,8 +12,8 @@ export default class Breadcrumb extends React.Component {
       <div className="breadcrumb">
         {
           data
-            .map(b => <Link to={b["link"]}>{b["name"]}</Link>)
-            .reduce((prev, curr) => [prev, <span className="separator">></span>, curr])
+            .map((b, i) => <Link to={b["link"]} key={i}>{b["name"]}</Link>)
+            .reduce((prev, curr, i) => [prev, <span className="separator" key={i + ">"}>></span>, curr])
         }
       </div>
     )

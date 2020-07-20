@@ -35,7 +35,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 class Home extends React.Component {
-  componentWillMount() {
+  componentDidMount() {
     var year = new Date().getFullYear();
     var season = getCurrentSeason();
     this.props.loadSeasonal(agent.Seasonal.current(year, season));

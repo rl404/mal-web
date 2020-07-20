@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import {
   Nav,
   Navbar,
@@ -115,7 +116,7 @@ const NavBottom = () => {
               <Form.Control type="text" placeholder="Search Anime, Manga, and more..." />
               <InputGroup.Append>
                 <Button variant="outline-secondary">
-                  <FontAwesomeIcon icon="search" />
+                  <FontAwesomeIcon icon={faSearch} />
                 </Button>
               </InputGroup.Append>
             </InputGroup>

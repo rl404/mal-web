@@ -72,3 +72,8 @@ export function ellipsis(str, limit) {
     }
     return str
 }
+
+export function cleanKey(str) {
+    str = str.replace(/_/g,' ')
+    return str[0].toUpperCase() + str.slice(1)
+}

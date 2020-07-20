@@ -7,10 +7,6 @@ import App from './components/App';
 import store from './store';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
-
-library.add(faSearch)
 
 ReactDOM.render((
   <Provider store={store}>

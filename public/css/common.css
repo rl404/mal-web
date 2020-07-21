@@ -303,6 +303,10 @@ body {
     padding-top: 10px;
 }
 
+.hide-div {
+    display: none;
+}
+
 /* 
     BREADCRUMB
 */

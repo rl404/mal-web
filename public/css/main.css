@@ -172,7 +172,7 @@
   margin-left: -10px;
   background-color: var(--border-dark);
   border-radius: 50%;
-  padding-left:2px;
+  padding-left: 2px;
 }
 
 .anime-page .empty-cover:hover {
@@ -361,4 +361,144 @@
 
 .anime-page #related-area td:nth-of-type(1) {
   width: 100px;
-} 
+}
+
+.anime-page #char-full {
+  display: none;
+}
+
+@media (min-width:992px) {
+  .anime-page .char-area:first-of-type {
+    border-right: 1px solid var(--border-color);
+  }
+}
+
+@media (max-width:992px) {
+  .anime-page #char-full {
+    display: flex;
+  }
+  .anime-page #char-split {
+    display: none;
+  }
+}
+
+.anime-page .char-area table tr:nth-of-type(1) td {
+  border: none;
+}
+
+.anime-page .char-area table tr td:first-of-type, .anime-page .char-area table tr td:last-of-type {
+  width: 60px;
+}
+
+.anime-page .char-area table tr:nth-of-type(even) {
+  background-color: var(--focus-bg);
+}
+
+.anime-page .char-area table tr td p {
+  margin: 0px;
+}
+
+.anime-page .char-area table tr td p:nth-of-type(2) {
+  font-size: 10px;
+}
+
+.anime-page #song-area {
+  margin-bottom: 15px;
+}
+
+.anime-page #song-area p {
+  margin: 0px;
+}
+
+.anime-page #review-area table td {
+  border: none;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.anime-page #review-area table tr td .row:first-of-type {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.anime-page #review-area table tr td .row:first-of-type .col:first-of-type {
+  width: 65px;
+  padding-right: 0px;
+  flex: none;
+}
+
+.anime-page #review-area table tr td .row .col p {
+  margin-bottom: 5px;
+}
+
+.anime-page #review-area table.score-table {
+  font-size: 11px;
+  padding: 3px;
+  border: 1px solid var(--border-color);
+}
+
+.anime-page #review-area table.score-table thead {
+  background-color: var(--focus-bg);
+}
+
+.anime-page #review-area table tr td .row:last-of-type {
+  font-size: 10px;
+  padding-bottom: 10px;
+}
+
+.anime-page #recommendation-area .react-multi-carousel-list .react-multiple-carousel__arrow--right {
+  right: 0px;
+  z-index: 1;
+}
+
+.anime-page #recommendation-area .react-multi-carousel-list .react-multiple-carousel__arrow--left {
+  left: 0px;
+  z-index: 1;
+}
+
+.anime-page #recommendation-area .react-multi-carousel-item .card {
+  width: 90px;
+  height: 140px;
+  /* object-fit: cover; */
+  border: 1px solid var(--border-color);
+  opacity: 1;
+  transition: ease-in-out .3s;
+}
+
+.anime-page #recommendation-area .react-multi-carousel-item .card:hover {
+  opacity: 0.8;
+  transition: ease-in-out .3s;
+}
+
+.anime-page #recommendation-area .react-multi-carousel-item .card .card-img {
+  border-radius: 0px;
+  width: 90px;
+  height: 140px;
+  object-fit: cover;
+}
+
+.anime-page #recommendation-area .react-multi-carousel-item .card .card-img-overlay {
+  padding: 5px;
+  top: auto;
+  color: white;
+  text-shadow: rgba(0, 0, 0, 0.8) 1px 1px 0;
+  background-image: url(/images/image_box_shadow_bottom.png);
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: 100% 100%;
+}
+
+.anime-page #recommendation-area .react-multi-carousel-item .card .card-img-overlay p {
+  font-size: 10px;
+  line-height: 1.2em;
+}
+
+.anime-page #recommendation-area .react-multi-carousel-item .card .card-img-overlay .card-title {
+  font-size: 10px;
+  display: block;
+  position: absolute;
+  bottom: 110px;
+  right: 0px;
+  background: rgba(0,0,0,.7);
+  padding: 2px 5px;
+}

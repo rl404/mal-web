@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col, Table, Image } from 'react-bootstrap';
-import { timeSince, ellipsis } from '../../utils/utils';
+import { timeSince, ellipsis, slugify } from '../../utils/utils';
 
 export default class News extends React.Component {
   render() {
@@ -25,7 +25,7 @@ export default class News extends React.Component {
             Anime & Manga News
           </Col>
           <Col md={3} xs={5} className="text-right">
-            <Link to='' className="view-more">
+            <Link to="/news" className="view-more">
               View More
             </Link>
           </Col>
@@ -39,18 +39,18 @@ export default class News extends React.Component {
                     return (
                       <tr key={news.id}>
                         <td className="img-col">
-                          <Link to="">
+                          <Link to={{ pathname: `/news/${news.id}/` + slugify(news.title) }}>
                             <Image src={news.image} alt={news.title} className="img-thumbnail" />
                           </Link>
                         </td>
                         <td className="content">
-                          <Link to="" className="font-weight-bold">{news.title}</Link>
+                          <Link to={{ pathname: `/news/${news.id}/` + slugify(news.title) }} className="font-weight-bold">{news.title}</Link>
                           <p>
                             {ellipsis(news.content, 250)}
-                            <Link to="">read more</Link>
+                            <Link to={{ pathname: `/news/${news.id}/` + slugify(news.title) }}>read more</Link>
                           </p>
                           <p>
-                            <span className="blend-text">{timeSince(news.date)} by <Link to="">{news.username}</Link> | <Link to="">Discuss ({news.comment.toLocaleString()} comments)</Link></span>
+                            <span className="blend-text">{timeSince(news.date)} by <Link to={{ pathname: `/user/${news.username}` }}>{news.username}</Link> | <Link to="#">Discuss ({news.comment.toLocaleString()} comments)</Link></span>
                           </p>
                         </td>
                       </tr>

@@ -1,4 +1,4 @@
-/* 
+/*
     HOME
 */
 
@@ -128,10 +128,10 @@
 
 .home-page .img-col {
   width: 60px;
-  flex: none;
+  /* max-width: 60px; */
 }
 
-/* 
+/*
     ANIME
 */
 
@@ -344,9 +344,23 @@
   color: var(--primary);
 }
 
-.anime-page #preview-video {
+.anime-page #preview-video-area {
   padding-bottom: 10px;
   padding-left: 0px;
+}
+
+@media (max-width:992px) {
+  .anime-page #preview-video-area {
+    padding-top: 56.25%;
+  }
+  .anime-page #preview-video {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    padding: 0 15px 15px 15px;
+  }
 }
 
 .anime-page p {
@@ -459,7 +473,6 @@
 .anime-page #recommendation-area .react-multi-carousel-item .card {
   width: 90px;
   height: 140px;
-  /* object-fit: cover; */
   border: 1px solid var(--border-color);
   opacity: 1;
   transition: ease-in-out .3s;
@@ -499,6 +512,80 @@
   position: absolute;
   bottom: 110px;
   right: 0px;
-  background: rgba(0,0,0,.7);
+  background: rgba(0, 0, 0, .7);
   padding: 2px 5px;
+}
+
+.anime-page #recommendation-area #recommend-col {
+  padding-right: 0px;
+}
+
+.anime-page #recommendation-area #more-recommend-col {
+  max-width: 115px;
+  padding-left: 10px;
+}
+
+.anime-page #recommendation-area .more-recommend {
+  display: block;
+  background-color: var(--focus-border);
+  color: var(--dark);
+  text-align: center;
+  margin: auto;
+  transition: ease-in-out .3s;
+  line-height: 140px;
+  font-weight: bold;
+  font-size: 12px;
+  height: 140px;
+  max-width: 90px;
+  opacity: 1;
+  transition: ease-in-out .3s;
+}
+
+.anime-page #recommendation-area .more-recommend:hover {
+  opacity: 0.8;
+  transition: ease-in-out .3s;
+}
+
+@media (max-width:768px) {
+  .anime-page #recommendation-area #recommend-col {
+    padding-right: 15px;
+  }
+  .anime-page #recommendation-area #more-recommend-col {
+    max-width: initial;
+    padding-left: 15px;
+  }
+  .anime-page #recommendation-area .more-recommend {
+    max-width: 100%;
+    height: 50px;
+    line-height: 50px;
+    margin-top: 10px;
+  }
+}
+
+.anime-page #recommendation-area .more-recommend span {
+  line-height: 1.5;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.anime-page #recommendation-area .more-recommend span svg {
+  font-size: 16px;
+}
+
+.anime-page #news-area table td, .anime-page #article-area table td {
+  border: none;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.anime-page #news-area table td a, .anime-page #article-area table td a {
+  font-size: 11px;
+}
+
+.anime-page #news-area table td p, .anime-page #article-area table td p {
+  margin-bottom: 5px;
+}
+
+.anime-page #news-area .img-col, .anime-page #article-area .img-col {
+  width: 60px;
+  flex: none;
 }

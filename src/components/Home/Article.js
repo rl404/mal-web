@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col, Table, Image } from 'react-bootstrap';
-import { timeSince } from '../../utils/utils';
+import { timeSince, slugify } from '../../utils/utils';
 
 export default class Article extends React.Component {
   render() {
@@ -25,7 +25,7 @@ export default class Article extends React.Component {
             Featured Articles
           </Col>
           <Col md={3} xs={5} className="text-right">
-            <Link to='' className="view-more">
+            <Link to={{ pathname: `/articles` }} className="view-more">
               View More
             </Link>
           </Col>
@@ -39,15 +39,15 @@ export default class Article extends React.Component {
                     return (
                       <tr key={article.id} className="border-bottom-light">
                         <td className="img-col">
-                          <Link to="">
+                          <Link to={{ pathname: `/article/${article.id}/` + slugify(article.title) }}>
                             <Image src={article.image} alt={article.title} className="img-thumbnail" />
                           </Link>
                         </td>
                         <td className="content">
-                          <Link to="" className="font-weight-bold">{article.title}</Link>
+                          <Link to={{ pathname: `/article/${article.id}/` + slugify(article.title) }} className="font-weight-bold">{article.title}</Link>
                           <p>{article.summary}</p>
                           <p>
-                            <span className="blend-text">{timeSince(article.date)} by <Link to="">{article.username}</Link> | <span className="font-weight-bold">{article.view.toLocaleString()}</span> views {getBadge(article)}
+                            <span className="blend-text">{timeSince(article.date)} by <Link to={{ pathname: `/user/${article.username}` }}>{article.username}</Link> | <span className="font-weight-bold">{article.view.toLocaleString()}</span> views {getBadge(article)}
                             </span>
                           </p>
                         </td>

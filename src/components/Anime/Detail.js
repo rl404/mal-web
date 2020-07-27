@@ -4,10 +4,10 @@ import Breadcrumb from '../Common/Breadcrumb';
 import { Row, Col, Badge, ListGroup, Form, Table, Image, Card } from 'react-bootstrap';
 import { ellipsis } from '../../utils/utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle, faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
 import { faPlusSquare } from '@fortawesome/free-regular-svg-icons';
-import ReactPlayer from 'react-player';
-import { slugify, cleanKey, parseTime } from '../../utils/utils';
+import ReactPlayer from 'react-player/lazy';
+import { slugify, cleanKey, parseTime, timeSince } from '../../utils/utils';
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
@@ -68,6 +68,8 @@ export default class Detail extends React.Component {
         {characterStaff(data.staff, "Staff", true)}
         {song(data.song)}
         {review(data.reviews, this)}
+        {news(data.news)}
+        {article(data.featured)}
         {recommendation(data.recommendations)}
       </div>
     )
@@ -77,7 +79,7 @@ export default class Detail extends React.Component {
 const stats = (data) => {
   return (
     <Row>
-      <Col>
+      <Col lg={9} sm={12}>
         <Row className="stats-area no-margin">
           <Col md={2} className="text-center border-right no-padding">
             <Row>
@@ -169,12 +171,14 @@ const video = data => {
   }
 
   return (
-    <Col md={3} id="preview-video">
+    <Col lg={3} sm={12} id="preview-video-area">
       <ReactPlayer
+        id="preview-video"
         url={data}
         light
-        width={190}
-        height={100} />
+        controls
+        width="100%"
+        height="100%" />
     </Col>
   )
 }
@@ -504,7 +508,7 @@ const review = (data, ts) => {
                             </p>
                           </Col>
                           <Col className="text-right">
-                            <p>
+                            <p title={parseTime(review.date, "h:mm A")}>
                               {parseTime(review.date, "MMM D, YYYY")}
                             </p>
                             <p className="blend-text">
@@ -591,6 +595,127 @@ const reviewContent = (review, ts) => {
   )
 }
 
+const news = data => {
+  if (!data || data.length === 0) {
+    return (
+      <Row>
+        <Col>
+          <h2 className="title-border">Recent News</h2>
+        </Col>
+      </Row>
+    )
+  }
+
+  return (
+    <div id="news-area">
+      <Row>
+        <Col>
+          <h2 className="title-border">Recent News</h2>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Table responsive size="sm">
+            <tbody>
+              {
+                data.map(news => {
+                  return (
+                    <tr key={news.id}>
+                      <td className="img-col">
+                        <Link to="">
+                          <Image src={news.image} alt={news.title} className="img-thumbnail" />
+                        </Link>
+                      </td>
+                      <td className="content">
+                        <p>
+                          <Link to="" className="font-weight-bold">{news.title}</Link>
+                        </p>
+                        <p>
+                          {ellipsis(news.content, 250)}
+                          <Link to="">read more</Link>
+                        </p>
+                        <p>
+                          <span className="blend-text">{timeSince(news.date)} by <Link to="">{news.username}</Link> | <Link to="">Discuss ({news.comment.toLocaleString()} comments)</Link></span>
+                        </p>
+                      </td>
+                    </tr>
+                  )
+                })
+              }
+            </tbody>
+          </Table>
+        </Col>
+      </Row>
+    </div>
+  )
+}
+
+const article = data => {
+  if (!data || data.length === 0) {
+    return
+  }
+
+  return (
+    <div id="article-area">
+      <Row>
+        <Col>
+          <h2 className="title-border">Recent Featured Articles</h2>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Table responsive size="sm">
+            <tbody>
+              {
+                data.map(article => {
+                  return (
+                    <tr key={article.id} className="border-bottom-light">
+                      <td className="img-col">
+                        <Link to="">
+                          <Image src={article.image} alt={article.title} className="img-thumbnail" />
+                        </Link>
+                      </td>
+                      <td className="content">
+                        <Link to="" className="font-weight-bold">{article.title}</Link>
+                        <p>{article.summary}</p>
+                        <p>
+                          <span className="blend-text">{timeSince(article.date)} by <Link to="">{article.username}</Link> | <span className="font-weight-bold">{article.view.toLocaleString()}</span> views {getBadge(article)}
+                          </span>
+                        </p>
+                      </td>
+                    </tr>
+                  )
+                })
+              }
+            </tbody>
+          </Table>
+        </Col>
+      </Row>
+    </div>
+  )
+}
+
+const getBadge = (article) => {
+  if (article.is_spoiler && article.is_advertorial) {
+    return <span>
+      |
+      <span className="badge badge-pill badge-danger">Spoiler</span>
+      <span className="badge badge-pill badge-primary"> Advertorial</span>
+    </span>
+  }
+  if (article.is_spoiler) {
+    return <span>
+      | <span className="badge badge-pill badge-danger">Spoiler</span>
+    </span>
+  }
+  if (article.is_advertorial) {
+    return <span>
+      | <span className="badge badge-pill badge-primary"> Advertorial</span>
+    </span>
+  }
+  return ""
+}
+
 const recommendation = data => {
   if (!data || data.length === 0) {
     return
@@ -631,7 +756,7 @@ const recommendation = data => {
         </Col>
       </Row>
       <Row>
-        <Col>
+        <Col id="recommend-col">
           <Carousel responsive={responsive} infinite={true} partialVisible={true}>
             {
               data.map(anime => {
@@ -654,8 +779,13 @@ const recommendation = data => {
             }
           </Carousel>
         </Col>
-        <Col md={2} sm={12}>
-            boy
+        <Col md={2} sm={12} id="more-recommend-col">
+          <Link to="#" className="more-recommend">
+            <span>
+              <span>View All</span><br />
+              <FontAwesomeIcon icon={faChevronCircleRight} />
+            </span>
+          </Link>
         </Col>
       </Row>
     </div >

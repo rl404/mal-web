@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Table, Image } from 'react-bootstrap';
-import { slugify }from '../../utils/utils';
+import { slugify, params } from '../../utils/utils';
 
 export default class TopList extends React.Component {
   render() {
@@ -24,7 +24,12 @@ export default class TopList extends React.Component {
           <thead>
             <tr>
               <th colSpan={3}>{this.props.title}</th>
-              <th className="text-right"><Link to="">More</Link></th>
+              <th className="text-right">
+                <Link
+                  to={{ pathname: '/top/anime', search: params({"type": this.props.type}) }} >
+                  More
+                </Link>
+              </th>
             </tr>
           </thead>
           <tbody>

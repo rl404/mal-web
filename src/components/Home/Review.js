@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col, Table, Image } from 'react-bootstrap';
-import { timeSince, ellipsis } from '../../utils/utils';
+import { timeSince, ellipsis, slugify } from '../../utils/utils';
 
 export default class Review extends React.Component {
   render() {
@@ -25,7 +25,7 @@ export default class Review extends React.Component {
             Latest Anime Reviews
           </Col>
           <Col md={3} xs={5} className="text-right">
-            <Link to='' className="view-more">
+            <Link to="/reviews" className="view-more">
               View More
             </Link>
           </Col>
@@ -39,19 +39,19 @@ export default class Review extends React.Component {
                     return (
                       <tr key={review.id} className="border-bottom-light">
                         <td className="img-col">
-                          <Link to="">
+                          <Link to={{ pathname: `/anime/${review.source.id}/`+ slugify(review.source.title) }}>
                             <Image src={review.source.image} alt={review.source.title} className="img-thumbnail" />
                           </Link>
                         </td>
                         <td className="content">
-                          <Link to="" className="font-weight-bold">{review.source.title}</Link>  <span className="add"><Link to="">add</Link></span>
+                          <Link to={{ pathname: `/anime/${review.source.id}/`+ slugify(review.source.title) }} className="font-weight-bold">{review.source.title}</Link>  <span className="add"><Link to="">add</Link></span>
                           <span className="blend-text float-right">Overall Rating: {review.score.overall}</span>
                           <p>
                             {ellipsis(review.review, 350)}
-                            <Link to="">read more</Link>
+                            <Link to={{ pathname: `/review/${review.id}` }}>read more</Link>
                           </p>
                           <p>
-                            <span className="blend-text">{timeSince(review.date)} by <Link to="">{review.username}</Link></span>
+                            <span className="blend-text">{timeSince(review.date)} by <Link to={{ pathname: `/user/${review.username}` }}>{review.username}</Link></span>
                           </p>
                         </td>
                       </tr>

@@ -169,6 +169,7 @@ body {
 #footer {
     background: var(--primary);
     color: white;
+    margin-top: 10px;
 }
 
 #footer .list-group {

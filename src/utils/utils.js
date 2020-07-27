@@ -47,7 +47,12 @@ export function capitalize(string) {
 }
 
 export function timeSince(str) {
-    return moment(str).subtract(7, 'h').fromNow()
+    var yesterday = moment().subtract(1, 'days')
+    var d = moment(str).subtract(7, 'h')
+    if (d.diff(yesterday, 'days') >= 1) {
+        return moment(str).fromNow()
+    }
+    return d.format('MMM D, YYYY h:mm A')   
 }
 
 export function slugify(str) {
@@ -55,7 +60,8 @@ export function slugify(str) {
         .toString()
         .trim()
         .toLowerCase()
-        .replace(/[^a-zA-Z0-9]\s+/g,' ')
+        // .replace(/[^a-zA-Z0-9]\s+/g,' ')
+        .replace(/[^\w ]+/g,'')
         .replace(/\s+/g, "-")
 }
 
@@ -76,4 +82,8 @@ export function ellipsis(str, limit) {
 export function cleanKey(str) {
     str = str.replace(/_/g,' ')
     return str[0].toUpperCase() + str.slice(1)
+}
+
+export function params(params) {
+    return new URLSearchParams(params).toString()
 }

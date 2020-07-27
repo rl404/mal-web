@@ -85,9 +85,9 @@ class Home extends React.Component {
               <Recommendation data={recommendationData} />
             </Col>
             <Col md={4}>
-              <TopList title="Top Airing Anime" data={topAiringData} />
-              <TopList title="Top Upcoming Anime" data={topUpcomingData} />
-              <TopList title="Most Popular Anime" data={popularData} />
+              <TopList title="Top Airing Anime" data={topAiringData} type={AnimeTopType["airing"]} />
+              <TopList title="Top Upcoming Anime" data={topUpcomingData} type={AnimeTopType["upcoming"]}  />
+              <TopList title="Most Popular Anime" data={popularData} type={AnimeTopType["popular"]}  />
             </Col>
           </Row>
         </Container>

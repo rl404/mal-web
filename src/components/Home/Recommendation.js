@@ -25,7 +25,7 @@ export default class Recommendation extends React.Component {
             Latest Anime Recommendations
           </Col>
           <Col md={3} xs={5} className="text-right">
-            <Link to='' className="view-more">
+            <Link to="/recommendations" className="view-more">
               View More
             </Link>
           </Col>
@@ -40,40 +40,36 @@ export default class Recommendation extends React.Component {
                       <tr key={index} className="border-bottom-light">
                         <td>
                           <Row className="no-margin">
-                            <Col md={1} className="no-padding img-col">
+                            <Col xl={1} sm={2} xs={2} className="no-padding">
                               <Link to={{ pathname: `/anime/${recommendation.source.liked.id}/` + slugify(recommendation.source.liked.title) }}>
                                 <Image src={recommendation.source.liked.image} alt={recommendation.source.liked.title} className="img-thumbnail" />
                               </Link>
                             </Col>
-                            <Col md={5} className="content no-padding">
-                              <p>
-                                If you liked <br />
-                                <Link to={{ pathname: `/anime/${recommendation.source.liked.id}/` + slugify(recommendation.source.liked.title) }} className="font-weight-bold">{recommendation.source.liked.title}</Link><br />
-                                <span className="add"><Link to="">add</Link></span>
-                              </p>
+                            <Col xl={5} sm={4} xs={10} className="content no-padding">
+                              <p>If you liked</p>
+                              <p><Link to={{ pathname: `/anime/${recommendation.source.liked.id}/` + slugify(recommendation.source.liked.title) }} className="font-weight-bold">{recommendation.source.liked.title}</Link></p>
+                              <p><span className="add"><Link to="">add</Link></span></p>
                             </Col>
-                            <Col md={1} className="no-padding img-col">
+                            <Col xl={1} sm={2} xs={2} className="no-padding">
                               <Link to={{ pathname: `/anime/${recommendation.source.recommended.id}/` + slugify(recommendation.source.recommended.title) }}>
                                 <Image src={recommendation.source.recommended.image} alt={recommendation.source.recommended.title} className="img-thumbnail" />
                               </Link>
                             </Col>
-                            <Col md={5} className="content no-padding">
-                              <p>
-                                ...then you might like <br />
-                                <Link to={{ pathname: `/anime/${recommendation.source.recommended.id}/` + slugify(recommendation.source.recommended.title) }} className="font-weight-bold">{recommendation.source.recommended.title}</Link><br />
-                                <span className="add"><Link to="">add</Link></span>
-                              </p>
+                            <Col xl={5} sm={4} xs={10} className="content no-padding">
+                              <p>...then you might like</p>
+                              <p><Link to={{ pathname: `/anime/${recommendation.source.recommended.id}/` + slugify(recommendation.source.recommended.title) }} className="font-weight-bold">{recommendation.source.recommended.title}</Link></p>
+                              <p><span className="add"><Link to="">add</Link></span></p>
                             </Col>
                           </Row>
                           <Row className="content no-margin">
                             <p>
                               {ellipsis(recommendation.content, 200)}
-                              <Link to="">read more</Link>
+                              <Link to={{ pathname: `/recommendation/anime/${recommendation.source.liked.id}-${recommendation.source.recommended.id}` }}>read more</Link>
                             </p>
                           </Row>
                           <Row className="content no-margin">
                             <p className="blend-text">
-                              Anime rec by <Link to="">{recommendation.username}</Link> - {timeSince(recommendation.date)}
+                              Anime rec by <Link to={{ pathname: `/user/${recommendation.username}` }}>{recommendation.username}</Link> - {timeSince(recommendation.date)}
                             </p>
                           </Row>
                         </td>

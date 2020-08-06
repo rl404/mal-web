@@ -1,18 +1,56 @@
 {
-  "name": "learn-starter",
+  "name": "mal-web",
   "version": "0.1.0",
+  "description": "mal-web description",
+  "author": {
+    "name": "mal-web",
+    "url": "https://mal.rl404.com",
+    "github": "https://github.com/rl404/mal-web"
+  },
+  "contributors": [
+    {
+      "name": "rl404",
+      "url": "https://github.com/rl404"
+    }
+  ],
+  "homepage": ".",
+  "copyright": "Copyright 2020 Axel",
+  "license": "MIT",
   "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:rl404/mal-web.git"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
-    "fontsource-roboto": "^2.2.6",
-    "next": "9.3.5",
-    "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "fontsource-roboto": "^3.0.3",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-redux": "^7.2.1",
+    "react-router-dom": "^5.2.0",
+    "redux": "^4.0.5"
+  },
+  "devDependencies": {
+    "react-scripts": "^3.4.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 10",
+    "not op_mini all"
+  ],
+  "engines": {
+    "node": ">=10",
+    "npm": ">=6"
   }
 }

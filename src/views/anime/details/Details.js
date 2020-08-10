@@ -1,11 +1,11 @@
 import React from 'react'
 
-const NotFound = () => {
+const Details = () => {
   return (
     <>
-      404 
+      Details
     </>
   )
 }
 
-export default NotFound
+export default Details

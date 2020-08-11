@@ -9,28 +9,32 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: 160,
-    height: 220
+    width: 300,
+    height: 110
   },
   media: {
-    height: 220,
-    width: 160
+    width: 80,
+    height: 110
   },
   title: {
     display: 'block',
     position: 'absolute',
     width: 145,
-    bottom: 0,
+    height: 95,
+    top: 0,
+    left: 80,
     padding: theme.spacing(1),
-    background: 'rgba(0,0,0,0.7)',
-    color: theme.palette.primary.contrastText,
     '& span': {
       lineHeight: 1.2
     }
+  },
+  relation: {
+    position: 'absolute',
+    bottom: 8
   }
-}));
+}))
 
-const Entry = (props) => {
+const MiniEntry = (props) => {
   const classes = useStyles();
 
   return (
@@ -42,8 +46,11 @@ const Entry = (props) => {
           title={props.title}
         />
         <CardContent className={classes.title}>
-          <Typography variant="caption">
+          <Typography variant="subtitle2">
             {props.title}
+          </Typography>
+          <Typography variant="caption" className={classes.relation}>
+            {props.entryType} · {props.relation}
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -51,16 +58,4 @@ const Entry = (props) => {
   )
 }
 
-export default Entry
-
-export const EntryLoading = () => {
-  const classes = useStyles();
-
-  return (
-    <Card className={classes.root}>
-      <CardActionArea>
-        <Skeleton variant="rect" width={160} height={220} />
-      </CardActionArea>
-    </Card>
-  )
-}
+export default MiniEntry

@@ -36,7 +36,7 @@ const Seasonal = (props) => {
       if (result.status === cons.CODE_OK) {
         const cleanData = []
         result.data.forEach(d => {
-          if (d.type === 'TV' && isCurrentSeason(d.startDate)) {
+          if (d.type === cons.ANIME_TV && isCurrentSeason(d.airing.start)) {
             cleanData.push(d)
           }
         })
@@ -92,7 +92,7 @@ const Seasonal = (props) => {
                 entryId={anime.id}
                 entryType={cons.ANIME_TYPE}
                 title={anime.title}
-                image={anime.image}
+                image={anime.cover}
                 onClick={props.onClick}
               />
             </Grid>

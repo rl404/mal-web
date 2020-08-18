@@ -5,6 +5,7 @@ import Summary from '../../components/drawer/Summary'
 import TopList from './TopList'
 import * as cons from '../../constant'
 import Grid from '@material-ui/core/Grid';
+import Total from './Total'
 
 const Home = () => {
   SetTitle('Home')
@@ -17,6 +18,9 @@ const Home = () => {
 
   return (
     <Grid container spacing={1}>
+      <Grid item xs={12}>
+        <Total />
+      </Grid>
       <Grid item xs={12}>
         <Seasonal onClick={onClick} />
       </Grid>

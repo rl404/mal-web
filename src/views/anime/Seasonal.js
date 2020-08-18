@@ -252,7 +252,7 @@ const AnimeSeasonal = () => {
                           entryId={anime.id}
                           entryType={cons.ANIME_TYPE}
                           title={anime.title}
-                          image={anime.image}
+                          image={anime.cover}
                           onClick={onClick}
                         />
                       </Grid>

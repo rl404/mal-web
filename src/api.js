@@ -1,5 +1,9 @@
 const Host = process.env.REACT_APP_API_HOST
-const Host2 = process.env.REACT_APP_API_HOST2
+
+export async function getMainTotal() {
+    const result = await fetch(Host + `/summary/main-total`)
+    return result.json()
+}
 
 export async function getSeasonalAnime(season, year) {
     const result = await fetch(Host + `/season?season=` + season + `&year=` + year)
@@ -7,7 +11,7 @@ export async function getSeasonalAnime(season, year) {
 }
 
 export async function getEntryDetail(type, id) {
-    const result = await fetch(Host2 + `/` + type + `/` + id)
+    const result = await fetch(Host + `/` + type + `/` + id)
     return result.json()
 }
 

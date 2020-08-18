@@ -82,7 +82,7 @@ const TopList = (props) => {
                 entryId={anime.id}
                 entryType={cons.ANIME_TYPE}
                 title={anime.title}
-                image={anime.image}
+                image={anime.cover}
                 onClick={props.onClick}
               />
             </Grid>

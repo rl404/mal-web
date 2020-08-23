@@ -9,17 +9,17 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: 160,
-    height: 220
+    maxWidth: 160,
+    minWidth: 144,
+    margin: 'auto'
   },
   media: {
-    height: 220,
-    width: 160
+    height: 220
   },
   title: {
     display: 'block',
     position: 'absolute',
-    width: 145,
+    width: 144,
     bottom: 0,
     padding: theme.spacing(1),
     background: 'rgba(0,0,0,0.7)',
@@ -38,7 +38,7 @@ const Entry = (props) => {
       <CardActionArea onClick={() => props.onClick(props.entryId, props.entryType)}>
         <CardMedia
           className={classes.media}
-          image={props.image}
+          image={props.image === '' ? '/images/grey.png' : props.image}
           title={props.title}
         />
         <CardContent className={classes.title}>

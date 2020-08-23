@@ -2,56 +2,58 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: 300,
-    height: 110
+    backgroundImage: props => 'url(/images/white90.png), url(' + props.image + ')',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center center',
   },
-  media: {
-    width: 80,
-    height: 110
-  },
-  title: {
-    display: 'block',
-    position: 'absolute',
-    width: 145,
-    height: 95,
-    top: 0,
-    left: 80,
-    padding: theme.spacing(1),
-    '& span': {
-      lineHeight: 1.2
+  height: {
+    height: props => props.height,
+    textShadow: '2px 2px white',
+    '& h6': {
+      lineHeight: '1.2'
     }
   },
-  relation: {
-    position: 'absolute',
-    bottom: 8
-  }
+  media: {
+    width: '100%',
+    height: props => props.height,
+    objectFit: 'cover'
+  },
 }))
 
 const MiniEntry = (props) => {
-  const classes = useStyles();
+  const classes = useStyles(props);
 
   return (
     <Card className={classes.root}>
-      <CardActionArea onClick={() => props.onClick(props.entryId, props.entryType)}>
-        <CardMedia
-          className={classes.media}
-          image={props.image}
-          title={props.title}
-        />
-        <CardContent className={classes.title}>
-          <Typography variant="subtitle2">
-            {props.title}
-          </Typography>
-          <Typography variant="caption" className={classes.relation}>
-            {props.entryType} · {props.relation}
-          </Typography>
-        </CardContent>
+      <CardActionArea onClick={() => props.onClick(props.entryId, props.entryType)} className={classes.container}>
+        <Grid container spacing={1} className={classes.height}>
+          <Grid item xs={4}>
+            <img
+              className={classes.media}
+              src={props.image === '' ? '/images/grey.png' : props.image}
+              alt={props.title}
+            />
+          </Grid>
+          <Grid item xs container direction='column' spacing={1} justify="center" className={classes.height}>
+            <Grid item>
+              <Typography variant="subtitle1">
+                <b>{props.title}</b>
+              </Typography>
+            </Grid>
+            {!props.detail || props.detail.length === 0 ? null :
+              <Grid item>
+                <Typography variant="caption">
+                  {props.detail.map((d) => d).reduce((prev, curr) => [prev, ' · ', curr])}
+                </Typography>
+              </Grid>
+            }
+          </Grid>
+        </Grid>
       </CardActionArea>
     </Card>
   )

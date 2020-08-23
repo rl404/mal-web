@@ -47,27 +47,34 @@ const TopList = (props) => {
           <Skeleton variant="text" width={300} />
         </Typography>
         <Grid container spacing={1}>
-        {[0,1,2,3,4].map(i => {
-          return (
-            <Grid item key={i} xs>
-              <EntryLoading />
-            </Grid>
-          )
-        })}
-      </Grid>
+          {[0, 1, 2, 3, 4].map(i => {
+            return (
+              <Grid item key={i} xs>
+                <EntryLoading />
+              </Grid>
+            )
+          })}
+        </Grid>
       </>
     )
   }
 
   return (
     <>
-       <Grid container>
+      <Grid container>
         <Grid item xs>
-          <Typography variant="h6">
-          <b>{props.title}</b>
-          </Typography>
+          <Grid container direction="row" alignItems="center" spacing={1}>
+            <Grid item>
+              {props.icon}
+            </Grid>
+            <Grid item>
+              <Typography variant="h6">
+                <b>{props.title}</b>
+              </Typography>
+            </Grid>
+          </Grid>
         </Grid>
-        <Grid item className={classes.viewMore} xs>
+        <Grid item className={classes.viewMore}>
           <Link to=''>
             <Button size="small" color="primary">View more</Button>
           </Link>

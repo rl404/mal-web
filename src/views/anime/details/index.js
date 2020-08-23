@@ -1,30 +1,43 @@
 import React from 'react'
 import { getEntryDetail } from '../../../api'
 import * as cons from '../../../constant'
-import { SetTitle, capitalize, parseTime, timeToDuration, parseClock } from '../../../utils'
+import { SetTitle, capitalize } from '../../../utils'
 import { makeStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider'
 import Grid from '@material-ui/core/Grid';
-import Cover from '../../../components/image/Cover';
 import Typography from '@material-ui/core/Typography';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import { Link } from 'react-router-dom';
 import Chip from '@material-ui/core/Chip';
 import PropTypes from 'prop-types';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import PersonIcon from '@material-ui/icons/Person';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import EqualizerIcon from '@material-ui/icons/Equalizer';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import AssessmentIcon from '@material-ui/icons/Assessment';
 import Details from './Details';
+import Stats from '../../../components/card/Stats';
+import { Paper } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    width: '100%',
-    backgroundColor: theme.palette.background.paper,
-  },
   cover: {
-    textAlign: 'center'
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundImage: props => 'url(/images/white.png), url(' + props.cover + ')',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center center',
+    [theme.breakpoints.up('md')]: {
+      maxWidth: 260,
+      backgroundClip: 'padding-box',
+      borderTop: '6px solid transparent',
+      borderBottom: '2px solid transparent',
+      borderRight: '18px solid transparent',
+      borderLeft: '18px solid transparent'
+    },
   },
   divider: {
     marginBottom: theme.spacing(1)
@@ -41,12 +54,12 @@ const useStyles = makeStyles((theme) => ({
   genre: {
     margin: 2
   },
-  link: {
-    textDecoration: 'none',
-    color: 'black',
-    '&:hover': {
-      color: theme.palette.primary.main
-    }
+  stats: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+  },
+  tab: {
+    marginBottom: theme.spacing(2),
   }
 }));
 
@@ -124,12 +137,10 @@ const AnimeDetails = (props) => {
   return (
     <>
       <Grid container spacing={1}>
-        <Grid item md={3} xs={12} className={classes.cover}>
-          <div className={classes.cover}>
-            <Cover src={data.cover} alt={data.title} />
-          </div>
+        <Grid item xs={12} className={classes.cover}>
+          <img src={data.cover} alt={data.title} />
         </Grid>
-        <Grid item md={9} xs={12}>
+        <Grid item md xs={12}>
           <Typography variant="h6">
             <b>{data.title}</b>
             <Tooltip title="Alternative titles" placement="right">
@@ -153,172 +164,75 @@ const AnimeDetails = (props) => {
           <Typography variant="subtitle2" className={classes.synopsis}>
             {data.synopsis}
           </Typography>
-            {data.genres.map(genre => {
-              return (
-                <Chip size="small" label={genre.name} color="primary" key={genre.id} className={classes.genre} />
-              )
-            })}
+          {data.genres.map(genre => {
+            return (
+              <Chip size="small" label={genre.name} color="primary" key={genre.id} className={classes.genre} />
+            )
+          })}
         </Grid>
-        <Grid item xs={12} container spacing={1}>
+        <Grid item xs={12} container spacing={1} justify="center" className={classes.stats}>
           <Grid item xs>
-            <Typography variant="subtitle2" align="center" className={classes.categoryName}>
-              Rank
-              </Typography>
-            <Typography variant="h6" align="center">
-              <b>#{data.rank.toLocaleString()}</b>
-            </Typography>
-          </Grid>
-          <Grid item xs>
-            <Typography variant="subtitle2" align="center" className={classes.categoryName}>
-              Score
-          </Typography>
-            <Typography variant="h6" align="center">
-              <Tooltip title={data.voter.toLocaleString() + ' voters'}>
-                <b>{Number(data.score).toFixed(2)}</b>
-              </Tooltip>
-            </Typography>
+            <Stats
+              width={200}
+              icon={<EqualizerIcon />}
+              data={'#' + data.rank.toLocaleString()}
+              name='Rank'
+            />
           </Grid>
           <Grid item xs>
-            <Typography variant="subtitle2" align="center" className={classes.categoryName}>
-              Popularity
-          </Typography>
-            <Typography variant="h6" align="center">
-              <b>#{data.popularity.toLocaleString()}</b>
-            </Typography>
+            <Stats
+              width={200}
+              icon={<AssessmentIcon />}
+              data={
+                <Tooltip title={data.voter.toLocaleString() + ' voters'} placement="top">
+                  <b>{Number(data.score).toFixed(2)}</b>
+                </Tooltip>}
+              name='Score'
+            />
           </Grid>
           <Grid item xs>
-            <Typography variant="subtitle2" align="center" className={classes.categoryName}>
-              Members
-          </Typography>
-            <Typography variant="h6" align="center">
-              <b>{data.member.toLocaleString()}</b>
-            </Typography>
+            <Stats
+              width={200}
+              icon={<ThumbUpIcon />}
+              data={'#' + data.popularity.toLocaleString()}
+              name='Popularity'
+            />
           </Grid>
           <Grid item xs>
-            <Typography variant="subtitle2" align="center" className={classes.categoryName}>
-              Favorites
-          </Typography>
-            <Typography variant="h6" align="center">
-              <b>{data.favorite.toLocaleString()}</b>
-            </Typography>
+            <Stats
+              width={200}
+              icon={<PersonIcon />}
+              data={data.member.toLocaleString()}
+              name='Members'
+            />
           </Grid>
-        </Grid>
-        <Grid item md={2} xs={12} container spacing={1} className={classes.information}>
-          <Grid item xs={12}>
-            <Typography variant="subtitle1">
-              <b>Information</b>
-            </Typography>
-            <Divider />
-          </Grid>
-          <Grid item md={12} xs={3}>
-            <Typography variant="caption">
-              <b>Type</b><br />
-              {data.type}
-            </Typography>
-          </Grid>
-          <Grid item md={12} xs={3}>
-            <Typography variant="caption">
-              <b>Episodes</b><br />
-              {data.episode}
-            </Typography>
-          </Grid>
-          <Grid item md={12} xs={3}>
-            <Typography variant="caption">
-              <b>Status</b><br />
-              {data.status}
-            </Typography>
-          </Grid>
-          <Grid item md={12} xs={3}>
-            <Typography variant="caption">
-              <b>Start Date</b><br />
-              {parseTime(data.airing.start, "MMM D, YYYY") !== '' ? parseTime(data.airing.start, "MMM D, YYYY") : '?'}
-            </Typography>
-          </Grid>
-          {data.episode === 1 ? null : (
-            <Grid item md={12} xs={3}>
-              <Typography variant="caption">
-                <b>End Date</b><br />
-                {parseTime(data.airing.end, "MMM D, YYYY") !== '' ? parseTime(data.airing.end, "MMM D, YYYY") : '?'}
-              </Typography>
-            </Grid>
-          )}
-          {data.type !== cons.ANIME_TV ? null : (
-            <Grid item md={12} xs={3}>
-              <Typography variant="caption">
-                <b>Season</b><br />
-                {data.premiered === '' ? '?' : capitalize(data.premiered)}
-              </Typography>
-            </Grid>
-          )}
-          <Grid item md={12} xs={3}>
-            <Typography variant="caption">
-              <b>Duration</b><br />
-              {timeToDuration(data.duration)}
-            </Typography>
-          </Grid>
-          {data.type !== cons.ANIME_TV ? null : (
-            <Grid item md={12} xs={3}>
-              <Typography variant="caption">
-                <b>Broadcast</b><br />
-                {data.airing.day === '' ? '?' : capitalize(data.airing.day) + ' ' + parseClock(data.airing.time, 'HH:mm:ss').format('HH:mm')}
-              </Typography>
-            </Grid>
-          )}
-          <Grid item md={12} xs={3}>
-            <Typography variant="caption">
-              <b>Studios</b><br />
-              {!data.studios || data.studios.length === 0 ? '?' : data.studios
-                .map((p) => <Link to="" key={p.id} className={classes.link}>{p.name}</Link>)
-                .reduce((prev, curr) => [prev, <br />, curr])
-              }
-            </Typography>
-          </Grid>
-          <Grid item md={12} xs={3}>
-            <Typography variant="caption">
-              <b>Producers</b><br />
-              {!data.producers || data.producers.length === 0 ? '?' : data.producers
-                .map((p) => <Link to="" key={p.id} className={classes.link}>{p.name}</Link>)
-                .reduce((prev, curr) => [prev, <br />, curr])
-              }
-            </Typography>
-          </Grid>
-          <Grid item md={12} xs={3}>
-            <Typography variant="caption">
-              <b>Licensors</b><br />
-              {!data.licensors || data.licensors.length === 0 ? '?' : data.licensors
-                .map((p) => <Link to="" key={p.id} className={classes.link}>{p.name}</Link>)
-                .reduce((prev, curr) => [prev, <br />, curr])
-              }
-            </Typography>
-          </Grid>
-          <Grid item md={12} xs={3}>
-            <Typography variant="caption">
-              <b>Source</b><br />
-              {data.source}
-            </Typography>
-          </Grid>
-          <Grid item md={12} xs={3}>
-            <Typography variant="caption">
-              <b>Rating</b><br />
-              {data.rating}
-            </Typography>
+          <Grid item xs>
+            <Stats
+              width={200}
+              icon={<FavoriteIcon />}
+              data={data.favorite.toLocaleString()}
+              name='Favorites'
+            />
           </Grid>
         </Grid>
-        <Grid item md={10} xs={12}>
-          <Tabs
-            value={tabValue}
-            onChange={handleChange}
-            variant="fullWidth"
-            scrollButtons="on"
-            indicatorColor="primary"
-            textColor="primary"
-            centered
-          >
-            <Tab label="Details" {...a11yProps(0)} />
-            <Tab label="Stats" {...a11yProps(1)} />
-            <Tab label="Characters" {...a11yProps(2)} />
-            <Tab label="Staff" {...a11yProps(3)} />
-          </Tabs>
+        <Grid item xs={12} className={classes.tab}>
+          <Paper>
+            <Tabs
+              value={tabValue}
+              onChange={handleChange}
+              variant="fullWidth"
+              indicatorColor="primary"
+              textColor="primary"
+              centered
+            >
+              <Tab label="Details" {...a11yProps(0)} />
+              <Tab label="Stats" {...a11yProps(1)} />
+              <Tab label="Characters" {...a11yProps(2)} />
+              <Tab label="Staff" {...a11yProps(3)} />
+            </Tabs>
+          </Paper>
+        </Grid>
+        <Grid item xs={12}>
           <TabPanel value={tabValue} index={0}>
             <Details data={data} />
           </TabPanel>

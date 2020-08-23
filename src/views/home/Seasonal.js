@@ -1,7 +1,7 @@
 import React from 'react'
 import Grid from '@material-ui/core/Grid';
-import { getSeasonalAnime } from '../../api'
-import { getCurrentSeason, isCurrentSeason, capitalize } from '../../utils'
+import { getTopList } from '../../api'
+import { getCurrentSeason } from '../../utils'
 import Entry, { EntryLoading } from '../../components/card/Entry'
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider'
@@ -10,6 +10,7 @@ import Skeleton from '@material-ui/lab/Skeleton';
 import * as cons from '../../constant'
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom'
+import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 
 const useStyles = makeStyles((theme) => ({
   divider: {
@@ -32,15 +33,9 @@ const Seasonal = (props) => {
 
   React.useEffect(() => {
     const getData = async () => {
-      const result = await getSeasonalAnime(CurrentSeason, CurrentYear)
+      const result = await getTopList(cons.ANIME_TYPE, 0, 1, CurrentSeason, CurrentYear)
       if (result.status === cons.CODE_OK) {
-        const cleanData = []
-        result.data.forEach(d => {
-          if (d.type === cons.ANIME_TV && isCurrentSeason(d.airing.start)) {
-            cleanData.push(d)
-          }
-        })
-        setData(cleanData.slice(0, 5));
+        setData(result.data.slice(0, 5));
       } else {
         setError(result.message)
         console.error(error)
@@ -73,11 +68,18 @@ const Seasonal = (props) => {
     <>
       <Grid container>
         <Grid item xs>
-          <Typography variant="h6">
-            <b>Anime {capitalize(CurrentSeason)} {CurrentYear}</b>
-          </Typography>
+          <Grid container direction="row" alignItems="center" spacing={1}>
+            <Grid item>
+              <EventAvailableIcon />
+            </Grid>
+            <Grid item>
+              <Typography variant="h6">
+                <b>Top Current Season</b>
+              </Typography>
+            </Grid>
+          </Grid>
         </Grid>
-        <Grid item className={classes.viewMore} xs>
+        <Grid item className={classes.viewMore}>
           <Link to='/anime/seasonal'>
             <Button size="small" color="primary">View more</Button>
           </Link>

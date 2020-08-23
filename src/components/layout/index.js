@@ -4,6 +4,7 @@ import Sidebar from '../sidebar'
 import Content from './Content'
 
 import { makeStyles } from '@material-ui/core/styles';
+import { Container } from '@material-ui/core';
 
 const drawerWidth = 240;
 
@@ -32,7 +33,9 @@ const Layout = () => {
       <Sidebar dWidth={drawerWidth} mOpen={mobileOpen} mToggle={handleDrawerToggle} />
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Content />
+        <Container>
+          <Content />
+        </Container>
       </main>
     </div>
   )

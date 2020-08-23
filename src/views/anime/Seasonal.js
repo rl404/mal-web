@@ -14,6 +14,12 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
+import AcUnitIcon from '@material-ui/icons/AcUnit';
+import LocalFloristIcon from '@material-ui/icons/LocalFlorist';
+import BeachAccessIcon from '@material-ui/icons/BeachAccess';
+import EcoIcon from '@material-ui/icons/Eco';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 
 const useStyles = makeStyles((theme) => ({
   divider: {
@@ -126,6 +132,7 @@ const AnimeSeasonal = () => {
   const [loading, setLoading] = React.useState(true)
   const [error, setError] = React.useState('')
   const [tabValue, setTabValue] = React.useState(0);
+  const [hentai, setHentai] = React.useState(false)
   const [seasonYear, setSeasonYear] = React.useState({
     season: CurrentSeason,
     year: CurrentYear
@@ -143,6 +150,10 @@ const AnimeSeasonal = () => {
 
   const updateSeasonYear = (season, year) => {
     setSeasonYear({ season: season, year: year })
+  }
+
+  const toggleHentai = () => {
+    setHentai(!hentai)
   }
 
   React.useEffect(() => {
@@ -175,18 +186,23 @@ const AnimeSeasonal = () => {
   if (loading) {
     return (
       <>
-        <Typography variant="h5">
-          <Skeleton variant="text" width={300} height={40} />
-        </Typography>
+        <SeasonSelect onChange={updateSeasonYear} season={seasonYear.season} year={seasonYear.year} />
         <Divider className={classes.divider} />
         <Grid container spacing={1}>
-          <Grid item sm={2}>
+          <Grid item sm={2} className={classes.tabs}>
             <Skeleton height={40} />
             <Skeleton height={40} />
             <Skeleton height={40} />
             <Skeleton height={40} />
             <Skeleton height={40} />
           </Grid>
+          {[0, 1, 2, 3, 4].map(i => {
+            return (
+              <Grid item xs className={classes.tabsMobile} key={i}>
+                <Skeleton variant='rect' height={40} />
+              </Grid>
+            )
+          })}
           <Grid item sm>
             <Grid container spacing={1}>
               {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(i => {
@@ -205,7 +221,7 @@ const AnimeSeasonal = () => {
 
   return (
     <>
-      <SeasonSelect onChange={updateSeasonYear} season={seasonYear.season} year={seasonYear.year} />
+      <SeasonSelect onChange={updateSeasonYear} season={seasonYear.season} year={seasonYear.year} hentaiState={hentai} onCheck={toggleHentai} />
       <Divider className={classes.divider} />
       <Grid container spacing={1}>
         <Grid item xs={12} sm={2} className={classes.tabArea}>
@@ -228,9 +244,7 @@ const AnimeSeasonal = () => {
             onChange={handleChange}
             indicatorColor="primary"
             textColor="primary"
-            scrollButtons="auto"
             variant="fullWidth"
-            centered
             className={classes.tabsMobile}
           >
             {Object.keys(data).map((key, i) => {
@@ -246,8 +260,9 @@ const AnimeSeasonal = () => {
               <TabPanel value={tabValue} index={i} key={i}>
                 <Grid container spacing={1}>
                   {data[key].map(anime => {
+                    var isHentai = anime.rating.includes('Hentai')
                     return (
-                      <Grid item key={anime.id} xs>
+                      <Grid item key={anime.id} xs style={isHentai && !hentai ? { display: 'none' } : null}>
                         <Entry
                           entryId={anime.id}
                           entryType={cons.ANIME_TYPE}
@@ -284,29 +299,68 @@ const SeasonSelect = (props) => {
     }
   }
 
+  const [hentai] = React.useState(props.hentaiState)
+  const handleHentaiChange = (e) => {
+    props.onCheck(e.target.checked)
+  }
+
+  var icon = ''
+  switch (props.season) {
+    case cons.SEASON_WINTER:
+      icon = <AcUnitIcon />
+      break
+    case cons.SEASON_SPRING:
+      icon = <LocalFloristIcon />
+      break
+    case cons.SEASON_SUMMER:
+      icon = <BeachAccessIcon />
+      break
+    case cons.SEASON_FALL:
+      icon = <EcoIcon />
+      break
+    default:
+  }
+
   return (
-    <Typography variant="h6">
-      <b>
-        Anime
-          <TextField
-          select
-          value={props.season}
-          onChange={handleSeasonChange}
-          size="small"
-          className={classes.seasonInput}
-        >
-          {cons.SEASONS.map((s) => (
-            <MenuItem key={s} value={s}>
-              <b>{capitalize(s)}</b>
-            </MenuItem>
-          ))}
-        </TextField>
-        <TextField
-          defaultValue={props.year}
-          onChange={handleYearChange}
-          size="small"
-          className={classes.yearInput} />
-      </b>
-    </Typography>
+    <Grid container direction="row" alignItems="center" spacing={1}>
+      <Grid item>
+        {icon}
+      </Grid>
+      <Grid item xs>
+        <Typography variant="h6">
+          <b>
+            Anime
+            <TextField
+              select
+              value={props.season}
+              onChange={handleSeasonChange}
+              size="small"
+              className={classes.seasonInput}
+            >
+              {cons.SEASONS.map((s) => (
+                <MenuItem key={s} value={s}>
+                  <b>{capitalize(s)}</b>
+                </MenuItem>
+              ))}
+            </TextField>
+            <TextField
+              defaultValue={props.year}
+              onChange={handleYearChange}
+              size="small"
+              className={classes.yearInput} />
+          </b>
+        </Typography>
+      </Grid>
+      <Grid item>
+        <FormControlLabel
+          control={<Checkbox checked={hentai}
+            onChange={handleHentaiChange}
+            name="hentai"
+            color="primary" />}
+          label="R18+"
+        />
+      </Grid>
+    </Grid>
+
   )
 }

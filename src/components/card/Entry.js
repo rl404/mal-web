@@ -1,66 +1,89 @@
 import React from 'react'
-import Skeleton from '@material-ui/lab/Skeleton';
-import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+
+import PropTypes from 'prop-types';
+import * as cons from '../../constant';
+import { ellipsis } from '../../utils';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 160,
-    minWidth: 144,
-    margin: 'auto'
+    backgroundImage: props => `url(${theme.overlay.white}), url(${props.image})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center center',
+  },
+  height: {
+    height: props => props.height,
+  },
+  content: {
+    height: props => props.height,
+    textShadow: '2px 2px white',
+    '& h6': {
+      lineHeight: '1.2',
+    },
   },
   media: {
-    height: 220
+    width: '100%',
+    height: props => props.height,
+    objectFit: 'cover',
   },
-  title: {
-    display: 'block',
-    position: 'absolute',
-    width: 144,
-    bottom: 0,
-    padding: theme.spacing(1),
-    background: 'rgba(0,0,0,0.7)',
-    color: theme.palette.primary.contrastText,
-    '& span': {
-      lineHeight: 1.2
-    }
+}))
+
+const EntryCard = (props) => {
+  const classes = useStyles(props);
+  const theme = useTheme();
+
+  var imageURL = props.image;
+  if (!imageURL || imageURL === '') {
+    imageURL = theme.error.image;
   }
-}));
-
-const Entry = (props) => {
-  const classes = useStyles();
 
   return (
     <Card className={classes.root}>
-      <CardActionArea onClick={() => props.onClick(props.entryId, props.entryType)}>
-        <CardMedia
-          className={classes.media}
-          image={props.image === '' ? '/images/grey.png' : props.image}
-          title={props.title}
-        />
-        <CardContent className={classes.title}>
-          <Typography variant="caption">
-            {props.title}
-          </Typography>
-        </CardContent>
+      <CardActionArea onClick={() => props.onClick(props.type, props.id)}>
+        <Grid container spacing={1} className={classes.height}>
+          <Grid item xs={4}>
+            <img
+              className={classes.media}
+              src={imageURL}
+              alt={props.title}
+            />
+          </Grid>
+          <Grid item xs container direction='column' spacing={1} justify="center" className={classes.content}>
+            <Grid item>
+              <Typography variant="subtitle1">
+                <b>{ellipsis(props.title, 40)}</b>
+              </Typography>
+            </Grid>
+            {!props.detail || props.detail.length === 0 ? null :
+              <Grid item>
+                <Typography variant="caption">
+                  {props.detail.map((d) => d).reduce((prev, curr) => [prev, ' · ', curr])}
+                </Typography>
+              </Grid>
+            }
+          </Grid>
+        </Grid>
       </CardActionArea>
     </Card>
-  )
-}
+  );
+};
 
-export default Entry
+EntryCard.propTypes = {
+  id: PropTypes.number,
+  type: PropTypes.oneOf(cons.MAIN_TYPES),
+  image: PropTypes.string,
+  title: PropTypes.string.isRequired,
+  detail: PropTypes.arrayOf(PropTypes.string),
+  onClick: PropTypes.func,
+  height: PropTypes.number,
+};
 
-export const EntryLoading = () => {
-  const classes = useStyles();
+EntryCard.defaultProps = {
+  height: 130,
+};
 
-  return (
-    <Card className={classes.root}>
-      <CardActionArea>
-        <Skeleton variant="rect" width={160} height={220} />
-      </CardActionArea>
-    </Card>
-  )
-}
+export default EntryCard;

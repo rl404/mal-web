@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import TheatersIcon from '@material-ui/icons/Theaters';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import SearchIcon from '@material-ui/icons/Search';
@@ -14,7 +14,7 @@ export default [
         id: 1,
         name: 'Anime Search',
         icon: <SearchIcon />,
-        link: '/anime/2'
+        link: '/search/anime'
       },
       {
         id: 2,
@@ -33,8 +33,8 @@ export default [
         id: 1,
         name: 'Manga Search',
         icon: <SearchIcon />,
-        link: '/manga/search'
+        link: '/search/manga'
       }
     ]
   }
-]
+];

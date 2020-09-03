@@ -1,54 +1,66 @@
-import React from 'react'
-import { makeStyles } from '@material-ui/core/styles';
+import React from 'react';
 import Chip from '@material-ui/core/Chip';
+import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
   green: {
-    background: 'rgba(0,255,0,0.7)',
-    color: 'white'
+    background: '#00e676',
+    color: 'black',
+    boxShadow: theme.shadows[3],
   },
   blue: {
-    background: 'rgba(0,0,255,0.7)',
-    color: 'white'
+    background: '#2979ff',
+    color: 'white',
+    boxShadow: theme.shadows[3],
   },
   yellow: {
-    background: 'yellow'
+    background: '#ffea00',
+    color: 'black',
+    boxShadow: theme.shadows[3],
   },
   orange: {
-    background: 'orange'
+    background: '#ff9100',
+    color: 'black',
+    boxShadow: theme.shadows[3],
   },
   red: {
-    background: 'rgba(255,0,0,0.7)',
-    color: 'white'
-  }
-}))
+    background: '#ff1744',
+    color: 'white',
+    boxShadow: theme.shadows[3],
+  },
+}));
 
 const ScoreBadge = (props) => {
-  var score = props.score
+  const classes = useStyles();
+
+  var score = props.score;
   if (!!props.Score) {
-    score = 0
+    score = 0;
   }
 
   score = Number(score).toFixed(2);
 
-  const classes = useStyles();
-
-  var colorClass = ''
+  var colorClass = '';
   if (score >= 8) {
-    colorClass = classes.green
+    colorClass = classes.green;
   } else if (score < 8 && score >= 7) {
-    colorClass = classes.blue
+    colorClass = classes.blue;
   } else if (score < 7 && score >= 6) {
-    colorClass = classes.yellow
+    colorClass = classes.yellow;
   } else if (score < 6 && score >= 5) {
-    colorClass = classes.orange
+    colorClass = classes.orange;
   } else if (score < 5 && score > 0) {
-    colorClass = classes.red
+    colorClass = classes.red;
   }
 
   return (
     <Chip size="small" label={score} className={colorClass} />
-  )
-}
+  );
+};
 
-export default ScoreBadge
+ScoreBadge.propTypes = {
+  score: PropTypes.number.isRequired,
+};
+
+export default ScoreBadge;

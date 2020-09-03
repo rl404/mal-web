@@ -1,5 +1,8 @@
-import React from 'react'
-import { Card, CardContent, CardActionArea, Typography } from '@material-ui/core'
+import React from 'react';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -7,18 +10,18 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: props => props.width,
     margin: 'auto',
     '& svg': {
-      fontSize: '2.5rem'
+      fontSize: '2.5rem',
     },
     '& .MuiCardContent-root:last-child': {
-      paddingBottom: theme.spacing(2)
+      paddingBottom: theme.spacing(2),
     },
   },
   details: {
     display: 'flex',
-  }
-}))
+  },
+}));
 
-const Stats = (props) => {
+const StatsCard = (props) => {
   const classes = useStyles(props);
 
   return (
@@ -37,7 +40,7 @@ const Stats = (props) => {
         </CardContent>
       </CardActionArea>
     </Card>
-  )
-}
+  );
+};
 
-export default Stats
+export default StatsCard;

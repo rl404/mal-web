@@ -1,8 +1,9 @@
 import moment from 'moment';
-import * as cons from '../constant'
+import * as cons from '../constant';
 
-export function SetTitle(page) {
-    document.title = process.env.REACT_APP_APP_NAME + ' | ' + page
+export function setTitle(page) {
+    // document.title = process.env.REACT_APP_APP_NAME + ' | ' + page
+    document.title = page
 }
 
 export function getSeason(month) {
@@ -18,12 +19,12 @@ export function getSeason(month) {
 }
 
 export function getCurrentSeason() {
-    var d = new Date()
-    return getSeason(d.getMonth() + 1)
+    var d = new Date();
+    return getSeason(d.getMonth() + 1);
 }
 
 export function isCurrentSeason(date) {
-    var d = new Date(date)
+    var d = new Date(date);
     var month = d.getMonth() + 1;
     var year = d.getYear();
 
@@ -31,20 +32,20 @@ export function isCurrentSeason(date) {
     var season = getCurrentSeason();
 
     if (year !== currentYear) {
-        return false
+        return false;
     }
 
     if (season === cons.SEASON_WINTER) {
-        return month >= 1 && month < 4
+        return month >= 1 && month < 4;
     } else if (season === cons.SEASON_SPRING) {
-        return month >= 4 && month < 7
+        return month >= 4 && month < 7;
     } else if (season === cons.SEASON_SUMMER) {
-        return month >= 7 && month < 10
+        return month >= 7 && month < 10;
     } else if (season === cons.SEASON_FALL) {
-        return month >= 10
+        return month >= 10;
     }
 
-    return false
+    return false;
 }
 
 export function capitalize(string) {
@@ -52,7 +53,7 @@ export function capitalize(string) {
 }
 
 export function timeSince(str) {
-    return moment(str).subtract(7, 'h').fromNow()
+    return moment(str).subtract(7, 'h').fromNow();
 }
 
 export function slugify(str) {
@@ -61,34 +62,41 @@ export function slugify(str) {
         .trim()
         .toLowerCase()
         .replace(/[^a-zA-Z0-9]\s+/g, ' ')
-        .replace(/\s+/g, "-")
+        .replace(/\s+/g, "-");
 }
 
 export function parseTime(str, fmt) {
     if (moment(str).year() === 1) {
-        return ""
+        return '';
     }
     return moment(str).format(fmt);
 }
 
 export function parseClock(str, fmt) {
-    return moment(str, fmt)
+    return moment(str, fmt);
 }
 
 export function timeToDuration(str) {
-    var duration = ''
-    var s = str.split(':')
+    var duration = '';
+    var s = str.split(':');
     if (parseInt(s[0]) !== 0) {
-        duration += parseInt(s[0]) + ' hr. '
+        duration += parseInt(s[0]) + ' hr. ';
     }
     if (parseInt(s[1]) !== 0) {
-        duration += parseInt(s[1]) + ' min. '
+        duration += parseInt(s[1]) + ' min. ';
     }
     if (parseInt(s[2]) !== 0) {
-        duration += parseInt(s[2]) + ' sec. '
+        duration += parseInt(s[2]) + ' sec. ';
     }
     if (duration === '') {
-        duration = '?'
+        duration = '?';
     }
-    return duration
+    return duration;
+}
+
+export function ellipsis(str, limit) {
+    if (limit !== 0 && str.length > limit) {
+        return str.substring(0, limit) + '...';
+    }
+    return str;
 }

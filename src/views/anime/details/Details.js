@@ -1,74 +1,58 @@
-import React from 'react'
-import {
-  Grid,
-  Typography,
-  Divider,
-  Table,
-  TableBody,
-  TableCell,
-  TableRow
-} from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles';
-import MiniEntry from '../../../components/card/MiniEntry';
-import Summary from '../../../components/drawer/Summary'
-import { capitalize, parseTime, timeToDuration, parseClock } from '../../../utils'
-import { Link } from 'react-router-dom';
-import * as cons from '../../../constant'
+import React from 'react';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import MusicNoteIcon from '@material-ui/icons/MusicNote';
 import LinkIcon from '@material-ui/icons/Link';
+import PersonIcon from '@material-ui/icons/Person';
+import { makeStyles } from '@material-ui/core/styles';
+
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import * as cons from '../../../constant';
+import Staff from './Staff';
+import Statistics from './Stats';
+import Characters from './Characters';
+import { capitalize, parseTime, timeToDuration, parseClock } from '../../../utils';
+import StyledTitle from '../../../components/styled/Title';
+import EntryCard from '../../../components/card/Entry';
 
 const useStyles = makeStyles((theme) => ({
-  divider: {
-    marginBottom: theme.spacing(1)
-  },
   link: {
     textDecoration: 'none',
     color: 'black',
     '&:hover': {
-      color: theme.palette.primary.main
-    }
+      color: theme.palette.primary.main,
+    },
   },
   relation: {
-    height: 130
+    height: 130,
   },
   marginTop: {
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(2),
   },
   row: {
-    padding: theme.spacing(1)
-  }
+    padding: theme.spacing(1),
+  },
 }))
 
 const Details = (props) => {
-  const data = props.data
+  const data = props.data;
   const classes = useStyles();
-
-  const ref = React.useRef(null);
-
-  const onClick = (id, type) => {
-    ref.current.showSummary(id, type);
-  };
 
   return (
     <Grid container spacing={2}>
       <Grid item md={3} xs={12}>
-        <Grid container direction="row" alignItems="center" spacing={1}>
-          <Grid item>
-            <InfoOutlinedIcon size='small' />
-          </Grid>
-          <Grid item>
-            <Typography variant="h6">
-              <b>Information</b>
-            </Typography>
-          </Grid>
-        </Grid>
-        <Divider className={classes.divider} />
+        <StyledTitle icon={<InfoOutlinedIcon size='small' />} title='Information' />
         <Table size="small">
           <TableBody>
             <TableRow>
               <TableCell className={classes.row} align='right'>Type</TableCell>
-              <TableCell className={classes.row} align='left'>{data.type}</TableCell>
+              <TableCell className={classes.row} align='left'>{cons.ANIME_TYPES[data.type]}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell className={classes.row} align='right'>Episodes</TableCell>
@@ -76,7 +60,7 @@ const Details = (props) => {
             </TableRow>
             <TableRow>
               <TableCell className={classes.row} align='right'>Status</TableCell>
-              <TableCell className={classes.row} align='left'>{data.status}</TableCell>
+              <TableCell className={classes.row} align='left'>{cons.ANIME_STATUS[data.status]}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell className={classes.row} align='right'>Producers</TableCell>
@@ -131,93 +115,95 @@ const Details = (props) => {
             </TableRow>
             <TableRow>
               <TableCell className={classes.row} align='right'>Source</TableCell>
-              <TableCell className={classes.row} align='left'>{data.source}</TableCell>
+              <TableCell className={classes.row} align='left'>{cons.ANIME_SOURCES[data.source]}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell className={classes.row} align='right'>Rating</TableCell>
-              <TableCell className={classes.row} align='left'>{data.rating}</TableCell>
+              <TableCell className={classes.row} align='left'>{cons.ANIME_RATINGS[data.rating]}</TableCell>
             </TableRow>
           </TableBody>
         </Table>
       </Grid>
       <Grid item md xs={12} container>
+
         <Grid item xs={12}>
-          <Grid container direction="row" alignItems="center" spacing={1}>
-            <Grid item>
-              <LinkIcon />
-            </Grid>
-            <Grid item>
-              <Typography variant="h6">
-                <b>Relations</b>
-              </Typography>
-            </Grid>
-          </Grid>
-          <Divider className={classes.divider} />
+          <Statistics data={data} />
+        </Grid>
+
+        <Grid item xs={12} className={classes.marginTop}>
+          <StyledTitle icon={<LinkIcon />} title='Relations' />
           <Grid container spacing={1}>
-            {Object.keys(data.related).map(key => {
-              return data.related[key].map(r => {
-                return (
-                  <Grid item md={4} xs={6} key={r.id} className={classes.relation}>
-                    <MiniEntry
-                      entryId={r.id}
-                      entryType={r.type}
-                      title={r.name}
-                      image={r.image}
-                      onClick={onClick}
-                      height={130}
-                      detail={[r.type, key.replace('_', ' ')]}
-                    />
-                  </Grid>
-                )
-              })
-            })}
+            {!data.related ?
+              <Typography>
+                No related anime/manga found.
+              </Typography> :
+              Object.keys(data.related).map(key => {
+                return data.related[key].map(r => {
+                  return (
+                    <Grid item md={4} sm={6} xs={12} key={r.id}>
+                      <EntryCard
+                        id={r.id}
+                        type={r.mainType}
+                        title={r.title}
+                        image={r.cover}
+                        onClick={props.onClick}
+                        detail={[r.mainType, key.replace('_', ' ')]}
+                      />
+                    </Grid>
+                  )
+                })
+              })}
           </Grid>
-          <Summary ref={ref} />
         </Grid >
-        <Grid item md={6} xs={12} className={classes.marginTop}>
-          <Grid container direction="row" alignItems="center" spacing={1}>
-            <Grid item>
-              <MusicNoteIcon size='small' />
-            </Grid>
-            <Grid item>
-              <Typography variant="h6">
-                <b>Opening Theme</b>
-              </Typography>
-            </Grid>
-          </Grid>
-          <Divider className={classes.divider} />
-          {data.songs.opening.map((song, i) => {
-            return (
-              <Typography key={i}>
-                {song}
-              </Typography>
-            )
-          })}
+
+        <Grid item xs={12} className={classes.marginTop}>
+          <StyledTitle icon={<PersonIcon />} title='Characters' />
+          <Characters data={data} limit={6} onClick={props.onClick} />
         </Grid>
-        <Grid item md={6} xs={12} className={classes.marginTop}>
-          <Grid container direction="row" alignItems="center" spacing={1}>
-            <Grid item>
-              <MusicNoteIcon size='small' />
-            </Grid>
-            <Grid item>
-              <Typography variant="h6">
-                <b>Opening Theme</b>
-              </Typography>
-            </Grid>
-          </Grid>
-          <Divider className={classes.divider} />
-          {data.songs.ending.map((song, i) => {
-            return (
-              <Typography key={i}>
-                {song}
-              </Typography>
-            )
-          })}
+
+        <Grid item xs={12} className={classes.marginTop}>
+          <StyledTitle icon={<PersonIcon />} title='Staff' />
+          <Staff data={data} limit={6} onClick={props.onClick} />
         </Grid>
+
+        <Grid item md={6} xs={12} className={classes.marginTop}>
+          <StyledTitle icon={<MusicNoteIcon size='small' />} title='Opening Theme' />
+          {!data.songs.opening ?
+            <Typography>
+              No opening theme found.
+            </Typography> :
+            data.songs.opening.map((song, i) => {
+              return (
+                <Typography key={i}>
+                  {song}
+                </Typography>
+              )
+            })}
+        </Grid>
+
+        <Grid item md={6} xs={12} className={classes.marginTop}>
+          <StyledTitle icon={<MusicNoteIcon size='small' />} title='Closing Theme' />
+          {!data.songs.ending ?
+            <Typography>
+              No opening theme found.
+            </Typography> :
+            data.songs.ending.map((song, i) => {
+              return (
+                <Typography key={i}>
+                  {song}
+                </Typography>
+              )
+            })}
+        </Grid>
+
       </Grid>
-
     </Grid>
-  )
-}
+  );
+};
 
-export default Details
+Details.propTypes = {
+  data: PropTypes.object.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
+
+export default Details;

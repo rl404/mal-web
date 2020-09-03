@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
@@ -12,70 +12,64 @@ import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import navigation from './_nav'
+import PropTypes from 'prop-types';
+import navigation from './_nav';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  drawer: {
+    [theme.breakpoints.up('lg')]: {
+      width: theme.drawer.width,
+      flexShrink: 0,
+    },
+  },
+  // necessary for content to be below app bar
+  toolbar: theme.mixins.toolbar,
+  drawerPaper: {
+    width: theme.drawer.width,
+  },
+  logoArea: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    height: '100%'
+  },
+  nested: {
+    paddingLeft: theme.spacing(4),
+  },
+}));
 
 const Sidebar = (props) => {
-  const drawerWidth = props.dWidth;
-  const useStyles = makeStyles((theme) => ({
-    drawer: {
-      [theme.breakpoints.up('sm')]: {
-        width: drawerWidth,
-        flexShrink: 0,
-      },
-    },
-    // necessary for content to be below app bar
-    toolbar: theme.mixins.toolbar,
-    drawerPaper: {
-      width: drawerWidth,
-    },
-    logoArea: {
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      height: "100%"
-    },
-    nested: {
-      paddingLeft: theme.spacing(4),
-    },
-  }));
-
-  const { window } = props;
   const classes = useStyles();
-  const theme = useTheme();
-  const [state, setState] = React.useState([]);
 
-  const toggleOpen = (key) => {
-    setState({ ...state, [key]: !state[key] });
+  const [listState, setState] = React.useState([]);
+  const toggleList = (key) => {
+    setState({ ...listState, [key]: !listState[key] });
   };
 
   const drawer = (
     <>
       <div className={classes.toolbar}>
-        <Grid className={classes.logoArea} container justify="center" alignItems="center" >
-          <Link to="/">
-            <img src="/images/logo.png" alt="MyAnimeList" />
+        <Grid className={classes.logoArea} container justify='center' alignItems='center'>
+          <Link to='/'>
+            <img src='/images/logo.png' alt={process.env.REACT_APP_APP_NAME} />
           </Link>
         </Grid>
       </div>
       <Divider />
-      <List
-        component="nav"
-        aria-labelledby="nested-list-subheader"
-        className={classes.root}
-      >
+      <List component='nav'>
         {navigation.map((list) => {
           return (
             <div key={list.id}>
-              <ListItem button onClick={() => toggleOpen(list.name)}>
+              <ListItem button onClick={() => toggleList(list.name)}>
                 <ListItemIcon>
                   {list.icon}
                 </ListItemIcon>
                 <ListItemText primary={list.name} />
-                {state[list.name] ? <ExpandLess /> : <ExpandMore />}
+                {listState[list.name] ? <ExpandLess /> : <ExpandMore />}
               </ListItem>
-              <Collapse in={state[list.name]} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
+              <Collapse in={listState[list.name]} timeout='auto' unmountOnExit>
+                <List component='div' disablePadding>
                   {list.subItems.map((item) => {
                     return (
                       <ListItem button className={classes.nested} component={Link} to={item.link} key={item.id}>
@@ -84,7 +78,7 @@ const Sidebar = (props) => {
                         </ListItemIcon>
                         <ListItemText primary={item.name} />
                       </ListItem>
-                    )
+                    );
                   })}
                 </List>
               </Collapse>
@@ -95,18 +89,15 @@ const Sidebar = (props) => {
     </>
   );
 
-  const container = window !== undefined ? () => window().document.body : undefined;
-
   return (
-    <nav className={classes.drawer} aria-label="mailbox folders">
+    <nav className={classes.drawer}>
       {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-      <Hidden smUp implementation="css">
+      <Hidden lgUp implementation='css'>
         <Drawer
-          container={container}
-          variant="temporary"
-          anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-          open={props.mOpen}
-          onClose={props.mToggle}
+          variant='temporary'
+          anchor='left'
+          open={props.mobileState}
+          onClose={props.mobileToggle}
           classes={{
             paper: classes.drawerPaper,
           }}
@@ -117,19 +108,24 @@ const Sidebar = (props) => {
           {drawer}
         </Drawer>
       </Hidden>
-      <Hidden xsDown implementation="css">
+      <Hidden mdDown implementation='css'>
         <Drawer
           classes={{
             paper: classes.drawerPaper,
           }}
-          variant="permanent"
+          variant='permanent'
           open
         >
           {drawer}
         </Drawer>
       </Hidden>
     </nav>
-  )
+  );
 }
 
-export default React.memo(Sidebar)
+Sidebar.propTypes = {
+  mobileState: PropTypes.bool.isRequired,
+  mobileToggle: PropTypes.func.isRequired,
+};
+
+export default React.memo(Sidebar);

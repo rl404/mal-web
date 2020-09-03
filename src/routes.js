@@ -1,14 +1,20 @@
 import React from 'react';
 
-const Home = React.lazy(() => import('./views/home/Home'));
+const Home = React.lazy(() => import('./views/home'));
 const AnimeDetails = React.lazy(() => import('./views/anime/details'));
-const AnimeSeasonal = React.lazy(() => import('./views/anime/Seasonal'));
+const AnimeSeasonal = React.lazy(() => import('./views/anime/seasonal'));
+const MangaDetails = React.lazy(() => import('./views/manga/details'));
+const CharacterDetails = React.lazy(() => import('./views/character/details'));
+const PeopleDetails = React.lazy(() => import('./views/people/details'));
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/home', name: 'Home', component: Home },
   { path: '/anime/seasonal', exact: true, name: 'Anime Seasonal', component: AnimeSeasonal },
-  { path: '/anime/:id/:title?/:tab?', exact: true, name: 'Anime Details', component: AnimeDetails },
+  { path: '/anime/:id/:title?', exact: true, name: 'Anime Details', component: AnimeDetails },
+  { path: '/manga/:id/:title?', exact: true, name: 'Manga Details', component: MangaDetails },
+  { path: '/character/:id/:name?', exact: true, name: 'Character Details', component: CharacterDetails },
+  { path: '/people/:id/:name?', exact: true, name: 'People Details', component: PeopleDetails },
 ];
 
 export default routes;

@@ -1,4 +1,6 @@
-import React from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { useTheme } from '@material-ui/core/styles';
 import {
   Chart,
   ArgumentAxis,
@@ -13,6 +15,13 @@ import {
 } from '@devexpress/dx-react-chart';
 
 const LineChart = (props) => {
+  const theme = useTheme();
+
+  var barColor = props.color;
+  if (!barColor) {
+    barColor = theme.palette.primary.main;
+  }
+
   const [target, changeHover] = React.useState(null)
   const TooltipContent = (tooltipProps) => {
     const { targetItem, text, ...restProps } = tooltipProps;
@@ -20,7 +29,7 @@ const LineChart = (props) => {
       <div>
         <Tooltip.Content
           {...restProps}
-          text={parseFloat(props.data[targetItem.point].[props.valueField]).toFixed(2)}
+          text={parseFloat(props.data[targetItem.point].value).toFixed(2)}
         />
       </div>
     );
@@ -30,13 +39,13 @@ const LineChart = (props) => {
     <Chart data={props.data} height={props.height}>
       <ArgumentAxis />
       <ValueAxis />
-      <LineSeries
-        valueField={props.valueField}
-        argumentField={props.argumentField}
-        color={props.color}
-      />
       <Animation />
       <EventTracker />
+      <LineSeries
+        valueField='value'
+        argumentField='key'
+        color={barColor}
+      />
       <HoverState
         hover={target}
         onHoverChange={changeHover}
@@ -46,7 +55,22 @@ const LineChart = (props) => {
         contentComponent={TooltipContent}
       />
     </Chart>
-  )
-}
+  );
+};
 
-export default LineChart
+LineChart.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.string.isRequired,
+      value: PropTypes.number.isRequired,
+    })
+  ),
+  height: PropTypes.number,
+  color: PropTypes.string,
+};
+
+LineChart.defaultProps = {
+  height: 200,
+};
+
+export default LineChart;

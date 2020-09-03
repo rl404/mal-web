@@ -1,167 +1,106 @@
-import React from 'react'
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { getYearlyScore } from '../../api';
-import * as cons from '../../constant'
+import React from 'react';
 import Skeleton from '@material-ui/lab/Skeleton';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider'
 import BarChart from '../../components/chart/BarChart';
 import LineChart from '../../components/chart/LineChart';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import TimelineIcon from '@material-ui/icons/Timeline';
 
-const useStyles = makeStyles((theme) => ({
-  divider: {
-    marginBottom: theme.spacing(1)
-  },
-}))
+import { getYearlyScore } from '../../api';
+import * as cons from '../../constant';
+import ErrorArea from '../../components/error/Error';
+import StyledTitle from '../../components/styled/Title';
+import StyledTitleLoading from '../../components/styled/loading/Title';
 
 const YearChart = () => {
-  const classes = useStyles();
-  const theme = useTheme();
-
-  const [data, setData] = React.useState([])
-  const [loading, setLoading] = React.useState(true)
-  const [error, setError] = React.useState('')
+  const [state, setState] = React.useState({
+    data: null,
+    loading: true,
+    error: null,
+  });
 
   React.useEffect(() => {
-    const getData = async () => {
-      const result = await getYearlyScore()
-      if (result.status === cons.CODE_OK) {
-        setData(result.data);
-      } else {
-        setError(result.message)
-        console.error(error)
+    if (state.data === null && state.error === null) {
+      const getData = async () => {
+        const result = await getYearlyScore();
+        if (result.status === cons.CODE_OK) {
+          setState({ ...state, data: result.data, loading: false });
+        } else {
+          setState({ ...state, error: { code: result.status, message: result.message }, loading: false });
+        }
       }
-      setLoading(false)
+      getData();
     }
-    getData()
-  }, [error]);
-
-  if (loading) {
-    return (
-      <Grid container spacing={1}>
-        {[0, 1, 2, 3].map(key => {
-          return (
-            <Grid item md={6} xs={12} key={key}>
-              <Typography variant="h6">
-                <Skeleton variant="text" width={150} />
-              </Typography>
-              <Divider className={classes.divider} />
-              <Skeleton variant="rect" height={200} />
-            </Grid>
-          )
-        })}
-      </Grid>
-    )
-  }
+  });
 
   return (
+    <>
+      {!state ? null : state.loading ? <YearChartLoading /> :
+        state.error !== null ? <ErrorArea code={state.error.code} message={state.error.message} /> :
+          <Grid container spacing={1}>
+            <Grid item md={6} xs={12}>
+              <StyledTitle icon={<BarChartIcon />} title='Anime Count' />
+              <BarChart
+                data={Object.keys(state.data).map(k => {
+                  return {
+                    key: k,
+                    value: state.data[k].anime.count,
+                  }
+                }).slice(-10)}
+              />
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <StyledTitle icon={<BarChartIcon />} title='Manga Count' />
+              <BarChart
+                data={Object.keys(state.data).map(k => {
+                  return {
+                    key: k,
+                    value: state.data[k].manga.count,
+                  }
+                }).slice(-10)}
+              />
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <StyledTitle icon={<TimelineIcon />} title='Anime Score' />
+              <LineChart
+                data={Object.keys(state.data).map(k => {
+                  return {
+                    key: k,
+                    value: state.data[k].anime.avgScore,
+                  }
+                }).slice(-10)}
+              />
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <StyledTitle icon={<TimelineIcon />} title='Manga Score' />
+              <LineChart
+                data={Object.keys(state.data).map(k => {
+                  return {
+                    key: k,
+                    value: state.data[k].manga.avgScore,
+                  }
+                }).slice(-10)}
+              />
+            </Grid>
+          </Grid>
+      }
+    </>
+  );
+};
+
+export default YearChart;
+
+const YearChartLoading = () => {
+  return (
     <Grid container spacing={1}>
-      <Grid item md={6} xs={12} >
-        <Grid container direction="row" alignItems="center" spacing={1}>
-          <Grid item>
-            <BarChartIcon />
+      {[0, 1, 2, 3].map(key => {
+        return (
+          <Grid item md={6} xs={12} key={key}>
+            <StyledTitleLoading />
+            <Skeleton variant="rect" height={200} />
           </Grid>
-          <Grid item>
-            <Typography variant="h6">
-              <b>Anime Count</b>
-            </Typography>
-          </Grid>
-        </Grid>
-
-        <Divider className={classes.divider} />
-        <BarChart
-          data={Object.keys(data).map(key => {
-            return {
-              year: key,
-              count: data[key].anime.count,
-            }
-          }).slice(-10)}
-          height={200}
-          valueField="count"
-          argumentField="year"
-          color={theme.palette.primary.main}
-        />
-      </Grid>
-      <Grid item md={6} xs={12}>
-        <Grid container direction="row" alignItems="center" spacing={1}>
-          <Grid item>
-            <BarChartIcon />
-          </Grid>
-          <Grid item>
-            <Typography variant="h6">
-              <b>Manga Count</b>
-            </Typography>
-          </Grid>
-        </Grid>
-        <Divider className={classes.divider} />
-        <BarChart
-          data={Object.keys(data).map(key => {
-            return {
-              year: key,
-              count: data[key].manga.count,
-            }
-          }).slice(-10)}
-          height={200}
-          valueField="count"
-          argumentField="year"
-          color={theme.palette.primary.main}
-        />
-      </Grid>
-      <Grid item md={6} xs={12}>
-        <Grid container direction="row" alignItems="center" spacing={1}>
-          <Grid item>
-            <TimelineIcon />
-          </Grid>
-          <Grid item>
-            <Typography variant="h6">
-              <b>Anime Score</b>
-            </Typography>
-          </Grid>
-        </Grid>
-        <Divider className={classes.divider} />
-        <LineChart
-          data={Object.keys(data).map(key => {
-            return {
-              year: key,
-              score: data[key].anime.avgScore,
-            }
-          }).slice(-10)}
-          height={200}
-          valueField="score"
-          argumentField="year"
-          color={theme.palette.primary.main}
-        />
-      </Grid>
-      <Grid item md={6} xs={12}>
-        <Grid container direction="row" alignItems="center" spacing={1}>
-          <Grid item>
-            <TimelineIcon />
-          </Grid>
-          <Grid item>
-            <Typography variant="h6">
-              <b>Manga Score</b>
-            </Typography>
-          </Grid>
-        </Grid>
-        <Divider className={classes.divider} />
-        <LineChart
-          data={Object.keys(data).map(key => {
-            return {
-              year: key,
-              score: data[key].manga.avgScore,
-            }
-          }).slice(-10)}
-          height={200}
-          valueField="score"
-          argumentField="year"
-          color={theme.palette.primary.main}
-        />
-      </Grid>
+        )
+      })}
     </Grid>
-  )
-}
-
-export default YearChart
+  );
+};

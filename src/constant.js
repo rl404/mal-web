@@ -6,6 +6,7 @@ export const ANIME_TYPE = 'anime'
 export const MANGA_TYPE = 'manga'
 export const CHAR_TYPE = 'character'
 export const PEOPLE_TYPE = 'people'
+export const MAIN_TYPES = [ANIME_TYPE, MANGA_TYPE, CHAR_TYPE, PEOPLE_TYPE]
 
 // Anime top list types.
 export const ANIME_TOP_ALL = 0
@@ -31,14 +32,99 @@ export const ANIME_MOVIE = 'Movie'
 export const ANIME_SPECIAL = 'Special'
 export const ANIME_ONA = 'ONA'
 export const ANIME_MUSIC = 'Music'
-export const ANIME_TYPES = {
-  ANIME_TV_ID: ANIME_TV,
-  ANIME_OVA_ID: ANIME_OVA,
-  ANIME_MOVIE_ID: ANIME_MOVIE,
-  ANIME_SPECIAL_ID: ANIME_SPECIAL,
-  ANIME_ONA_ID: ANIME_ONA,
-  ANIME_MUSIC_ID: ANIME_MUSIC,
-}
+export const ANIME_TYPES = [
+  '?',
+  ANIME_TV,
+  ANIME_OVA,
+  ANIME_MOVIE,
+  ANIME_SPECIAL,
+  ANIME_ONA,
+  ANIME_MUSIC,
+]
+
+// Anime rating.
+export const ANIME_RATING_G_ID = 1
+export const ANIME_RATING_PG_ID = 2
+export const ANIME_RATING_PG13_ID = 3
+export const ANIME_RATING_R_ID = 4
+export const ANIME_RATING_RP_ID = 5
+export const ANIME_RATING_RX_ID = 6
+export const ANIME_RATING_G = 'G - All Ages'
+export const ANIME_RATING_PG = 'PG - Children'
+export const ANIME_RATING_PG13 = 'PG-13 - Teens 13 or Older'
+export const ANIME_RATING_R = 'R - 17+ (violence & profanity'
+export const ANIME_RATING_RP = 'R+ - Mild Nudity'
+export const ANIME_RATING_RX = 'Rx -  Hentai'
+export const ANIME_RATINGS = [
+  '?',
+  ANIME_RATING_G,
+  ANIME_RATING_PG,
+  ANIME_RATING_PG13,
+  ANIME_RATING_R,
+  ANIME_RATING_RP,
+  ANIME_RATING_RX,
+]
+
+// Anime status.
+export const ANIME_STATUS_AIRING_ID = 1
+export const ANIME_STATUS_FINISHED_ID = 2
+export const ANIME_STATUS_NOT_ID = 3
+export const ANIME_STATUS_AIRING = 'Currently Airing'
+export const ANIME_STATUS_FINISHED = 'Finished Airing'
+export const ANIME_STATUS_NOT = 'Not yet aired'
+export const ANIME_STATUS = [
+  '?',
+  ANIME_STATUS_AIRING,
+  ANIME_STATUS_FINISHED,
+  ANIME_STATUS_NOT,
+]
+
+// Anime source.
+export const ANIME_SOURCE_ORI_ID = 1
+export const ANIME_SOURCE_MANGA_ID = 2
+export const ANIME_SOURCE_4KOMA_ID = 3
+export const ANIME_SOURCE_WEB_ID = 4
+export const ANIME_SOURCE_DIGITAL_ID = 5
+export const ANIME_SOURCE_NOVEL_ID = 6
+export const ANIME_SOURCE_LIGHT_ID = 7
+export const ANIME_SOURCE_VISUAL_ID = 8
+export const ANIME_SOURCE_GAME_ID = 9
+export const ANIME_SOURCE_CARD_ID = 10
+export const ANIME_SOURCE_BOOK_ID = 11
+export const ANIME_SOURCE_PICTURE_ID = 12
+export const ANIME_SOURCE_RADIO_ID = 13
+export const ANIME_SOURCE_MUSIC_ID = 14
+export const ANIME_SOURCE_ORI = 'Original'
+export const ANIME_SOURCE_MANGA = 'Manga'
+export const ANIME_SOURCE_4KOMA = '4-koma Manga'
+export const ANIME_SOURCE_WEB = 'Web Manga'
+export const ANIME_SOURCE_DIGITAL = 'Digital Manga'
+export const ANIME_SOURCE_NOVEL = 'Novel'
+export const ANIME_SOURCE_LIGHT = 'Light Novel'
+export const ANIME_SOURCE_VISUAL = 'Visual Novel'
+export const ANIME_SOURCE_GAME = 'Game'
+export const ANIME_SOURCE_CARD = 'Card Game'
+export const ANIME_SOURCE_BOOK = 'Book'
+export const ANIME_SOURCE_PICTURE = 'Picture Book'
+export const ANIME_SOURCE_RADIO = 'Radio'
+export const ANIME_SOURCE_MUSIC = 'Music'
+export const ANIME_SOURCES = [
+  '?',
+  ANIME_SOURCE_ORI,
+  ANIME_SOURCE_MANGA,
+  ANIME_SOURCE_4KOMA,
+  ANIME_SOURCE_WEB,
+  ANIME_SOURCE_DIGITAL,
+  ANIME_SOURCE_NOVEL,
+  ANIME_SOURCE_LIGHT,
+  ANIME_SOURCE_VISUAL,
+  ANIME_SOURCE_GAME,
+  ANIME_SOURCE_CARD,
+  ANIME_SOURCE_BOOK,
+  ANIME_SOURCE_PICTURE,
+  ANIME_SOURCE_RADIO,
+  ANIME_SOURCE_MUSIC,
+]
 
 // Anime season.
 export const SEASON_WINTER = 'winter'
@@ -62,12 +148,33 @@ export const MANGA_DOUJINSHI = 'Doujinshi'
 export const MANGA_MANHWA = 'Manhwa'
 export const MANGA_MANHUA = 'Manhua'
 export const MANGA_OEL = 'OEL'
-export const MANGA_TYPES = {
-  MANGA_MANGA_ID: MANGA_MANGA,
-  MANGA_NOVEL_ID: MANGA_NOVEL,
-  MANGA_ONESHOT_ID: MANGA_ONESHOT,
-  MANGA_DOUJINSHI_ID: MANGA_DOUJINSHI,
-  MANGA_MANHWA_ID: MANGA_MANHWA,
-  MANGA_MANHUA_ID: MANGA_MANHUA,
-  MANGA_OEL_ID: MANGA_OEL,
-}
+export const MANGA_TYPES = [
+  '?',
+  MANGA_MANGA,
+  MANGA_NOVEL,
+  MANGA_ONESHOT,
+  MANGA_DOUJINSHI,
+  MANGA_MANHWA,
+  MANGA_MANHUA,
+  MANGA_OEL,
+]
+
+// Manga status.
+export const MANGA_STATUS_PUBLISHING_ID = 1
+export const MANGA_STATUS_FINISHED_ID = 2
+export const MANGA_STATUS_NOT_ID = 3
+export const MANGA_STATUS_HIATUS_ID = 4
+export const MANGA_STATUS_DISCONTINUED_ID = 5
+export const MANGA_STATUS_PUBLISHING = 'Publishing'
+export const MANGA_STATUS_FINISHED = 'Finished'
+export const MANGA_STATUS_NOT = 'Not yet published'
+export const MANGA_STATUS_HIATUS = 'On Hiatus'
+export const MANGA_STATUS_DISCONTINUED = 'Discontinued'
+export const MANGA_STATUS = [
+  '?',
+  MANGA_STATUS_PUBLISHING,
+  MANGA_STATUS_FINISHED,
+  MANGA_STATUS_NOT,
+  MANGA_STATUS_HIATUS,
+  MANGA_STATUS_DISCONTINUED,
+]

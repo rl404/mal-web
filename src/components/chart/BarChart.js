@@ -1,4 +1,6 @@
-import React from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { useTheme } from '@material-ui/core/styles';
 import {
   Chart,
   ArgumentAxis,
@@ -13,14 +15,21 @@ import {
 } from '@devexpress/dx-react-chart';
 
 const BarChart = (props) => {
-  const [target, changeHover] = React.useState(null)
-  const TooltipContent = (tooltipProps) => {
+  const theme = useTheme();
+
+  var barColor = props.color;
+  if (!barColor) {
+    barColor = theme.palette.primary.main;
+  }
+
+  const [target, changeHover] = React.useState(null);
+  const tooltipContent = (tooltipProps) => {
     const { targetItem, text, ...restProps } = tooltipProps;
     return (
       <div>
         <Tooltip.Content
           {...restProps}
-          text={parseInt(props.data[targetItem.point].[props.valueField]).toLocaleString()}
+          text={parseInt(props.data[targetItem.point].value).toLocaleString()}
         />
       </div>
     );
@@ -30,23 +39,38 @@ const BarChart = (props) => {
     <Chart data={props.data} height={props.height}>
       <ArgumentAxis />
       <ValueAxis />
-      <BarSeries
-        valueField={props.valueField}
-        argumentField={props.argumentField}
-        color={props.color}
-      />
       <Animation />
       <EventTracker />
+      <BarSeries
+        valueField='value'
+        argumentField='key'
+        color={barColor}
+      />
       <HoverState
         hover={target}
         onHoverChange={changeHover}
       />
       <Tooltip
         targetItem={target}
-        contentComponent={TooltipContent}
+        contentComponent={tooltipContent}
       />
     </Chart>
-  )
-}
+  );
+};
 
-export default BarChart
+BarChart.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.string.isRequired,
+      value: PropTypes.number.isRequired,
+    })
+  ),
+  height: PropTypes.number,
+  color: PropTypes.string,
+};
+
+BarChart.defaultProps = {
+  height: 200,
+};
+
+export default BarChart;

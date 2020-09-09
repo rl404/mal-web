@@ -6,17 +6,17 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import Skeleton from '@material-ui/lab/Skeleton';
-import TheatersIcon from '@material-ui/icons/Theaters';
-import MenuBookIcon from '@material-ui/icons/MenuBook';
-import PersonIcon from '@material-ui/icons/Person';
-import EntryCard from '../../../components/card/Entry';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Paper from '@material-ui/core/Paper';
 
 import PropTypes from 'prop-types';
 import { getEntryDetail } from '../../../api';
 import * as cons from '../../../constant';
+import Ography from './Ography';
+import VoiceActor from './VoiceActor';
 import StyledDivider from '../../../components/styled/Divider';
 import EllipsisText from '../../../components/text/EllipsisText';
-import StyledTitle from '../../../components/styled/Title';
 import ErrorArea from '../../../components/error/Error';
 
 const useStyles = makeStyles((theme) => ({
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
       borderTop: '6px solid transparent',
       borderBottom: '2px solid transparent',
       borderRight: '18px solid transparent',
-      borderLeft: '18px solid transparent'
+      borderLeft: '18px solid transparent',
     },
   },
   loadingCover: {
@@ -42,40 +42,44 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     [theme.breakpoints.up('md')]: {
       maxWidth: 260,
-    }
+    },
   },
   altTitle: {
     color: theme.palette.grey[500],
     '& span': {
-      fontWeight: 'bold'
-    }
+      fontWeight: 'bold',
+    },
   },
   favorite: {
-    marginTop: 5
+    marginTop: 5,
   },
   synopsis: {
-    whiteSpace: 'pre-wrap'
+    whiteSpace: 'pre-wrap',
   },
   marginTop: {
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(2),
   },
-  relation: {
-    height: 130
+  tab: {
+    marginBottom: theme.spacing(2),
   },
 }));
 
 const CharacterDetails = (props) => {
+  const idRef = React.useRef('');
   const [state, setState] = React.useState({
     data: null,
     loading: true,
     altTitle: false,
+    tabValue: 0,
     error: null,
   });
 
   const classes = useStyles(!state.data ? [] : state.data);
 
   React.useEffect(() => {
-    if (state.data === null && state.error === null) {
+    if ((state.data === null && state.error === null) || idRef.current !== props.match.params.id) {
+      idRef.current = props.match.params.id;
+
       const getData = async () => {
         const result = await getEntryDetail(cons.CHAR_TYPE, props.match.params.id)
         if (result.status === cons.CODE_OK) {
@@ -90,6 +94,10 @@ const CharacterDetails = (props) => {
 
   const toggleAlt = () => {
     setState({ ...state, altTitle: !state.altTitle });
+  };
+
+  const changeTab = (event, newValue) => {
+    setState({ ...state, tabValue: newValue });
   };
 
   return (
@@ -140,73 +148,33 @@ const CharacterDetails = (props) => {
               </Typography>
             </Grid>
 
-            <Grid item xs={12}>
-              <StyledTitle icon={<TheatersIcon size='small' />} title='Animeography' />
-              <Grid container spacing={1}>
-                {!state.data.animeography ?
-                  <Typography>
-                    No related anime found.
-                  </Typography> :
-                  state.data.animeography.map(anime => {
-                    return (
-                      <Grid item lg={3} md={4} xs={6} key={anime.id}>
-                        <EntryCard
-                          id={anime.id}
-                          type={cons.ANIME_TYPE}
-                          title={anime.title}
-                          image={anime.cover}
-                          onClick={props.showEntryDrawer}
-                        />
-                      </Grid>
-                    )
-                  })}
-              </Grid>
+            <Grid item xs={12} className={classes.tab}>
+              <Paper>
+                <Tabs
+                  value={state.tabValue}
+                  onChange={changeTab}
+                  variant='fullWidth'
+                  indicatorColor='primary'
+                  textColor='primary'
+                  centered
+                >
+                  <Tab label='Animeography' {...a11yProps(0)} />
+                  <Tab label='Mangaography' {...a11yProps(1)} />
+                  <Tab label='Voice Actors' {...a11yProps(2)} />
+                </Tabs>
+              </Paper>
             </Grid>
 
-            <Grid item xs={12} className={classes.marginTop}>
-              <StyledTitle icon={<MenuBookIcon size='small' />} title='Mangaography' />
-              <Grid container spacing={1}>
-                {!state.data.mangaography ?
-                  <Typography>
-                    No related manga found.
-                  </Typography> :
-                  state.data.mangaography.map(manga => {
-                    return (
-                      <Grid item lg={3} md={4} xs={6} key={manga.id}>
-                        <EntryCard
-                          id={manga.id}
-                          type={cons.MANGA_TYPE}
-                          title={manga.title}
-                          image={manga.cover}
-                          onClick={props.showEntryDrawer}
-                        />
-                      </Grid>
-                    )
-                  })}
-              </Grid>
-            </Grid>
-            <Grid item xs={12} className={classes.marginTop}>
-              <StyledTitle icon={<PersonIcon size='small' />} title='Voice Actors' />
-              <Grid container spacing={1}>
-                {!state.data.voiceActors ?
-                  <Typography>
-                    No related voice actor found.
-                  </Typography> :
-                  state.data.voiceActors.map(va => {
-                    return (
-                      <Grid item lg={3} md={4} xs={6} key={va.id}>
-                        <EntryCard
-                          id={va.id}
-                          type={cons.PEOPLE_TYPE}
-                          title={va.name}
-                          image={va.image}
-                          onClick={props.showEntryDrawer}
-                          detail={[va.role]}
-                        />
-                      </Grid>
-                    )
-                  })}
-              </Grid>
+            <Grid item xs={12}>
+              <TabPanel value={state.tabValue} index={0}>
+                <Ography type={cons.ANIME_TYPE} data={state.data} onClick={props.showEntryDrawer} />
+              </TabPanel>
+              <TabPanel value={state.tabValue} index={1}>
+                <Ography type={cons.MANGA_TYPE} data={state.data} onClick={props.showEntryDrawer} />
+              </TabPanel>
+              <TabPanel value={state.tabValue} index={2}>
+                <VoiceActor data={state.data} onClick={props.showEntryDrawer} />
+              </TabPanel>
             </Grid>
           </Grid>
       }
@@ -220,65 +188,55 @@ CharacterDetails.propTypes = {
 
 export default CharacterDetails;
 
+const TabPanel = (props) => {
+  const { children, value, index, ...other } = props;
+  return (
+    <div
+      role='tabpanel'
+      hidden={value !== index}
+      id={`character-tabpanel-${index}`}
+      aria-labelledby={`character-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <>{children}</>
+      )}
+    </div>
+  );
+};
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired,
+};
+
+const a11yProps = (index) => {
+  return {
+    id: `character-tab-${index}`,
+    'aria-controls': `character-tabpanel-${index}`,
+  };
+};
+
 const CharacterDetailsLoading = () => {
   const classes = useStyles();
 
   return (
-    <>
-      <Grid container spacing={1}>
-        <Grid item xs={12} className={classes.loadingCover}>
-          <Skeleton variant='rect' height={300} width={200} />
-        </Grid>
-        <Grid item md xs={12}>
-          <Skeleton height={40} width={500} />
-          <StyledDivider />
-          <Skeleton height={30} />
-          <Skeleton height={30} />
-          <Skeleton height={30} />
-          <Skeleton height={30} width={200} />
-        </Grid>
+    <Grid container spacing={1}>
+      <Grid item xs={12} className={classes.loadingCover}>
+        <Skeleton variant='rect' height={300} width={200} />
       </Grid>
-      <Grid container spacing={1}>
-        <Grid item xs={12} container spacing={1}>
-          <Skeleton height={40} width={150} />
-          <StyledDivider />
-          <Grid container spacing={1}>
-            {[0, 1, 2, 3].map(i => {
-              return (
-                <Grid item lg={3} md={4} xs={6} key={i}>
-                  <Skeleton variant='rect' height={130} />
-                </Grid>
-              )
-            })}
-          </Grid>
-        </Grid>
-        <Grid item xs={12} container spacing={1}>
-          <Skeleton height={40} width={150} />
-          <StyledDivider />
-          <Grid container spacing={1}>
-            {[0, 1, 2, 3].map(i => {
-              return (
-                <Grid item lg={3} md={4} xs={6} key={i}>
-                  <Skeleton variant='rect' height={130} />
-                </Grid>
-              )
-            })}
-          </Grid>
-        </Grid>
-        <Grid item xs={12} container spacing={1}>
-          <Skeleton height={40} width={150} />
-          <StyledDivider />
-          <Grid container spacing={1}>
-            {[0, 1, 2, 3].map(i => {
-              return (
-                <Grid item lg={3} md={4} xs={6} key={i}>
-                  <Skeleton variant='rect' height={130} />
-                </Grid>
-              )
-            })}
-          </Grid>
-        </Grid>
+      <Grid item md xs={12}>
+        <Skeleton height={40} width={500} />
+        <StyledDivider />
+        <Skeleton height={30} />
+        <Skeleton height={30} />
+        <Skeleton height={30} />
+        <Skeleton height={30} width={200} />
       </Grid>
-    </>
+      <Grid item xs={12}>
+        <Skeleton variant='rect' height={40} />
+      </Grid>
+    </Grid>
   );
 };

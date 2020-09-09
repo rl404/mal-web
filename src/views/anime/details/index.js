@@ -75,6 +75,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AnimeDetails = (props) => {
+  const idRef = React.useRef('');
   const [state, setState] = React.useState({
     id: 0,
     data: null,
@@ -87,7 +88,9 @@ const AnimeDetails = (props) => {
   var classes = useStyles(!state.data ? [] : state.data);
 
   React.useEffect(() => {
-    if (state.data === null && state.error === null) {
+    if ((state.data === null && state.error === null) || idRef.current !== props.match.params.id) {
+      idRef.current = props.match.params.id;
+
       const getData = async () => {
         const result = await getEntryDetail(cons.ANIME_TYPE, props.match.params.id);
         if (result.status === cons.CODE_OK) {

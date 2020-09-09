@@ -26,11 +26,11 @@ const Statistics = (props) => {
         if (result.status === cons.CODE_OK) {
           var d = result.data;
           d.orderedSummary = {
-            'Watching': d.summary.watching,
+            'Watching': d.summary.current,
             'Completed': d.summary.completed,
-            'On-hold': d.summary.["on-hold"],
+            'On-hold': d.summary.onHold,
             'Dropped': d.summary.dropped,
-            'Plan to watch': d.summary.plan_to_watch,
+            'Plan to watch': d.summary.planned,
           };
           setState({ ...state, data: d, loading: false });
         } else {

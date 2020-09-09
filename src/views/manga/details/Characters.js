@@ -23,11 +23,7 @@ const Characters = (props) => {
       const getData = async () => {
         const result = await getEntryCharacters(cons.MANGA_TYPE, data.id)
         if (result.status === cons.CODE_OK) {
-          var d = result.data;
-          if (d !== null) {
-            d = d.slice(0, props.limit);
-          }
-          setState({ ...state, data: d, loading: false });
+          setState({ ...state, data: result.data.slice(0, props.limit), loading: false });
         } else {
           setState({ ...state, error: { code: result.status, message: result.message }, loading: false });
         }
@@ -41,7 +37,7 @@ const Characters = (props) => {
       {!state ? null : state.loading ? <CharactersLoading /> :
         state.error !== null ? <ErrorArea code={state.error.code} message={state.error.message} /> :
           <Grid container spacing={1}>
-            {!state.data ?
+            {!state.data || state.data.length === 0 ?
               <Typography>
                 No related character found.
               </Typography> :
@@ -79,7 +75,7 @@ const CharactersLoading = () => {
       {[0, 1, 2, 3, 4, 5].map(i => {
         return (
           <Grid item lg={4} md={6} xs={12} key={i}>
-            <Skeleton variant='rect' height={100} />
+            <Skeleton variant='rect' height={130} />
           </Grid>
         )
       })}

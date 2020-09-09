@@ -34,6 +34,21 @@ export async function getEntryStaff(type, id) {
     return result.json()
 }
 
+export async function getEntryAnime(type, id) {
+    const result = await fetch(`${Host}/${type}/${id}/anime`)
+    return result.json()
+}
+
+export async function getEntryManga(type, id) {
+    const result = await fetch(`${Host}/${type}/${id}/manga`)
+    return result.json()
+}
+
+export async function getEntryVA(type, id) {
+    const result = await fetch(`${Host}/${type}/${id}/va`)
+    return result.json()
+}
+
 // Seasonal anime endpoints.
 
 export async function getSeasonalAnime(season, year) {

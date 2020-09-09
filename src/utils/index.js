@@ -62,7 +62,15 @@ export function slugify(str) {
         .trim()
         .toLowerCase()
         .replace(/[^a-zA-Z0-9]\s+/g, ' ')
+        .replace(/\//g, "-")
         .replace(/\s+/g, "-");
+}
+
+export function splitCamel(str) {
+    return str.split(/([A-Z][a-z]+)/)
+        .filter(function (e) { return e })
+        .map(s => s.toLowerCase())
+        .join(' ');
 }
 
 export function parseTime(str, fmt) {

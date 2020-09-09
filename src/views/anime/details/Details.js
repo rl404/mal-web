@@ -17,7 +17,7 @@ import * as cons from '../../../constant';
 import Staff from './Staff';
 import Statistics from './Stats';
 import Characters from './Characters';
-import { capitalize, parseTime, timeToDuration, parseClock } from '../../../utils';
+import { capitalize, parseTime, timeToDuration, parseClock, splitCamel } from '../../../utils';
 import StyledTitle from '../../../components/styled/Title';
 import EntryCard from '../../../components/card/Entry';
 
@@ -133,7 +133,7 @@ const Details = (props) => {
         <Grid item xs={12} className={classes.marginTop}>
           <StyledTitle icon={<LinkIcon />} title='Relations' />
           <Grid container spacing={1}>
-            {!data.related ?
+            {isRelatedEmpty(data.related) ?
               <Typography>
                 No related anime/manga found.
               </Typography> :
@@ -143,11 +143,11 @@ const Details = (props) => {
                     <Grid item md={4} sm={6} xs={12} key={r.id}>
                       <EntryCard
                         id={r.id}
-                        type={r.mainType}
-                        title={r.title}
-                        image={r.cover}
+                        type={r.type}
+                        title={r.name}
+                        image={r.image}
                         onClick={props.onClick}
-                        detail={[r.mainType, key.replace('_', ' ')]}
+                        detail={[r.type, splitCamel(key)]}
                       />
                     </Grid>
                   )
@@ -168,7 +168,7 @@ const Details = (props) => {
 
         <Grid item md={6} xs={12} className={classes.marginTop}>
           <StyledTitle icon={<MusicNoteIcon size='small' />} title='Opening Theme' />
-          {!data.songs.opening ?
+          {!data.songs.opening || data.songs.opening.length === 0 ?
             <Typography>
               No opening theme found.
             </Typography> :
@@ -183,9 +183,9 @@ const Details = (props) => {
 
         <Grid item md={6} xs={12} className={classes.marginTop}>
           <StyledTitle icon={<MusicNoteIcon size='small' />} title='Closing Theme' />
-          {!data.songs.ending ?
+          {!data.songs.ending || data.songs.ending.length === 0 ?
             <Typography>
-              No opening theme found.
+              No ending theme found.
             </Typography> :
             data.songs.ending.map((song, i) => {
               return (
@@ -207,3 +207,13 @@ Details.propTypes = {
 };
 
 export default Details;
+
+const isRelatedEmpty = (related) => {
+  var isEmpty = true;
+  Object.keys(related).forEach(key => {
+    if (related[key].length > 0) {
+      isEmpty = false;
+    }
+  });
+  return isEmpty;
+}

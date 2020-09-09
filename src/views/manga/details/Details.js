@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom';
 import * as cons from '../../../constant';
 import Statistics from './Stats';
 import Characters from './Characters';
-import { slugify, parseTime } from '../../../utils';
+import { slugify, parseTime, splitCamel } from '../../../utils';
 import StyledTitle from '../../../components/styled/Title';
 import EntryCard from '../../../components/card/Entry';
 
@@ -24,11 +24,8 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: 'none',
     color: 'black',
     '&:hover': {
-      color: theme.palette.primary.main
+      color: theme.palette.primary.main,
     }
-  },
-  relation: {
-    height: 130
   },
   marginTop: {
     marginTop: theme.spacing(2)
@@ -62,7 +59,7 @@ const Details = (props) => {
             </TableRow>
             <TableRow>
               <TableCell className={classes.row} align='right'>Status</TableCell>
-              <TableCell className={classes.row} align='left'>{cons.MANGA_TYPES[data.status]}</TableCell>
+              <TableCell className={classes.row} align='left'>{cons.MANGA_STATUS[data.status]}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell className={classes.row} align='right'>Authors</TableCell>
@@ -102,7 +99,7 @@ const Details = (props) => {
         <Grid item xs={12} className={classes.marginTop}>
           <StyledTitle icon={<LinkIcon />} title='Relations' />
           <Grid container spacing={1}>
-            {!data.related ?
+            {isRelatedEmpty(data.related) ?
               <Typography>
                 No related anime/manga found.
               </Typography> :
@@ -112,11 +109,11 @@ const Details = (props) => {
                     <Grid item md={4} sm={6} xs={12} key={r.id} className={classes.relation}>
                       <EntryCard
                         id={r.id}
-                        type={r.mainType}
-                        title={r.title}
-                        image={r.cover}
+                        type={r.type}
+                        title={r.name}
+                        image={r.image}
                         onClick={props.onClick}
-                        detail={[r.mainType, key.replace('_', ' ')]}
+                        detail={[r.type, splitCamel(key)]}
                       />
                     </Grid>
                   )
@@ -140,3 +137,13 @@ Details.propTypes = {
 };
 
 export default Details;
+
+const isRelatedEmpty = (related) => {
+  var isEmpty = true;
+  Object.keys(related).forEach(key => {
+    if (related[key].length > 0) {
+      isEmpty = false;
+    }
+  });
+  return isEmpty;
+}

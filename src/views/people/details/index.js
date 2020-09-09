@@ -1,11 +1,11 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Skeleton from '@material-ui/lab/Skeleton';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
 
 import PropTypes from 'prop-types';
 import { getEntryDetail } from '../../../api';
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
       borderTop: '6px solid transparent',
       borderBottom: '2px solid transparent',
       borderRight: '18px solid transparent',
-      borderLeft: '18px solid transparent'
+      borderLeft: '18px solid transparent',
     },
   },
   loadingCover: {
@@ -39,24 +39,22 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     [theme.breakpoints.up('md')]: {
       maxWidth: 260,
-    }
+    },
   },
   favorite: {
-    marginTop: 5
+    marginTop: 5,
   },
   synopsis: {
-    whiteSpace: 'pre-wrap'
-  },
-  relation: {
-    height: 130
+    whiteSpace: 'pre-wrap',
   },
   tab: {
     marginBottom: theme.spacing(2),
-    marginTop: theme.spacing(2)
-  }
+    marginTop: theme.spacing(2),
+  },
 }));
 
 const PeopleDetails = (props) => {
+  const idRef = React.useRef('');
   const [state, setState] = React.useState({
     data: null,
     loading: true,
@@ -67,7 +65,9 @@ const PeopleDetails = (props) => {
   var classes = useStyles(!state.data ? [] : state.data);
 
   React.useEffect(() => {
-    if (state.data === null && state.error === null) {
+    if ((state.data === null && state.error === null) || idRef.current !== props.match.params.id) {
+      idRef.current = props.match.params.id;
+
       const getData = async () => {
         const result = await getEntryDetail(cons.PEOPLE_TYPE, props.match.params.id);
         if (result.status === cons.CODE_OK) {

@@ -23,11 +23,7 @@ const Staff = (props) => {
       const getData = async () => {
         const result = await getEntryStaff(cons.ANIME_TYPE, data.id)
         if (result.status === cons.CODE_OK) {
-          var d = result.data;
-          if (d !== null) {
-            d = d.slice(0, props.limit);
-          }
-          setState({ ...state, data: d, loading: false });
+          setState({ ...state, data: result.data.slice(0, props.limit), loading: false });
         } else {
           setState({ ...state, error: { code: result.status, message: result.message }, loading: false });
         }
@@ -41,7 +37,7 @@ const Staff = (props) => {
       {!state ? null : state.loading ? <StaffLoading /> :
         state.error !== null ? <ErrorArea code={state.error.code} message={state.error.message} /> :
           <Grid container spacing={1}>
-            {!state.data ?
+            {!state.data || state.data.length === 0 ?
               <Typography>
                 No related staff found.
               </Typography> :

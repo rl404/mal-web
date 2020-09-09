@@ -26,11 +26,11 @@ const Statistics = (props) => {
         if (result.status === cons.CODE_OK) {
           var d = result.data
           d.orderedSummary = {
-            'Reading': d.summary.reading,
+            'Reading': d.summary.current,
             'Completed': d.summary.completed,
-            'On-hold': d.summary.["on-hold"],
+            'On-hold': d.summary.onHold,
             'Dropped': d.summary.dropped,
-            'Plan to read': d.summary.plan_to_read,
+            'Plan to read': d.summary.planned,
           }
           setState({ ...state, data: d, loading: false });
         } else {

@@ -23,11 +23,7 @@ const Characters = (props) => {
       const getData = async () => {
         const result = await getEntryCharacters(cons.ANIME_TYPE, data.id)
         if (result.status === cons.CODE_OK) {
-          var d = result.data;
-          if (d !== null) {
-            d = d.slice(0, props.limit);
-          }
-          setState({ ...state, data: d, loading: false });
+          setState({ ...state, data: result.data.slice(0, props.limit), loading: false });
         } else {
           setState({ ...state, error: { code: result.status, message: result.message }, loading: false });
         }
@@ -41,7 +37,7 @@ const Characters = (props) => {
       {!state ? null : state.loading ? <CharactersLoading /> :
         state.error !== null ? <ErrorArea code={state.error.code} message={state.error.message} /> :
           <Grid container spacing={1}>
-            {!state.data ?
+            {!state.data || state.data.length === 0 ?
               <Typography>
                 No related character found.
               </Typography> :
@@ -57,7 +53,7 @@ const Characters = (props) => {
                         image: char.image,
                         detail: char.role,
                       }}
-                      right={!char.voiceActors ? null : {
+                      right={!char.voiceActors || char.voiceActors.length === 0 ? null : {
                           id: char.voiceActors[0].id,
                           type: cons.PEOPLE_TYPE,
                           name: char.voiceActors[0].name,

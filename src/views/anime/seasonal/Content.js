@@ -65,9 +65,9 @@ const SeasonalContent = React.forwardRef((props, ref) => {
               splitData.[d.type].push(d);
             }
           });
-          setState({ ...state, data: splitData, loading: false, needUpdate: false });
+          setState({ ...state, data: splitData, loading: false });
         } else {
-          setState({ ...state, error: { code: result.status, message: result.message, needUpdate: false }, loading: false });
+          setState({ ...state, error: { code: result.status, message: result.message }, loading: false });
         }
       }
       getData();

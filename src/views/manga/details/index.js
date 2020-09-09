@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
       borderTop: '6px solid transparent',
       borderBottom: '2px solid transparent',
       borderRight: '18px solid transparent',
-      borderLeft: '18px solid transparent'
+      borderLeft: '18px solid transparent',
     },
   },
   loadingCover: {
@@ -50,22 +50,22 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     [theme.breakpoints.up('md')]: {
       maxWidth: 260,
-    }
+    },
   },
   divider: {
-    marginBottom: theme.spacing(1)
+    marginBottom: theme.spacing(1),
   },
   altTitle: {
     color: theme.palette.grey[500],
     '& span': {
-      fontWeight: 'bold'
-    }
+      fontWeight: 'bold',
+    },
   },
   synopsis: {
-    whiteSpace: 'pre-wrap'
+    whiteSpace: 'pre-wrap',
   },
   genre: {
-    margin: 2
+    margin: 2,
   },
   stats: {
     marginTop: theme.spacing(2),
@@ -73,10 +73,11 @@ const useStyles = makeStyles((theme) => ({
   },
   tab: {
     marginBottom: theme.spacing(2),
-  }
+  },
 }));
 
 const MangaDetails = (props) => {
+  const idRef = React.useRef('');
   const [state, setState] = React.useState({
     data: null,
     loading: true,
@@ -88,7 +89,9 @@ const MangaDetails = (props) => {
   var classes = useStyles(!state.data ? [] : state.data);
 
   React.useEffect(() => {
-    if (state.data === null && state.error === null) {
+    if ((state.data === null && state.error === null) || idRef.current !== props.match.params.id) {
+      idRef.current = props.match.params.id;
+
       const getData = async () => {
         const result = await getEntryDetail(cons.MANGA_TYPE, props.match.params.id);
         if (result.status === cons.CODE_OK) {
@@ -132,7 +135,7 @@ const MangaDetails = (props) => {
               <StyledDivider />
 
               {Object.keys(state.data.alternativeTitles).map(key => {
-                if (state.data.alternativeTitles[key] === '' || !state.altState) {
+                if (state.data.alternativeTitles[key] === '' || !state.altTitle) {
                   return null
                 } else {
                   return (

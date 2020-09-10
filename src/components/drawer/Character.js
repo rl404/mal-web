@@ -11,6 +11,7 @@ import EllipsisText from '../text/EllipsisText';
 import CharacterDrawerLoading from './loading/Character';
 import ErrorArea from '../error/Error';
 import StyledDivider from '../styled/Divider';
+import Img from '../image/Img';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(2),
     lineHeight: theme.typography.body1.lineHeight,
     '& a': {
-      color: 'black',
+      color: theme.palette.text.primary,
       textDecoration: 'none',
       '&:hover': {
         color: theme.palette.primary.main
@@ -37,7 +38,11 @@ const useStyles = makeStyles((theme) => ({
   },
   synopsis: {
     whiteSpace: 'pre-line'
-  }
+  },
+  cover: {
+    maxHeight: 220,
+    maxWidth: '100%',
+  },
 }));
 
 const CharacterDrawer = (props) => {
@@ -60,7 +65,7 @@ const CharacterDrawer = (props) => {
             <StyledDivider />
             <Grid container spacing={1}>
               <Grid item xs={12} className={classes.center}>
-                <img src={state.data.image} alt={state.data.name} />
+                <Img src={state.data.image} alt={state.data.name} />
               </Grid>
               <Grid item xs={12}>
                 <Typography variant="subtitle2" className={classes.categoryName}>

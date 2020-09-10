@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundImage: props => `url(${theme.overlay.white}), url(${props.image})`,
+    backgroundImage: props => `url(${theme.overlay.image}), url(${props.image})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center center',
     [theme.breakpoints.up('md')]: {
@@ -41,6 +41,12 @@ const useStyles = makeStyles((theme) => ({
       maxWidth: 260,
     },
   },
+  altTitle: {
+    color: theme.palette.grey[500],
+    '& span': {
+      fontWeight: 'bold',
+    },
+  },
   favorite: {
     marginTop: 5,
   },
@@ -58,6 +64,7 @@ const PeopleDetails = (props) => {
   const [state, setState] = React.useState({
     data: null,
     loading: true,
+    altTitle: false,
     tabValue: 0,
     error: null,
   });
@@ -107,6 +114,24 @@ const PeopleDetails = (props) => {
                 </Grid>
               </Grid>
               <StyledDivider />
+
+              {state.data.givenName === '' ? null :
+                <Typography variant="subtitle2" className={classes.synopsis}>
+                  Given name: {state.data.givenName}
+                </Typography>
+              }
+
+              {state.data.familyName === '' ? null :
+                <Typography variant="subtitle2" className={classes.synopsis}>
+                  Family name: {state.data.familyName}
+                </Typography>
+              }
+
+              {state.data.alternativeNames.length === 0 ? null :
+                <Typography variant="subtitle2" className={classes.synopsis}>
+                  Alternative names: {state.data.alternativeNames.join(", ")}
+                </Typography>
+              }
 
               <Typography variant="subtitle2" className={classes.synopsis}>
                 {state.data.more}

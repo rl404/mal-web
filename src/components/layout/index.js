@@ -2,10 +2,10 @@ import React from 'react';
 import Header from '../header';
 import Sidebar from '../sidebar';
 import Content from './Content';
-import customTheme from '../theme';
+import getTheme from '../theme';
 
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
-import { Container } from '@material-ui/core';
+import { Container, CssBaseline } from '@material-ui/core';
 import SummaryDrawer from '../drawer/Summary';
 import Footer from '../footer/Footer';
 
@@ -28,6 +28,11 @@ const Layout = () => {
     setMobileState(!mobileState);
   };
 
+  const [darkState, setDarkState] = React.useState(false);
+  const darkToggle = () => {
+    setDarkState(!darkState);
+  };
+
   const headerRef = React.useRef(null);
   const setTitle = (title) => {
     document.title = title
@@ -40,9 +45,10 @@ const Layout = () => {
   };
 
   return (
-    <ThemeProvider theme={customTheme}>
+    <ThemeProvider theme={darkState ? getTheme('dark') : getTheme('light')}>
+      <CssBaseline />
       <div className={classes.root}>
-        <Header mobileToggle={mobileToggle} ref={headerRef} />
+        <Header mobileToggle={mobileToggle} darkToggle={darkToggle} darkState={darkState} ref={headerRef} />
         <Sidebar mobileState={mobileState} mobileToggle={mobileToggle} />
         <main className={classes.content}>
           <div className={classes.toolbar} />

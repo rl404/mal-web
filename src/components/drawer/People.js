@@ -10,6 +10,8 @@ import { slugify } from '../../utils';
 import PeopleDrawerLoading from './loading/People';
 import ErrorArea from '../error/Error';
 import StyledDivider from '../styled/Divider';
+import Img from '../image/Img';
+import EllipsisText from '../text/EllipsisText';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(2),
     lineHeight: theme.typography.body1.lineHeight,
     '& a': {
-      color: 'black',
+      color: theme.palette.text.primary,
       textDecoration: 'none',
       '&:hover': {
         color: theme.palette.primary.main
@@ -36,7 +38,11 @@ const useStyles = makeStyles((theme) => ({
   },
   synopsis: {
     whiteSpace: 'pre-line'
-  }
+  },
+  cover: {
+    maxHeight: 220,
+    maxWidth: '100%',
+  },
 }));
 
 const PeopleDrawer = (props) => {
@@ -56,14 +62,14 @@ const PeopleDrawer = (props) => {
             <StyledDivider />
             <Grid container spacing={1}>
               <Grid item xs={12} className={classes.center}>
-                <img src={state.data.image} alt={state.data.name} />
+                <Img src={state.data.image} alt={state.data.name} />
               </Grid>
               <Grid item xs={12}>
                 <Typography variant="subtitle2" className={classes.categoryName}>
                   About
               </Typography>
                 <Typography variant="body2" className={classes.synopsis}>
-                  {state.data.more}
+                  <EllipsisText text={state.data.more} limit={500} />
                 </Typography>
               </Grid>
             </Grid>

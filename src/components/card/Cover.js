@@ -25,12 +25,13 @@ const useStyles = makeStyles((theme) => ({
   title: {
     display: 'block',
     position: 'absolute',
-    width: 144,
+    width: '100%',
     bottom: 0,
     padding: theme.spacing(1),
     background: theme.transparent.black[70],
     color: theme.palette.primary.contrastText,
     '& span': {
+      color: 'white',
       lineHeight: 1.2,
     },
   },

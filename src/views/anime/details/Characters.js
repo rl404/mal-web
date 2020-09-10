@@ -53,7 +53,7 @@ const Characters = (props) => {
                         image: char.image,
                         detail: char.role,
                       }}
-                      right={!char.voiceActors || char.voiceActors.length === 0 ? null : {
+                      right={!char.voiceActors || char.voiceActors.length === 0 || char.voiceActors[0].role !== 'Japanese' ? null : {
                           id: char.voiceActors[0].id,
                           type: cons.PEOPLE_TYPE,
                           name: char.voiceActors[0].name,

@@ -19,7 +19,7 @@ const LineChart = (props) => {
 
   var barColor = props.color;
   if (!barColor) {
-    barColor = theme.palette.primary.main;
+    barColor = theme.palette.primary.chart;
   }
 
   const [target, changeHover] = React.useState(null)

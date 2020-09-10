@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundImage: props => `url(${theme.overlay.white}), url(${props.cover})`,
+    backgroundImage: props => `url(${theme.overlay.image}), url(${props.cover})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center center',
     [theme.breakpoints.up('md')]: {

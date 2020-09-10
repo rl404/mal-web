@@ -6,24 +6,29 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
+import Brightness4Icon from '@material-ui/icons/Brightness4';
+import Brightness7Icon from '@material-ui/icons/Brightness7';
 
 import PropTypes from 'prop-types';
 import { fade, makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
+    background: theme.palette.gradient.main,
     [theme.breakpoints.up('lg')]: {
       width: `calc(100% - ${theme.drawer.width}px)`,
       marginLeft: theme.drawer.width,
     },
   },
   menuButton: {
+    color: 'white',
     marginRight: theme.spacing(2),
     [theme.breakpoints.up('lg')]: {
       display: 'none',
     },
   },
   title: {
+    color: 'white',
     flexGrow: 1,
     display: 'none',
     [theme.breakpoints.up('sm')]: {
@@ -38,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: fade(theme.palette.common.white, 0.25),
     },
     marginLeft: 0,
+    marginRight: theme.spacing(2),
     width: '100%',
     [theme.breakpoints.up('sm')]: {
       marginLeft: theme.spacing(1),
@@ -45,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   searchIcon: {
+    color: 'white',
     padding: theme.spacing(0, 2),
     height: '100%',
     position: 'absolute',
@@ -57,6 +64,7 @@ const useStyles = makeStyles((theme) => ({
     color: 'inherit',
   },
   inputInput: {
+    color: 'white',
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
@@ -69,6 +77,9 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
+  themeIcon: {
+    color: theme.palette.common.white,
+  },
 }));
 
 const Header = React.forwardRef((props, ref) => {
@@ -77,7 +88,7 @@ const Header = React.forwardRef((props, ref) => {
   const [titleState, setTitleState] = React.useState(process.env.REACT_APP_APP_NAME);
   const setTitle = (title) => {
     setTitleState(title);
-  }
+  };
 
   React.useImperativeHandle(ref, () => {
     return { setTitle: setTitle };
@@ -113,6 +124,11 @@ const Header = React.forwardRef((props, ref) => {
             inputProps={{ 'aria-label': 'search' }}
           />
         </div>
+
+        <IconButton onClick={props.darkToggle} className={classes.themeIcon}>
+          {!props.darkState ? <Brightness4Icon /> : <Brightness7Icon />}
+        </IconButton>
+
       </Toolbar>
     </AppBar>
   )
@@ -120,6 +136,8 @@ const Header = React.forwardRef((props, ref) => {
 
 Header.propTypes = {
   mobileToggle: PropTypes.func.isRequired,
+  darkToggle: PropTypes.func.isRequired,
+  darkState: PropTypes.bool.isRequired,
 };
 
 export default React.memo(Header);

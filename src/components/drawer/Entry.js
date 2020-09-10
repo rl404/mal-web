@@ -11,6 +11,7 @@ import * as cons from '../../constant';
 import EllipsisText from '../text/EllipsisText';
 import EntryDrawerLoading from './loading/Entry';
 import ErrorArea from '../error/Error';
+import Img from '../image/Img';
 import StyledDivider from '../styled/Divider';
 
 const useStyles = makeStyles((theme) => ({
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     margin: 2,
   },
   link: {
-    color: 'black',
+    color: theme.palette.text.primary,
     textDecoration: 'none',
     '&:hover': {
       color: theme.palette.primary.main,
@@ -39,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
   },
   cover: {
     maxHeight: 220,
+    maxWidth: '100%',
   },
 }));
 
@@ -59,7 +61,7 @@ const EntryDrawer = (props) => {
             <StyledDivider />
             <Grid container spacing={1}>
               <Grid item xs={12} className={classes.center}>
-                <img src={state.data.cover} alt={state.data.title} className={classes.cover} />
+              <Img src={state.data.cover} alt={state.data.title} />
               </Grid>
               <Grid item xs={4}>
                 <Typography variant='subtitle2' align='center' className={classes.categoryName}>

@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 import PropTypes from 'prop-types';
+import { ellipsis } from '../../utils';
 import * as cons from '../../constant';
 
 const useStyles = makeStyles((theme) => ({
@@ -18,6 +19,12 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     height: props => props.height,
     objectFit: 'cover',
+  },
+  leftContent: {
+    paddingLeft: theme.spacing(1),
+  },
+  rightContent: {
+    paddingRight: theme.spacing(1),
   },
 }));
 
@@ -51,10 +58,10 @@ const DualCard = (props) => {
                   alt={left.name}
                 />
               </Grid>
-              <Grid item xs container direction='column' justify="center">
+              <Grid item xs={8} container direction='column' justify="center" className={classes.leftContent}>
                 <Grid item>
                   <Typography variant="subtitle1">
-                    <b>{left.name}</b>
+                    <b>{ellipsis(left.name, 20)}</b>
                   </Typography>
                 </Grid>
                 <Grid item>
@@ -70,10 +77,10 @@ const DualCard = (props) => {
           <Grid item xs={6}>
             <CardActionArea onClick={() => props.onClick(right.type, right.id)}>
               <Grid container className={classes.height}>
-                <Grid item xs container direction='column' justify="center">
+                <Grid item xs={8} container direction='column' justify="center" className={classes.rightContent}>
                   <Grid item>
                     <Typography variant="subtitle1" align='right'>
-                      <b>{right.name}</b>
+                      <b>{ellipsis(right.name, 20)}</b>
                     </Typography>
                   </Grid>
                   <Grid item>

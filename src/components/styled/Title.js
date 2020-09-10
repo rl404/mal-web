@@ -9,8 +9,11 @@ import StyledDivider from './Divider';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
-  marginTop: {
+  root: {
     marginTop: theme.spacing(1),
+  },
+  icon: {
+    color: theme.palette.primary.main,
   },
   viewMore: {
     textAlign: 'right',
@@ -22,8 +25,8 @@ const StyledTitle = (props) => {
 
   return (
     <>
-      <Grid container direction="row" alignItems="center" spacing={1} className={classes.marginTop}>
-        <Grid item>
+      <Grid container direction="row" alignItems="center" spacing={1} className={classes.root}>
+        <Grid item className={classes.icon}>
           {props.icon}
         </Grid>
         <Grid item>

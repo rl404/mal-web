@@ -24,7 +24,7 @@ import EntryCard from '../../../components/card/Entry';
 const useStyles = makeStyles((theme) => ({
   link: {
     textDecoration: 'none',
-    color: 'black',
+    color: theme.palette.text.primary,
     '&:hover': {
       color: theme.palette.primary.main,
     },

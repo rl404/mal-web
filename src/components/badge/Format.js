@@ -7,8 +7,8 @@ import * as cons from '../../constant';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    background: theme.palette.primary.main,
-    color: theme.palette.primary.contrastText,
+    background: theme.palette.gradient.main,
+    color: 'white',
     boxShadow: theme.shadows[3],
   },
 }));

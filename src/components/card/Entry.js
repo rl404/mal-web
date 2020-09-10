@@ -11,7 +11,7 @@ import { ellipsis } from '../../utils';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundImage: props => `url(${theme.overlay.white}), url(${props.image})`,
+    backgroundImage: props => `url(${theme.overlay.image}), url(${props.image})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center center',
   },
@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     height: props => props.height,
-    textShadow: '2px 2px white',
     '& h6': {
       lineHeight: '1.2',
     },

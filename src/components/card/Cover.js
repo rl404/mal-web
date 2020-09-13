@@ -85,10 +85,10 @@ const CoverCard = (props) => {
           </Typography>
         </CardContent>
         <CardContent className={classes.score}>
-          {state ? <ScoreBadge score={props.score} /> : null}
+          {state && props.score ? <ScoreBadge score={props.score} /> : null}
         </CardContent>
         <CardContent className={classes.format}>
-          {state ? <FormatBadge type={props.format} /> : null}
+          {state && props.format ? <FormatBadge type={props.type} format={props.format} /> : null}
         </CardContent>
       </CardActionArea>
     </Card>

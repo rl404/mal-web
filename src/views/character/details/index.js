@@ -18,13 +18,14 @@ import VoiceActor from './VoiceActor';
 import StyledDivider from '../../../components/styled/Divider';
 import EllipsisText from '../../../components/text/EllipsisText';
 import ErrorArea from '../../../components/error/Error';
+import Img from '../../../components/image/Img';
 
 const useStyles = makeStyles((theme) => ({
   cover: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundImage: props => `url(${theme.overlay.white}), url(${props.image})`,
+    backgroundImage: props => `url(${theme.overlay.image}), url(${props.image})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center center',
     [theme.breakpoints.up('md')]: {
@@ -107,7 +108,7 @@ const CharacterDetails = (props) => {
 
           <Grid container spacing={1}>
             <Grid item xs={12} className={classes.cover}>
-              <img src={state.data.image} alt={state.data.name} />
+              <Img src={state.data.image} alt={state.data.name} height={300} />
             </Grid>
 
             <Grid item md xs={12}>

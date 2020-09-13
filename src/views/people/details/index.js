@@ -15,6 +15,7 @@ import Staff from './Staff';
 import Manga from './Manga';
 import StyledDivider from '../../../components/styled/Divider';
 import ErrorArea from '../../../components/error/Error';
+import Img from '../../../components/image/Img';
 
 const useStyles = makeStyles((theme) => ({
   cover: {
@@ -97,7 +98,7 @@ const PeopleDetails = (props) => {
         state.error !== null ? <ErrorArea code={state.error.code} message={state.error.message} /> :
           <Grid container spacing={1}>
             <Grid item xs={12} className={classes.cover}>
-              <img src={state.data.image} alt={state.data.name} />
+              <Img src={state.data.image} alt={state.data.name} height={300} />
             </Grid>
 
             <Grid item md xs={12}>

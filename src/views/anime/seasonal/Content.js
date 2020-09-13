@@ -163,6 +163,10 @@ const SeasonalContent = React.forwardRef((props, ref) => {
   );
 });
 
+SeasonalContent.propTypes = {
+  onClick: PropTypes.func.isRequired,
+};
+
 export default SeasonalContent;
 
 const a11yProps = (index) => {

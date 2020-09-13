@@ -6,6 +6,7 @@ const AnimeSeasonal = React.lazy(() => import('./views/anime/seasonal'));
 const MangaDetails = React.lazy(() => import('./views/manga/details'));
 const CharacterDetails = React.lazy(() => import('./views/character/details'));
 const PeopleDetails = React.lazy(() => import('./views/people/details'));
+const Search = React.lazy(() => import('./views/search'));
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -15,6 +16,7 @@ const routes = [
   { path: '/manga/:id/:title?', exact: true, name: 'Manga Details', component: MangaDetails },
   { path: '/character/:id/:name?', exact: true, name: 'Character Details', component: CharacterDetails },
   { path: '/people/:id/:name?', exact: true, name: 'People Details', component: PeopleDetails },
+  { path: '/search/:type', exact: true, name: 'Search', component: Search },
 ];
 
 export default routes;

@@ -15,13 +15,20 @@ const useStyles = makeStyles((theme) => ({
 
 const FormatBadge = (props) => {
   const classes = useStyles();
+
+  var t = cons.ANIME_TYPES[props.format];
+  if (props.type === cons.MANGA_TYPE) {
+    t = cons.MANGA_TYPES[props.format];
+  }
+
   return (
-    <Chip size="small" label={cons.ANIME_TYPES[props.type]} className={classes.root} />
+    <Chip size="small" label={t} className={classes.root} />
   );
 };
 
 FormatBadge.propTypes = {
-  type: PropTypes.number.isRequired,
+  type: PropTypes.oneOf([cons.ANIME_TYPE, cons.MANGA_TYPE]).isRequired,
+  format: PropTypes.number.isRequired,
 };
 
 export default FormatBadge;

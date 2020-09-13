@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   divider: {
-    marginBottom: theme.spacing(1),
+    marginBottom: theme.spacing(2),
   },
 }));
 

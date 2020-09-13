@@ -61,7 +61,7 @@ const EntryDrawer = (props) => {
             <StyledDivider />
             <Grid container spacing={1}>
               <Grid item xs={12} className={classes.center}>
-              <Img src={state.data.cover} alt={state.data.title} />
+                <Img src={state.data.cover} alt={state.data.title} />
               </Grid>
               <Grid item xs={4}>
                 <Typography variant='subtitle2' align='center' className={classes.categoryName}>

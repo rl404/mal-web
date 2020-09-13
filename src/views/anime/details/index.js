@@ -27,6 +27,7 @@ import EllipsisText from '../../../components/text/EllipsisText';
 import StyledDivider from '../../../components/styled/Divider';
 import StatsCard from '../../../components/card/Stats';
 import ErrorArea from '../../../components/error/Error';
+import Img from '../../../components/image/Img';
 
 const useStyles = makeStyles((theme) => ({
   cover: {
@@ -117,7 +118,7 @@ const AnimeDetails = (props) => {
         state.error !== null ? <ErrorArea code={state.error.code} message={state.error.message} /> :
           <Grid container spacing={1}>
             <Grid item xs={12} className={classes.cover}>
-              <img src={state.data.cover} alt={state.data.title} />
+              <Img src={state.data.cover} alt={state.data.title} height={300} />
             </Grid>
 
             <Grid item md xs={12}>

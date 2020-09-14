@@ -11,6 +11,7 @@ import * as cons from '../../constant';
 import { ellipsis } from '../../utils';
 import ScoreBadge from '../badge/Score';
 import FormatBadge from '../badge/Format';
+import RankBadge from '../badge/Rank';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,6 +49,12 @@ const useStyles = makeStyles((theme) => ({
     top: 0,
     padding: theme.spacing(1),
   },
+  rank: {
+    display: 'block',
+    position: 'absolute',
+    top: 0,
+    padding: theme.spacing(1),
+  },
 }));
 
 const CoverCard = (props) => {
@@ -66,7 +73,7 @@ const CoverCard = (props) => {
     setState(false);
   };
 
-  const classes = useStyles({state: state});
+  const classes = useStyles({ state: state });
 
   return (
     <Card className={classes.root}>
@@ -90,6 +97,9 @@ const CoverCard = (props) => {
         <CardContent className={classes.format}>
           {state && props.format ? <FormatBadge type={props.type} format={props.format} /> : null}
         </CardContent>
+        <CardContent className={classes.rank}>
+          {state && props.rank ? null : <RankBadge rank={props.rank} />}
+        </CardContent>
       </CardActionArea>
     </Card>
   );
@@ -103,6 +113,7 @@ CoverCard.propTypes = {
   format: PropTypes.number,
   score: PropTypes.number,
   onClick: PropTypes.func,
+  rank: PropTypes.number,
 };
 
 export default CoverCard;

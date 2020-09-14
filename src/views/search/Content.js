@@ -75,7 +75,7 @@ const SearchContent = React.forwardRef((props, ref) => {
             state.data.length === 0 && state.page === 1 ?
               <Typography variant='h6'>
                 No {state.type} found.
-            </Typography> :
+              </Typography> :
               <>
                 <Grid container spacing={1}>
                   {state.data.length === 0 ?
@@ -157,5 +157,5 @@ const SearchLoading = () => {
         )
       })}
     </Grid>
-  )
-}
+  );
+};

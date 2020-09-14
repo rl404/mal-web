@@ -11,7 +11,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
-import AssessmentIcon from '@material-ui/icons/Assessment';
+import GradeIcon from '@material-ui/icons/Grade';
 import Paper from '@material-ui/core/Paper';
 import Skeleton from '@material-ui/lab/Skeleton';
 import { makeStyles } from '@material-ui/core/styles';
@@ -170,7 +170,7 @@ const MangaDetails = (props) => {
               <Grid item xs>
                 <StatsCard
                   width={200}
-                  icon={<AssessmentIcon />}
+                  icon={<GradeIcon />}
                   data={
                     <Tooltip title={state.data.voter.toLocaleString() + ' voters'} placement='top'>
                       <b>{Number(state.data.score).toFixed(2)}</b>

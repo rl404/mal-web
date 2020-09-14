@@ -186,7 +186,7 @@ const SearchHeader = (props) => {
       'name': "Name asc",
       '-name': "Name desc",
     },
-  }
+  };
 
   return (
     <>
@@ -385,6 +385,7 @@ const SearchHeader = (props) => {
 };
 
 SearchHeader.propTypes = {
+  type: PropTypes.oneOf(cons.MAIN_TYPES).isRequired,
   updateQuery: PropTypes.func.isRequired,
 };
 

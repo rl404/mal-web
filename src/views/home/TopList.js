@@ -41,7 +41,7 @@ const TopList = (props) => {
               title={props.title}
               more={{
                 text: 'view more',
-                link: '',
+                link: `/top/anime?order=${props.type}`,
               }}
             />
             <Grid container spacing={1}>

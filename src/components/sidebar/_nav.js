@@ -4,6 +4,7 @@ import MenuBookIcon from '@material-ui/icons/MenuBook';
 import SearchIcon from '@material-ui/icons/Search';
 import ListIcon from '@material-ui/icons/List';
 import PersonIcon from '@material-ui/icons/Person';
+import GradeIcon from '@material-ui/icons/Grade';
 
 export default [
   {
@@ -23,6 +24,12 @@ export default [
         icon: <ListIcon />,
         link: '/anime/seasonal',
       },
+      {
+        id: 3,
+        name: 'Top Anime',
+        icon: <GradeIcon />,
+        link: '/top/anime',
+      },
     ],
   },
   {
@@ -35,6 +42,12 @@ export default [
         name: 'Manga Search',
         icon: <SearchIcon />,
         link: '/search/manga',
+      },
+      {
+        id: 2,
+        name: 'Top Manga',
+        icon: <GradeIcon />,
+        link: '/top/manga',
       },
     ],
   },
@@ -49,10 +62,16 @@ export default [
         icon: <SearchIcon />,
         link: '/search/character',
       },
+      {
+        id: 2,
+        name: 'Top Character',
+        icon: <GradeIcon />,
+        link: '/top/character',
+      },
     ],
   },
   {
-    id: 3,
+    id: 4,
     name: 'People',
     icon: <PersonIcon />,
     subItems: [
@@ -61,6 +80,12 @@ export default [
         name: 'People Search',
         icon: <SearchIcon />,
         link: '/search/people',
+      },
+      {
+        id: 2,
+        name: 'Top People',
+        icon: <GradeIcon />,
+        link: '/top/people',
       },
     ],
   },

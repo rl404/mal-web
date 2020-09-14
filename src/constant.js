@@ -15,9 +15,10 @@ export const ANIME_TOP_UPCOMING = 2
 export const ANIME_TOP_TV = 3
 export const ANIME_TOP_MOVIE = 4
 export const ANIME_TOP_OVA = 5
-export const ANIME_TOP_SPECIAL = 6
-export const ANIME_TOP_POPULAR = 7
-export const ANIME_TOP_FAVORITE = 8
+export const ANIME_TOP_ONA = 6
+export const ANIME_TOP_SPECIAL = 7
+export const ANIME_TOP_POPULAR = 8
+export const ANIME_TOP_FAVORITE = 9
 
 // Anime series types.
 export const ANIME_TV_ID = 1

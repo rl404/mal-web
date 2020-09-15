@@ -7,7 +7,6 @@ import getTheme from '../theme';
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import { Container, CssBaseline } from '@material-ui/core';
 import SummaryDrawer from '../drawer/Summary';
-import Footer from '../footer/Footer';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(1),
+    marginBottom: theme.spacing(4),
   },
 }))
 
@@ -55,7 +55,6 @@ const Layout = () => {
           <Container>
             <Content setTitle={setTitle} showEntryDrawer={showEntryDrawer} />
           </Container>
-          <Footer />
         </main>
         <SummaryDrawer ref={summaryRef} />
       </div>

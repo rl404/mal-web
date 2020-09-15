@@ -11,6 +11,7 @@ import Brightness7Icon from '@material-ui/icons/Brightness7';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Tooltip from '@material-ui/core/Tooltip';
+import GitHubIcon from '@material-ui/icons/GitHub';
 import { fade, makeStyles } from '@material-ui/core/styles';
 
 import PropTypes from 'prop-types';
@@ -98,7 +99,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   themeIcon: {
-    color: theme.palette.common.white,
+    '& svg': {
+      color: theme.palette.common.white,
+    },
   },
   link: {
     width: '100%',
@@ -217,13 +220,19 @@ const Header = React.forwardRef((props, ref) => {
           />
           {!loading ? null :
             <div className={classes.loadingIcon}>
-              <CircularProgress color="inherit" size={15} />
+              <CircularProgress color='inherit' size={15} />
             </div>
           }
         </div>
 
         <IconButton onClick={props.darkToggle} className={classes.themeIcon}>
           {!props.darkState ? <Brightness4Icon /> : <Brightness7Icon />}
+        </IconButton>
+
+        <IconButton className={classes.themeIcon}>
+          <a href='https://github.com/rl404/mal-web' target='_blank' rel='noopener noreferrer'>
+            <GitHubIcon />
+          </a>
         </IconButton>
 
       </Toolbar>

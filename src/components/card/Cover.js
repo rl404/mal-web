@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 160,
     minWidth: 144,
     margin: 'auto',
+    background: `url(${theme.error.image})`,
   },
   media: {
     height: 220,
@@ -98,7 +99,7 @@ const CoverCard = (props) => {
           {state && props.format ? <FormatBadge type={props.type} format={props.format} /> : null}
         </CardContent>
         <CardContent className={classes.rank}>
-          {state && props.rank ? null : <RankBadge rank={props.rank} />}
+          {state || !props.rank ? null : <RankBadge rank={props.rank} />}
         </CardContent>
       </CardActionArea>
     </Card>

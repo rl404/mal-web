@@ -38,10 +38,6 @@ const useStyles = makeStyles((theme) => ({
   synopsis: {
     whiteSpace: 'pre-line',
   },
-  cover: {
-    maxHeight: 220,
-    maxWidth: '100%',
-  },
 }));
 
 const EntryDrawer = (props) => {

@@ -96,6 +96,13 @@ export async function getSearch(type, query, page = 1, advQuery) {
             if (advQuery.order && advQuery.order !== '' && advQuery.order !== '-') {
                 baseQuery += `&order=${advQuery.order}`;
             }
+            if (advQuery.producer && advQuery.producer > 0) {
+                if (type === cons.ANIME_TYPE) {
+                    baseQuery += `&producer=${advQuery.producer}`;
+                } else {
+                    baseQuery += `&magazine=${advQuery.producer}`;
+                }
+            }
         }
 
         const result = await fetch(`${Host}/search/${type}?${baseQuery}`)
@@ -113,6 +120,18 @@ export async function getSearch(type, query, page = 1, advQuery) {
         return result.json()
     } else {
         const result = await fetch(`${Host}/search?query=${query}`)
+        return result.json()
+    }
+}
+
+// Producer/magazine endpoints.
+
+export async function getProducers(type) {
+    if (type === cons.ANIME_TYPE) {
+        const result = await fetch(`${Host}/producers`)
+        return result.json()
+    } else {
+        const result = await fetch(`${Host}/magazines`)
         return result.json()
     }
 }

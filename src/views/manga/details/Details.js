@@ -74,7 +74,7 @@ const Details = (props) => {
               <TableCell className={classes.row} align='right'>Serializations</TableCell>
               <TableCell className={classes.row} align='left'>
                 {!data.serializations || data.serializations.length === 0 ? '?' : data.serializations
-                  .map((p) => <Link to={`/people/${p.id}/${slugify(p.name)}`} key={'s' + p.id} className={classes.link}>{p.name}</Link>)
+                  .map((p) => <Link to={`/search/manga?producer=${p.id}`} key={'s' + p.id} className={classes.link}>{p.name}</Link>)
                   .reduce((prev, curr) => [prev, <br key={prev} />, curr])
                 }
               </TableCell>

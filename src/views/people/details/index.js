@@ -16,6 +16,7 @@ import Manga from './Manga';
 import StyledDivider from '../../../components/styled/Divider';
 import ErrorArea from '../../../components/error/Error';
 import Img from '../../../components/image/Img';
+import EllipsisText from '../../../components/text/EllipsisText';
 
 const useStyles = makeStyles((theme) => ({
   cover: {
@@ -135,7 +136,7 @@ const PeopleDetails = (props) => {
               }
 
               <Typography variant="subtitle2" className={classes.synopsis}>
-                {state.data.more}
+                <EllipsisText text={state.data.more} limit={1000} />
               </Typography>
             </Grid>
 

@@ -66,7 +66,7 @@ const Details = (props) => {
               <TableCell className={classes.row} align='right'>Producers</TableCell>
               <TableCell className={classes.row} align='left'>
                 {!data.producers || data.producers.length === 0 ? '?' : data.producers
-                  .map((p) => <Link to="" key={'p' + p.id} className={classes.link}>{p.name}</Link>)
+                  .map((p) => <Link to={`/search/anime?producer=${p.id}`} key={'p' + p.id} className={classes.link}>{p.name}</Link>)
                   .reduce((prev, curr) => [prev, <br key={prev} />, curr])
                 }
               </TableCell>
@@ -75,7 +75,7 @@ const Details = (props) => {
               <TableCell className={classes.row} align='right'>Studios</TableCell>
               <TableCell className={classes.row} align='left'>
                 {!data.studios || data.studios.length === 0 ? '?' : data.studios
-                  .map((p) => <Link to="" key={'s' + p.id} className={classes.link}>{p.name}</Link>)
+                  .map((p) => <Link to={`/search/anime?producer=${p.id}`} key={'s' + p.id} className={classes.link}>{p.name}</Link>)
                   .reduce((prev, curr) => [prev, <br key={prev} />, curr])
                 }
               </TableCell>
@@ -84,7 +84,7 @@ const Details = (props) => {
               <TableCell className={classes.row} align='right'>Licensors</TableCell>
               <TableCell className={classes.row} align='left'>
                 {!data.licensors || data.licensors.length === 0 ? '?' : data.licensors
-                  .map((p) => <Link to="" key={'l' + p.id} className={classes.link}>{p.name}</Link>)
+                  .map((p) => <Link to={`/search/anime?producer=${p.id}`} key={'l' + p.id} className={classes.link}>{p.name}</Link>)
                   .reduce((prev, curr) => [prev, <br key={prev} />, curr])
                 }
               </TableCell>

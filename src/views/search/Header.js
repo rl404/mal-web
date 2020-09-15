@@ -8,6 +8,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import TuneIcon from '@material-ui/icons/Tune';
 import Tooltip from '@material-ui/core/Tooltip';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from '@material-ui/core/styles';
 
 import PropTypes from 'prop-types';
@@ -15,6 +16,7 @@ import * as cons from '../../constant';
 import { capitalize } from '../../utils';
 import StyledDivider from '../../components/styled/Divider';
 import { Link } from 'react-router-dom';
+import { getProducers } from '../../api';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,6 +25,8 @@ const useStyles = makeStyles((theme) => ({
   link: {
     textDecoration: 'none',
     color: theme.palette.text.primary,
+    fontWeight: theme.typography.h6.fontWeight + 1,
+    width: '100%',
   },
   typeInput: {
     verticalAlign: 'middle',
@@ -72,6 +76,7 @@ const SearchHeader = (props) => {
     source: 0,
     season: '-',
     year: '',
+    producer: props.producer,
     order: '-',
   };
 
@@ -82,10 +87,18 @@ const SearchHeader = (props) => {
     setting: false,
   });
 
+  const [auto, setAuto] = React.useState({
+    options: [],
+    optionMap: [],
+    open: false,
+    loading: true,
+  });
+
   const changeType = (e) => {
     const t = e.target.value;
-    setState({ ...state, type: t, advQuery: defaultAdvQuery, setting: false });
-    props.updateQuery(t, state.query, defaultAdvQuery);
+    setState({ ...state, type: t, advQuery: { ...defaultAdvQuery, producer: 0 }, setting: false });
+    setAuto({ options: [], optionMap: [], open: false, loading: true });
+    props.updateQuery(t, state.query, { ...defaultAdvQuery, producer: 0 });
   };
 
   var timeout = 0
@@ -100,6 +113,30 @@ const SearchHeader = (props) => {
 
   const toggleSetting = () => {
     setState({ ...state, setting: !state.setting });
+
+    if (auto.options.length === 0) {
+      const getOptions = async () => {
+        const result = await getProducers(state.type);
+        if (result.status === cons.CODE_OK) {
+          var m = [];
+          result.data.forEach(k => { m[k.id] = k.name })
+
+          setAuto({
+            ...auto,
+            loading: false,
+            options: result.data.map(o => {
+              const letter = o.name[0].toUpperCase();
+              return {
+                letter: /[^a-zA-Z]/.test(letter) ? '0-9' : letter,
+                ...o,
+              }
+            }),
+            optionMap: m,
+          });
+        }
+      };
+      getOptions();
+    }
   };
 
   const changeScore = (e) => {
@@ -157,6 +194,16 @@ const SearchHeader = (props) => {
     props.updateQuery(state.type, state.query, { ...state.advQuery, order: order });
   };
 
+  const changeProducer = (v) => {
+    var producer = 0;
+    if (v && v.id) {
+      producer = v.id;
+    }
+
+    setState({ ...state, advQuery: { ...state.advQuery, producer: producer } });
+    props.updateQuery(state.type, state.query, { ...state.advQuery, producer: producer });
+  };
+
   var orderList = {
     [cons.ANIME_TYPE]: {
       'member': 'Member asc',
@@ -204,7 +251,7 @@ const SearchHeader = (props) => {
             >
               {cons.MAIN_TYPES.map((s) => (
                 <MenuItem key={s} value={s}>
-                  <b><Link to={`/search/${s}`} className={classes.link}>{capitalize(s)}</Link></b>
+                  <Link to={`/search/${s}`} className={classes.link}>{capitalize(s)}</Link>
                 </MenuItem>
               ))}
             </TextField>
@@ -254,6 +301,31 @@ const SearchHeader = (props) => {
         !state.setting ? null :
           <>
             <Grid container spacing={1}>
+              <Grid lg={2} md={3} sm={4} xs={6} item>
+                <Autocomplete
+                  open={auto.open}
+                  loading={auto.loading}
+                  onOpen={() => setAuto({ ...auto, open: true })}
+                  onClose={() => setAuto({ ...auto, open: false })}
+                  options={auto.options.sort((a, b) => -b.letter.localeCompare(a.letter))}
+                  getOptionLabel={(option) => !option.name ? '' : option.name}
+                  groupBy={(option) => option.letter}
+                  onChange={(e, v) => changeProducer(v)}
+                  getOptionSelected={(o, v) => o.id === v.id}
+                  value={!state.advQuery.producer || state.advQuery.producer === 0 ? null : { id: state.advQuery.producer, name: auto.optionMap[state.advQuery.producer] }}
+
+                  renderInput={params =>
+                    <TextField
+                      label={state.type === cons.ANIME_TYPE ? 'Producer/Studio/Licensor' : 'Magazine/Serialization'}
+                      fullWidth
+                      {...params}
+                      value={state.advQuery.producer}
+                      InputProps={params.InputProps}
+                    />
+                  }
+                />
+              </Grid>
+
               <Grid lg={2} md={3} sm={4} xs={6} item>
                 <TextField
                   select
@@ -386,6 +458,7 @@ const SearchHeader = (props) => {
 
 SearchHeader.propTypes = {
   type: PropTypes.oneOf(cons.MAIN_TYPES).isRequired,
+  producer: PropTypes.number.isRequired,
   updateQuery: PropTypes.func.isRequired,
 };
 

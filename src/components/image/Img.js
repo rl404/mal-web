@@ -5,7 +5,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 const useStyles = makeStyles({
   error: {
     width: props => props.width,
-    height: props => props.width*4/3,
+    height: props => props.width * 4 / 3,
   },
   image: {
     maxHeight: props => props.height,

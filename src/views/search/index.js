@@ -9,10 +9,12 @@ const Search = (props) => {
     ref.current.updateQuery(type, query, advQuery);
   };
 
+  const producer = new URLSearchParams(props.location.search).get('producer');
+
   return (
     <>
-      <SearchHeader updateQuery={updateQuery} type={props.match.params.type} />
-      <SearchContent ref={ref} onClick={props.showEntryDrawer} type={props.match.params.type} />
+      <SearchHeader updateQuery={updateQuery} type={props.match.params.type} producer={!producer ? 0 : parseInt(producer)} />
+      <SearchContent ref={ref} onClick={props.showEntryDrawer} type={props.match.params.type} producer={!producer ? 0 : parseInt(producer)} />
     </>
   )
 };

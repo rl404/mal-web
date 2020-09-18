@@ -1,3 +1,6 @@
+// MyAnimeList web.
+export const MAL_URL = 'https://myanimelist.net'
+
 // Response code.
 export const CODE_OK = 200
 

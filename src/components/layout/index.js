@@ -2,6 +2,7 @@ import React from 'react';
 import Header from '../header';
 import Sidebar from '../sidebar';
 import Content from './Content';
+import Footer from '../footer';
 import getTheme from '../theme';
 
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
@@ -15,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    padding: theme.spacing(1),
+    padding: theme.spacing(2),
     marginBottom: theme.spacing(4),
   },
 }))
@@ -35,7 +36,6 @@ const Layout = () => {
 
   const headerRef = React.useRef(null);
   const setTitle = (title) => {
-    document.title = title
     headerRef.current.setTitle(title);
   };
 
@@ -55,6 +55,7 @@ const Layout = () => {
           <Container>
             <Content setTitle={setTitle} showEntryDrawer={showEntryDrawer} />
           </Container>
+          <Footer />
         </main>
         <SummaryDrawer ref={summaryRef} />
       </div>

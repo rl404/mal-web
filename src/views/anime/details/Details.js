@@ -48,7 +48,7 @@ const Details = (props) => {
     <Grid container spacing={2}>
       <Grid item md={3} xs={12}>
         <StyledTitle icon={<InfoOutlinedIcon size='small' />} title='Information' />
-        <Table size="small">
+        <Table size='small'>
           <TableBody>
             <TableRow>
               <TableCell className={classes.row} align='right'>Type</TableCell>
@@ -91,12 +91,12 @@ const Details = (props) => {
             </TableRow>
             <TableRow>
               <TableCell className={classes.row} align='right'>Start Date</TableCell>
-              <TableCell className={classes.row} align='left'>{parseTime(data.airing.start, "MMM D, YYYY") !== '' ? parseTime(data.airing.start, "MMM D, YYYY") : '?'}</TableCell>
+              <TableCell className={classes.row} align='left'>{parseTime(data.airing.start, 'MMM D, YYYY') !== '' ? parseTime(data.airing.start, 'MMM D, YYYY') : '?'}</TableCell>
             </TableRow>
             {data.episode === 1 ? null : (
               <TableRow>
                 <TableCell className={classes.row} align='right'>End Date</TableCell>
-                <TableCell className={classes.row} align='left'>{parseTime(data.airing.end, "MMM D, YYYY") !== '' ? parseTime(data.airing.end, "MMM D, YYYY") : '?'}</TableCell>
+                <TableCell className={classes.row} align='left'>{parseTime(data.airing.end, 'MMM D, YYYY') !== '' ? parseTime(data.airing.end, 'MMM D, YYYY') : '?'}</TableCell>
               </TableRow>
             )}
             {data.type !== cons.ANIME_TV ? null : (

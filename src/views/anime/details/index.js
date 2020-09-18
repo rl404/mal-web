@@ -13,13 +13,16 @@ import EqualizerIcon from '@material-ui/icons/Equalizer';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import GradeIcon from '@material-ui/icons/Grade';
 import Paper from '@material-ui/core/Paper';
+import RefreshIcon from '@material-ui/icons/Refresh';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Skeleton from '@material-ui/lab/Skeleton';
+import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import { makeStyles } from '@material-ui/core/styles';
 
 import PropTypes from 'prop-types';
-import { getEntryDetail } from '../../../api';
+import { getEntryDetail, reparse } from '../../../api';
 import * as cons from '../../../constant';
-import { capitalize } from '../../../utils';
+import { capitalize, parseTime } from '../../../utils';
 import Details from './Details';
 import Characters from './Characters';
 import Staff from './Staff';
@@ -72,14 +75,17 @@ const useStyles = makeStyles((theme) => ({
   },
   tab: {
     marginBottom: theme.spacing(2),
-  }
+  },
+  message: {
+    marginTop: 5,
+  },
 }));
 
 const AnimeDetails = (props) => {
   const idRef = React.useRef('');
   const [state, setState] = React.useState({
-    id: 0,
     data: null,
+    meta: null,
     loading: true,
     altTitle: false,
     tabValue: 0,
@@ -95,9 +101,9 @@ const AnimeDetails = (props) => {
       const getData = async () => {
         const result = await getEntryDetail(cons.ANIME_TYPE, props.match.params.id);
         if (result.status === cons.CODE_OK) {
-          setState({ ...state, id: props.match.params.id, data: result.data, loading: false });
+          setState({ ...state, data: result.data, meta: result.meta, loading: false });
         } else {
-          setState({ ...state, id: props.match.params.id, error: { code: result.status, message: result.message }, loading: false });
+          setState({ ...state, error: { code: result.status, message: result.message }, loading: false });
         }
       }
       getData();
@@ -112,6 +118,24 @@ const AnimeDetails = (props) => {
     setState({ ...state, tabValue: newValue });
   };
 
+  var timeout = 0;
+  const [refreshState, setRefreshState] = React.useState({
+    loading: false,
+    message: '',
+  });
+  const onClickRefresh = () => {
+    setRefreshState({ ...refreshState, loading: true });
+
+    const refresh = async () => {
+      const result = await reparse(cons.ANIME_TYPE, props.match.params.id);
+      setRefreshState({ loading: false, message: result.message });
+    };
+    refresh();
+
+    clearTimeout(timeout);
+    timeout = setTimeout(() => { setRefreshState({ ...refreshState, message: '' }) }, 5000);
+  };
+
   return (
     <>
       {!state ? null : state.loading ? <AnimeDetailsLoading /> :
@@ -122,16 +146,44 @@ const AnimeDetails = (props) => {
             </Grid>
 
             <Grid item md xs={12}>
-              <Typography variant='h6'>
-                <b>{state.data.title}</b>
-                {state.data.alternativeTitles.english === '' && state.data.alternativeTitles.japanese === '' && state.data.alternativeTitles.synonym === '' ? null :
-                  <Tooltip title='Alternative titles' placement='right'>
-                    <IconButton size='small' onClick={toggleAlt}>
-                      <ArrowDropDownIcon />
-                    </IconButton>
+              <Grid container spacing={1}>
+                <Grid item xs>
+                  <Typography variant='h6'>
+                    <b>{state.data.title}</b>
+                    {state.data.alternativeTitles.english === '' && state.data.alternativeTitles.japanese === '' && state.data.alternativeTitles.synonym === '' ? null :
+                      <Tooltip title='Alternative titles' placement='right'>
+                        <IconButton size='small' onClick={toggleAlt}>
+                          <ArrowDropDownIcon />
+                        </IconButton>
+                      </Tooltip>
+                    }
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography variant='subtitle2' className={classes.message}>
+                    {refreshState.message}
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Tooltip placement='bottom-end' title={parseTime(state.meta.parsedAt, 'YYYY-MM-DD HH:mm:ss')}>
+                    {refreshState.loading ?
+                      <CircularProgress color='inherit' size={15} className={classes.message} /> :
+                      <IconButton size='small' onClick={onClickRefresh}>
+                        <RefreshIcon />
+                      </IconButton>
+                    }
                   </Tooltip>
-                }
-              </Typography>
+                </Grid>
+                <Grid item>
+                  <a href={`${cons.MAL_URL}/${cons.ANIME_TYPE}/${state.data.id}`} target='_blank' rel='noopener noreferrer'>
+                    <Tooltip placement='bottom-end' title='MyAnimeList Page'>
+                      <IconButton size='small'>
+                        <OpenInNewIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </a>
+                </Grid>
+              </Grid>
               <StyledDivider />
 
               {Object.keys(state.data.alternativeTitles).map(key => {

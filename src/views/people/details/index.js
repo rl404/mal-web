@@ -5,10 +5,16 @@ import Skeleton from '@material-ui/lab/Skeleton';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Paper from '@material-ui/core/Paper';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+import RefreshIcon from '@material-ui/icons/Refresh';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import { makeStyles } from '@material-ui/core/styles';
 
 import PropTypes from 'prop-types';
-import { getEntryDetail } from '../../../api';
+import { getEntryDetail, reparse } from '../../../api';
+import { parseTime } from '../../../utils';
 import * as cons from '../../../constant';
 import VoiceActor from './VoiceActor';
 import Staff from './Staff';
@@ -65,6 +71,7 @@ const PeopleDetails = (props) => {
   const idRef = React.useRef('');
   const [state, setState] = React.useState({
     data: null,
+    meta: null,
     loading: true,
     altTitle: false,
     tabValue: 0,
@@ -80,7 +87,7 @@ const PeopleDetails = (props) => {
       const getData = async () => {
         const result = await getEntryDetail(cons.PEOPLE_TYPE, props.match.params.id);
         if (result.status === cons.CODE_OK) {
-          setState({ ...state, data: result.data, loading: false });
+          setState({ ...state, data: result.data, meta: result.meta, loading: false });
         } else {
           setState({ ...state, error: { code: result.status, message: result.message }, loading: false });
         }
@@ -91,6 +98,24 @@ const PeopleDetails = (props) => {
 
   const changeTab = (event, newValue) => {
     setState({ ...state, tabValue: newValue });
+  };
+
+  var timeout = 0;
+  const [refreshState, setRefreshState] = React.useState({
+    loading: false,
+    message: '',
+  });
+  const onClickRefresh = () => {
+    setRefreshState({ ...refreshState, loading: true });
+
+    const refresh = async () => {
+      const result = await reparse(cons.PEOPLE_TYPE, props.match.params.id);
+      setRefreshState({ loading: false, message: result.message });
+    };
+    refresh();
+
+    clearTimeout(timeout);
+    timeout = setTimeout(() => { setRefreshState({ ...refreshState, message: '' }) }, 5000);
   };
 
   return (
@@ -105,37 +130,61 @@ const PeopleDetails = (props) => {
             <Grid item md xs={12}>
               <Grid container spacing={1}>
                 <Grid item xs>
-                  <Typography variant="h6">
+                  <Typography variant='h6'>
                     <b>{state.data.name}</b>
                   </Typography>
                 </Grid>
                 <Grid item>
-                  <Typography variant="subtitle2" className={classes.favorite}>
+                  <Typography variant='subtitle2' className={classes.favorite}>
                     Favorites: {state.data.favorite.toLocaleString()}
                   </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography variant='subtitle2' className={classes.favorite}>
+                    {refreshState.message}
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Tooltip placement='bottom-end' title={parseTime(state.meta.parsedAt, 'YYYY-MM-DD HH:mm:ss')}>
+                    {refreshState.loading ?
+                      <CircularProgress color='inherit' size={15} className={classes.favorite} /> :
+                      <IconButton size='small' onClick={onClickRefresh}>
+                        <RefreshIcon />
+                      </IconButton>
+                    }
+                  </Tooltip>
+                </Grid>
+                <Grid item>
+                  <a href={`${cons.MAL_URL}/${cons.PEOPLE_TYPE}/${state.data.id}`} target='_blank' rel='noopener noreferrer'>
+                    <Tooltip placement='bottom-end' title='MyAnimeList Page'>
+                      <IconButton size='small'>
+                        <OpenInNewIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </a>
                 </Grid>
               </Grid>
               <StyledDivider />
 
               {state.data.givenName === '' ? null :
-                <Typography variant="subtitle2" className={classes.synopsis}>
+                <Typography variant='subtitle2' className={classes.synopsis}>
                   Given name: {state.data.givenName}
                 </Typography>
               }
 
               {state.data.familyName === '' ? null :
-                <Typography variant="subtitle2" className={classes.synopsis}>
+                <Typography variant='subtitle2' className={classes.synopsis}>
                   Family name: {state.data.familyName}
                 </Typography>
               }
 
               {state.data.alternativeNames.length === 0 ? null :
-                <Typography variant="subtitle2" className={classes.synopsis}>
-                  Alternative names: {state.data.alternativeNames.join(", ")}
+                <Typography variant='subtitle2' className={classes.synopsis}>
+                  Alternative names: {state.data.alternativeNames.join(', ')}
                 </Typography>
               }
 
-              <Typography variant="subtitle2" className={classes.synopsis}>
+              <Typography variant='subtitle2' className={classes.synopsis}>
                 <EllipsisText text={state.data.more} limit={1000} />
               </Typography>
             </Grid>
@@ -145,14 +194,14 @@ const PeopleDetails = (props) => {
                 <Tabs
                   value={state.tabValue}
                   onChange={changeTab}
-                  variant="fullWidth"
-                  indicatorColor="primary"
-                  textColor="primary"
+                  variant='fullWidth'
+                  indicatorColor='primary'
+                  textColor='primary'
                   centered
                 >
-                  <Tab label="Voice Actors" {...a11yProps(0)} />
-                  <Tab label="Staff" {...a11yProps(1)} />
-                  <Tab label="Published Manga" {...a11yProps(2)} />
+                  <Tab label='Voice Actors' {...a11yProps(0)} />
+                  <Tab label='Staff' {...a11yProps(1)} />
+                  <Tab label='Published Manga' {...a11yProps(2)} />
                 </Tabs>
               </Paper>
             </Grid>
@@ -183,7 +232,7 @@ const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
   return (
     <div
-      role="tabpanel"
+      role='tabpanel'
       hidden={value !== index}
       id={`people-tabpanel-${index}`}
       aria-labelledby={`people-tab-${index}`}
@@ -227,7 +276,7 @@ const PeopleDetailsLoading = () => {
       </Grid>
 
       <Grid item xs={12}>
-        <Skeleton variant="rect" height={40} />
+        <Skeleton variant='rect' height={40} />
       </Grid>
       {[0, 1, 2, 3, 4, 5, 6, 7].map(i => {
         return (

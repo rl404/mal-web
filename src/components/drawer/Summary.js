@@ -53,9 +53,7 @@ const SummaryDrawer = React.forwardRef((props, ref) => {
   };
 
   React.useImperativeHandle(ref, () => {
-    return {
-      showDrawer: showDrawer
-    };
+    return { showDrawer: showDrawer };
   });
 
   return (

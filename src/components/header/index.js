@@ -118,6 +118,7 @@ const Header = React.forwardRef((props, ref) => {
 
   const [titleState, setTitleState] = React.useState('');
   const setTitle = (title) => {
+    document.title = title
     setTitleState(title);
   };
 

@@ -135,3 +135,10 @@ export async function getProducers(type) {
         return result.json()
     }
 }
+
+// Re-parse endpoint.
+
+export async function reparse(type, id) {
+    const result = await fetch(`${Host}/enqueue?type=${type}&id=${id}`)
+    return result.json()
+}

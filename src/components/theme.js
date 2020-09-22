@@ -8,6 +8,9 @@ const base = {
 
 const lightTheme = createMuiTheme({
   ...base,
+  logo: {
+    image: '/images/logo.svg',
+  },
   palette: {
     type: 'light',
     primary: {
@@ -41,6 +44,9 @@ const lightTheme = createMuiTheme({
 
 const darkTheme = createMuiTheme({
   ...base,
+  logo: {
+    image: '/images/logo-dark.svg',
+  },
   palette: {
     type: 'dark',
     primary: {

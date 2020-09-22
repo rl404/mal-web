@@ -14,7 +14,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 
 import PropTypes from 'prop-types';
 import navigation from './_nav';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -32,15 +32,20 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    height: '100%'
+    height: '100%',
+    padding: theme.spacing(1),
   },
   nested: {
     paddingLeft: theme.spacing(4),
+  },
+  logo: {
+    width: '100%',
   },
 }));
 
 const Sidebar = (props) => {
   const classes = useStyles();
+  const theme = useTheme();
 
   const [listState, setState] = React.useState([]);
   const toggleList = (key) => {
@@ -52,7 +57,7 @@ const Sidebar = (props) => {
       <div className={classes.toolbar}>
         <Grid className={classes.logoArea} container justify='center' alignItems='center'>
           <Link to='/'>
-            <img src='/images/logo.png' alt={process.env.REACT_APP_APP_NAME} />
+            <img src={theme.logo.image} alt={process.env.REACT_APP_APP_NAME} className={classes.logo} />
           </Link>
         </Grid>
       </div>

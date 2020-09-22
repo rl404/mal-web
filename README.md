@@ -48,7 +48,7 @@ Yes, everything is open-source and you can host both the backend and frontend by
     ```
     npm start
     ```
-6. [http://localhost:3001](http://localhost:3001) is ready.
+6. [http://localhost:3001](http://localhost:3001) is ready*.
 
 **Port depends on `PORT` in `.env` file.*
 

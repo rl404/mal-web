@@ -1,5 +1,5 @@
 <p align=center>
-    <img src="https://raw.githubusercontent.com/rl404/mal-web/master/public/images/logo.png" width='50%'>
+    <img src="https://raw.githubusercontent.com/rl404/mal-web/master/public/images/logo.svg" width='50%'>
 </p>
 
 *MyAnimeList Drive-Thru* or *MAL-DT* is a website where you can quick look at [MyAnimeList](https://myanimelist.net)'s contents (anime, manga, character, and voice actor). That's why it's called *drive-thru*.

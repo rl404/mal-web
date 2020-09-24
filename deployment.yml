@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
         - name: malweb
-          image: malweb:0.4.0
+          image: malweb:0.4.1
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80

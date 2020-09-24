@@ -126,16 +126,11 @@ const Header = React.forwardRef((props, ref) => {
     return { setTitle: setTitle };
   });
 
-  const [open, setOpen] = React.useState(false);
-  const [options, setOptions] = React.useState([]);
-  const [loading, setLoading] = React.useState(false);
-
-  React.useEffect(() => {
-    if (!open) {
-      setOptions([]);
-      setLoading(false);
-    }
-  }, [open]);
+  const [state, setState] = React.useState({
+    open: false,
+    options: [],
+    loading: false,
+  });
 
   const selectedValue = React.useRef(null);
 
@@ -145,7 +140,7 @@ const Header = React.forwardRef((props, ref) => {
     clearTimeout(timeout);
     timeout = setTimeout(() => {
       if (query.length >= 3) {
-        setLoading(true);
+        setState({ ...state, loading: true });
 
         const getData = async () => {
           const result = await getSearch('', query);
@@ -153,10 +148,7 @@ const Header = React.forwardRef((props, ref) => {
             if (selectedValue.current != null) {
               result.data.push(selectedValue.current)
             }
-
-            setOptions(result.data);
-            setOpen(true);
-            setLoading(false);
+            setState({ ...state, options: result.data, open: true, loading: false });
           }
         }
         getData();
@@ -186,12 +178,21 @@ const Header = React.forwardRef((props, ref) => {
             <SearchIcon />
           </div>
           <Autocomplete
-            open={open}
-            onClose={() => setOpen(false)}
-            options={options}
+            open={state.open}
+            onClose={() => setState({ ...state, open: false })}
+            options={state.options}
             groupBy={(option) => option.type}
             getOptionLabel={(option) => option.name}
             onChange={(e, v) => selectedValue.current = v}
+            filterOptions={(option, s) => {
+              var cleanOpt = [];
+              option.forEach(o => {
+                if (!selectedValue.current || o.id !== selectedValue.current.id) {
+                  cleanOpt.push(o);
+                }
+              });
+              return cleanOpt
+            }}
             renderOption={option => {
               return (
                 <Tooltip placement='left' title={
@@ -219,7 +220,7 @@ const Header = React.forwardRef((props, ref) => {
               />
             }
           />
-          {!loading ? null :
+          {!state.loading ? null :
             <div className={classes.loadingIcon}>
               <CircularProgress color='inherit' size={15} />
             </div>

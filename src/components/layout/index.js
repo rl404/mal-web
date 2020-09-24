@@ -29,9 +29,12 @@ const Layout = () => {
     setMobileState(!mobileState);
   };
 
-  const [darkState, setDarkState] = React.useState(false);
+  const defaultDarkState = localStorage.getItem('darkState') ? localStorage.getItem('darkState') === 'true' : false;
+
+  const [darkState, setDarkState] = React.useState(defaultDarkState);
   const darkToggle = () => {
     setDarkState(!darkState);
+    localStorage.setItem('darkState', !darkState);
   };
 
   const headerRef = React.useRef(null);

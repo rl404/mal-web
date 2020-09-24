@@ -8,6 +8,7 @@ import TableRow from '@material-ui/core/TableRow';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import LinkIcon from '@material-ui/icons/Link';
 import PersonIcon from '@material-ui/icons/Person';
+import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 
 import PropTypes from 'prop-types';
@@ -28,16 +29,38 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   marginTop: {
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(2),
   },
   row: {
-    padding: theme.spacing(1)
-  }
+    padding: theme.spacing(1),
+  },
+  more: {
+    marginTop: theme.spacing(1),
+    textAlign: 'center',
+  },
+  moreButton: {
+    margin: theme.spacing(1),
+  },
 }))
 
 const Details = (props) => {
   const data = props.data
   const classes = useStyles();
+
+  var relatedCount = 0;
+  Object.keys(data.related).forEach(key => {
+    relatedCount += data.related[key].length;
+  });
+
+  var count = 0;
+  const [state, setState] = React.useState(6);
+  const showMore = () => {
+    setState(state + 6);
+  };
+
+  const showAll = () => {
+    setState(relatedCount);
+  };
 
   return (
     <Grid container spacing={2}>
@@ -99,27 +122,52 @@ const Details = (props) => {
         <Grid item xs={12} className={classes.marginTop}>
           <StyledTitle icon={<LinkIcon />} title='Relations' />
           <Grid container spacing={1}>
-            {isRelatedEmpty(data.related) ?
+            {relatedCount === 0 ?
               <Typography>
                 No related anime/manga found.
               </Typography> :
               Object.keys(data.related).map(key => {
                 return data.related[key].map(r => {
-                  return (
-                    <Grid item md={4} sm={6} xs={12} key={r.id} className={classes.relation}>
-                      <EntryCard
-                        id={r.id}
-                        type={r.type}
-                        title={r.name}
-                        image={r.image}
-                        onClick={props.onClick}
-                        detail={[r.type, splitCamel(key)]}
-                      />
-                    </Grid>
-                  )
+                  count++
+                  if (count > state) {
+                    return null;
+                  } else {
+                    return (
+                      <Grid item md={4} sm={6} xs={12} key={r.id} className={classes.relation}>
+                        <EntryCard
+                          id={r.id}
+                          type={r.type}
+                          title={r.name}
+                          image={r.image}
+                          onClick={props.onClick}
+                          detail={[r.type, splitCamel(key)]}
+                        />
+                      </Grid>
+                    )
+                  }
                 })
               })}
           </Grid>
+          {relatedCount <= state ? null :
+            <div className={classes.more}>
+              <Button
+                size='small'
+                variant='contained'
+                color='primary'
+                className={classes.moreButton}
+                onClick={showMore}>
+                Show more
+                </Button>
+              <Button
+                size='small'
+                variant='contained'
+                color='primary'
+                className={classes.moreButton}
+                onClick={showAll}>
+                Show all ({relatedCount})
+                </Button>
+            </div>
+          }
         </Grid >
 
         <Grid item xs={12} className={classes.marginTop}>
@@ -137,13 +185,3 @@ Details.propTypes = {
 };
 
 export default Details;
-
-const isRelatedEmpty = (related) => {
-  var isEmpty = true;
-  Object.keys(related).forEach(key => {
-    if (related[key].length > 0) {
-      isEmpty = false;
-    }
-  });
-  return isEmpty;
-}

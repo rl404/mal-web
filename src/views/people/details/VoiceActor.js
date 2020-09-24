@@ -2,6 +2,8 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Skeleton from '@material-ui/lab/Skeleton';
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
 
 import PropTypes from 'prop-types';
 import * as cons from '../../../constant';
@@ -9,14 +11,26 @@ import DualCard from '../../../components/card/Dual';
 import { getEntryVA } from '../../../api';
 import ErrorArea from '../../../components/error/Error';
 
+const useStyles = makeStyles((theme) => ({
+  more: {
+    marginTop: theme.spacing(1),
+    textAlign: 'center',
+  },
+  moreButton: {
+    margin: theme.spacing(1),
+  },
+}));
+
 const VoiceActors = (props) => {
   const idRef = React.useRef(0);
   const data = props.data;
+  const classes = useStyles();
 
   const [state, setState] = React.useState({
     data: null,
     loading: true,
     error: null,
+    show: 20,
   });
 
   React.useEffect(() => {
@@ -35,39 +49,73 @@ const VoiceActors = (props) => {
     }
   });
 
+  var count = 0;
+  const showMore = () => {
+    setState({ ...state, show: state.show + 20 });
+  };
+
+  const showAll = () => {
+    setState({ ...state, show: state.data.length });
+  };
+
   return (
     <>
       {!state ? null : state.loading ? <VoiceActorLoading /> :
         state.error !== null ? <ErrorArea code={state.error.code} message={state.error.message} /> :
-          <Grid container spacing={1}>
-            {!state.data || state.data.length === 0 ?
-              <Typography>
-                No voice acting role found.
-              </Typography> :
-              state.data.map((va, i) => {
-                return (
-                  <Grid item lg={4} md={6} xs={12} key={i}>
-                    <DualCard
-                      onClick={props.onClick}
-                      left={{
-                        id: va.anime.id,
-                        type: cons.ANIME_TYPE,
-                        name: va.anime.name,
-                        image: va.anime.image,
-                        detail: va.anime.role,
-                      }}
-                      right={{
-                        id: va.character.id,
-                        type: cons.CHAR_TYPE,
-                        name: va.character.name,
-                        image: va.character.image,
-                        detail: va.character.role,
-                      }}
-                    />
-                  </Grid>
-                )
-              })}
-          </Grid>
+          <>
+            <Grid container spacing={1}>
+              {!state.data || state.data.length === 0 ?
+                <Typography>
+                  No voice acting role found.
+                </Typography> :
+                state.data.map((va, i) => {
+                  count++
+                  if (count > state.show) {
+                    return null;
+                  } else {
+                    return (
+                      <Grid item lg={4} md={6} xs={12} key={i}>
+                        <DualCard
+                          onClick={props.onClick}
+                          left={{
+                            id: va.anime.id,
+                            type: cons.ANIME_TYPE,
+                            name: va.anime.name,
+                            image: va.anime.image,
+                            detail: va.anime.role,
+                          }}
+                          right={{
+                            id: va.character.id,
+                            type: cons.CHAR_TYPE,
+                            name: va.character.name,
+                            image: va.character.image,
+                            detail: va.character.role,
+                          }}
+                        />
+                      </Grid>
+                    )
+                  }
+                })}
+            </Grid>
+            {state.data.length <= state.show ? null :
+              <div className={classes.more}>
+                <Button
+                  variant='contained'
+                  color='primary'
+                  className={classes.moreButton}
+                  onClick={showMore}>
+                  Show more
+                </Button>
+                <Button
+                  variant='contained'
+                  color='primary'
+                  className={classes.moreButton}
+                  onClick={showAll}>
+                  Show all ({state.data.length})
+                </Button>
+              </div>
+            }
+          </>
       }
     </>
   );

@@ -10,6 +10,7 @@ import ErrorArea from '../../../components/error/Error';
 import EntryCard from '../../../components/card/Entry';
 
 const Characters = (props) => {
+  const idRef = React.useRef(0);
   const data = props.data;
 
   const [state, setState] = React.useState({
@@ -19,7 +20,9 @@ const Characters = (props) => {
   });
 
   React.useEffect(() => {
-    if (state.data === null && state.error === null) {
+    if ((state.data === null && state.error === null) || idRef.current !== data.id) {
+      idRef.current = data.id;
+
       const getData = async () => {
         const result = await getEntryCharacters(cons.MANGA_TYPE, data.id)
         if (result.status === cons.CODE_OK) {

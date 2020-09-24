@@ -10,6 +10,7 @@ import EntryCard from '../../../components/card/Entry';
 import ErrorArea from '../../../components/error/Error';
 
 const Staff = (props) => {
+  const idRef = React.useRef(0);
   const data = props.data;
 
   const [state, setState] = React.useState({
@@ -19,7 +20,9 @@ const Staff = (props) => {
   });
 
   React.useEffect(() => {
-    if (state.data === null && state.error === null) {
+    if ((state.data === null && state.error === null) || idRef.current !== data.id) {
+      idRef.current = data.id;
+
       const getData = async () => {
         const result = await getEntryStaff(cons.PEOPLE_TYPE, data.id);
         if (result.status === cons.CODE_OK) {

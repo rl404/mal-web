@@ -10,6 +10,7 @@ import ErrorArea from '../../../components/error/Error';
 import DualCard from '../../../components/card/Dual';
 
 const Characters = (props) => {
+  const idRef = React.useRef(0);
   const data = props.data;
 
   const [state, setState] = React.useState({
@@ -19,7 +20,9 @@ const Characters = (props) => {
   });
 
   React.useEffect(() => {
-    if (state.data === null && state.error === null) {
+    if ((state.data === null && state.error === null) || idRef.current !== data.id) {
+      idRef.current = data.id;
+
       const getData = async () => {
         const result = await getEntryCharacters(cons.ANIME_TYPE, data.id)
         if (result.status === cons.CODE_OK) {
@@ -54,12 +57,12 @@ const Characters = (props) => {
                         detail: char.role,
                       }}
                       right={!char.voiceActors || char.voiceActors.length === 0 || char.voiceActors[0].role !== 'Japanese' ? null : {
-                          id: char.voiceActors[0].id,
-                          type: cons.PEOPLE_TYPE,
-                          name: char.voiceActors[0].name,
-                          image: char.voiceActors[0].image,
-                          detail: char.voiceActors[0].role,
-                        }
+                        id: char.voiceActors[0].id,
+                        type: cons.PEOPLE_TYPE,
+                        name: char.voiceActors[0].name,
+                        image: char.voiceActors[0].image,
+                        detail: char.voiceActors[0].role,
+                      }
                       }
                     />
                   </Grid>

@@ -11,6 +11,7 @@ import EntryCard from '../../../components/card/Entry';
 import StyledDivider from '../../../components/styled/Divider';
 
 const Ography = (props) => {
+  const idRef = React.useRef(0);
   const data = props.data;
 
   const [state, setState] = React.useState({
@@ -20,7 +21,9 @@ const Ography = (props) => {
   });
 
   React.useEffect(() => {
-    if (state.data === null && state.error === null) {
+    if ((state.data === null && state.error === null) || idRef.current !== data.id) {
+      idRef.current = data.id;
+
       const getData = async () => {
         var result
         if (props.type === cons.ANIME_TYPE) {

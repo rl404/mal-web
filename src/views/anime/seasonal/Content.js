@@ -18,6 +18,8 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 100,
   },
   tabs: {
+    position: 'sticky',
+    top: 70,
     borderRight: `1px solid ${theme.palette.divider}`,
     '& .MuiTab-root': {
       minWidth: 90

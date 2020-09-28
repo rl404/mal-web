@@ -28,6 +28,10 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.primary.main,
     }
   },
+  info: {
+    position: 'sticky',
+    top: 70,
+  },
   marginTop: {
     marginTop: theme.spacing(2),
   },
@@ -65,53 +69,55 @@ const Details = (props) => {
   return (
     <Grid container spacing={2}>
       <Grid item md={3} xs={12}>
-        <StyledTitle icon={<InfoOutlinedIcon size='small' />} title='Information' />
-        <Table size="small">
-          <TableBody>
-            <TableRow>
-              <TableCell className={classes.row} align='right'>Type</TableCell>
-              <TableCell className={classes.row} align='left'>{cons.MANGA_TYPES[data.type]}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell className={classes.row} align='right'>Volume</TableCell>
-              <TableCell className={classes.row} align='left'>{data.volume}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell className={classes.row} align='right'>Chapter</TableCell>
-              <TableCell className={classes.row} align='left'>{data.chapter}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell className={classes.row} align='right'>Status</TableCell>
-              <TableCell className={classes.row} align='left'>{cons.MANGA_STATUS[data.status]}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell className={classes.row} align='right'>Authors</TableCell>
-              <TableCell className={classes.row} align='left'>
-                {!data.authors || data.authors.length === 0 ? '?' : data.authors
-                  .map((p) => <Link to={`/people/${p.id}/${slugify(p.name)}`} key={'p' + p.id} className={classes.link}>{p.name} ({p.role})</Link>)
-                  .reduce((prev, curr) => [prev, <br key={prev} />, curr])
-                }
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell className={classes.row} align='right'>Serializations</TableCell>
-              <TableCell className={classes.row} align='left'>
-                {!data.serializations || data.serializations.length === 0 ? '?' : data.serializations
-                  .map((p) => <Link to={`/search/manga?producer=${p.id}`} key={'s' + p.id} className={classes.link}>{p.name}</Link>)
-                  .reduce((prev, curr) => [prev, <br key={prev} />, curr])
-                }
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell className={classes.row} align='right'>Start Date</TableCell>
-              <TableCell className={classes.row} align='left'>{parseTime(data.publishing.start, "MMM D, YYYY") !== '' ? parseTime(data.publishing.start, "MMM D, YYYY") : '?'}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell className={classes.row} align='right'>End Date</TableCell>
-              <TableCell className={classes.row} align='left'>{parseTime(data.publishing.end, "MMM D, YYYY") !== '' ? parseTime(data.publishing.end, "MMM D, YYYY") : '?'}</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
+        <div className={classes.info}>
+          <StyledTitle icon={<InfoOutlinedIcon size='small' />} title='Information' />
+          <Table size="small">
+            <TableBody>
+              <TableRow>
+                <TableCell className={classes.row} align='right'>Type</TableCell>
+                <TableCell className={classes.row} align='left'>{cons.MANGA_TYPES[data.type]}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className={classes.row} align='right'>Volume</TableCell>
+                <TableCell className={classes.row} align='left'>{data.volume}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className={classes.row} align='right'>Chapter</TableCell>
+                <TableCell className={classes.row} align='left'>{data.chapter}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className={classes.row} align='right'>Status</TableCell>
+                <TableCell className={classes.row} align='left'>{cons.MANGA_STATUS[data.status]}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className={classes.row} align='right'>Authors</TableCell>
+                <TableCell className={classes.row} align='left'>
+                  {!data.authors || data.authors.length === 0 ? '?' : data.authors
+                    .map((p) => <Link to={`/people/${p.id}/${slugify(p.name)}`} key={'p' + p.id} className={classes.link}>{p.name} ({p.role})</Link>)
+                    .reduce((prev, curr) => [prev, <br key={prev} />, curr])
+                  }
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className={classes.row} align='right'>Serializations</TableCell>
+                <TableCell className={classes.row} align='left'>
+                  {!data.serializations || data.serializations.length === 0 ? '?' : data.serializations
+                    .map((p) => <Link to={`/search/manga?producer=${p.id}`} key={'s' + p.id} className={classes.link}>{p.name}</Link>)
+                    .reduce((prev, curr) => [prev, <br key={prev} />, curr])
+                  }
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className={classes.row} align='right'>Start Date</TableCell>
+                <TableCell className={classes.row} align='left'>{parseTime(data.publishing.start, "MMM D, YYYY") !== '' ? parseTime(data.publishing.start, "MMM D, YYYY") : '?'}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className={classes.row} align='right'>End Date</TableCell>
+                <TableCell className={classes.row} align='left'>{parseTime(data.publishing.end, "MMM D, YYYY") !== '' ? parseTime(data.publishing.end, "MMM D, YYYY") : '?'}</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </div>
       </Grid>
       <Grid item md xs={12} container>
 

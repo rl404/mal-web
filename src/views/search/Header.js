@@ -9,6 +9,9 @@ import IconButton from '@material-ui/core/IconButton';
 import TuneIcon from '@material-ui/icons/Tune';
 import Tooltip from '@material-ui/core/Tooltip';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import Checkbox from '@material-ui/core/Checkbox';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import { makeStyles } from '@material-ui/core/styles';
 
 import PropTypes from 'prop-types';
@@ -16,7 +19,7 @@ import * as cons from '../../constant';
 import { capitalize } from '../../utils';
 import StyledDivider from '../../components/styled/Divider';
 import { Link } from 'react-router-dom';
-import { getProducers } from '../../api';
+import { getGenres, getProducers } from '../../api';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -77,6 +80,7 @@ const SearchHeader = (props) => {
     season: '-',
     year: '',
     producer: props.producer,
+    genre: props.genre,
     order: '-',
   };
 
@@ -87,18 +91,24 @@ const SearchHeader = (props) => {
     setting: false,
   });
 
-  const [auto, setAuto] = React.useState({
+  const [producerAuto, setProducerAuto] = React.useState({
     options: [],
     optionMap: [],
-    open: false,
+    loading: true,
+  });
+
+  const [genreAuto, setGenreAuto] = React.useState({
+    options: [],
+    optionMap: [],
     loading: true,
   });
 
   const changeType = (e) => {
     const t = e.target.value;
-    setState({ ...state, type: t, advQuery: { ...defaultAdvQuery, producer: 0 }, setting: false });
-    setAuto({ options: [], optionMap: [], open: false, loading: true });
-    props.updateQuery(t, state.query, { ...defaultAdvQuery, producer: 0 });
+    setState({ ...state, type: t, advQuery: { ...defaultAdvQuery, producer: 0, genre: [] }, setting: false });
+    setProducerAuto({ options: [], optionMap: [], loading: true });
+    setGenreAuto({ options: [], optionMap: [], loading: true });
+    props.updateQuery(t, state.query, { ...defaultAdvQuery, producer: 0, genre: [] });
   };
 
   var timeout = 0
@@ -114,15 +124,15 @@ const SearchHeader = (props) => {
   const toggleSetting = () => {
     setState({ ...state, setting: !state.setting });
 
-    if (auto.options.length === 0) {
+    if (producerAuto.options.length === 0) {
       const getOptions = async () => {
         const result = await getProducers(state.type);
         if (result.status === cons.CODE_OK) {
           var m = [];
           result.data.forEach(k => { m[k.id] = k.name })
 
-          setAuto({
-            ...auto,
+          setProducerAuto({
+            ...producerAuto,
             loading: false,
             options: result.data.map(o => {
               const letter = o.name[0].toUpperCase();
@@ -131,6 +141,24 @@ const SearchHeader = (props) => {
                 ...o,
               }
             }),
+            optionMap: m,
+          });
+        }
+      };
+      getOptions();
+    }
+
+    if (genreAuto.options.length === 0) {
+      const getOptions = async () => {
+        const result = await getGenres();
+        if (result.status === cons.CODE_OK) {
+          var m = [];
+          result.data.[state.type].forEach(k => { m[k.id] = k.name })
+
+          setGenreAuto({
+            ...genreAuto,
+            loading: false,
+            options: result.data.[state.type],
             optionMap: m,
           });
         }
@@ -203,6 +231,16 @@ const SearchHeader = (props) => {
     setState({ ...state, advQuery: { ...state.advQuery, producer: producer } });
     props.updateQuery(state.type, state.query, { ...state.advQuery, producer: producer });
   };
+
+  const changeGenre = (v) => {
+    var genre = [];
+    if (v && v.length > 0) {
+      genre = v.map(g => g.id);
+    }
+
+    setState({ ...state, advQuery: { ...state.advQuery, genre: genre } });
+    props.updateQuery(state.type, state.query, { ...state.advQuery, genre: genre });
+  }
 
   var orderList = {
     [cons.ANIME_TYPE]: {
@@ -303,16 +341,13 @@ const SearchHeader = (props) => {
             <Grid container spacing={1}>
               <Grid lg={2} md={3} sm={4} xs={6} item>
                 <Autocomplete
-                  open={auto.open}
-                  loading={auto.loading}
-                  onOpen={() => setAuto({ ...auto, open: true })}
-                  onClose={() => setAuto({ ...auto, open: false })}
-                  options={auto.options.sort((a, b) => -b.letter.localeCompare(a.letter))}
+                  loading={producerAuto.loading}
+                  options={producerAuto.options.sort((a, b) => -b.letter.localeCompare(a.letter))}
                   getOptionLabel={(option) => !option.name ? '' : option.name}
                   groupBy={(option) => option.letter}
                   onChange={(e, v) => changeProducer(v)}
                   getOptionSelected={(o, v) => o.id === v.id}
-                  value={!state.advQuery.producer || state.advQuery.producer === 0 ? null : { id: state.advQuery.producer, name: auto.optionMap[state.advQuery.producer] }}
+                  value={!state.advQuery.producer || state.advQuery.producer === 0 ? null : { id: state.advQuery.producer, name: producerAuto.optionMap[state.advQuery.producer] }}
 
                   renderInput={params =>
                     <TextField
@@ -448,6 +483,39 @@ const SearchHeader = (props) => {
                   onChange={changeYear}
                   fullWidth />
               </Grid>
+
+              <Grid lg={2} md={3} sm={4} xs={6} item>
+                <Autocomplete
+                  multiple
+                  disableCloseOnSelect
+                  loading={genreAuto.loading}
+                  options={genreAuto.options}
+                  getOptionLabel={(option) => !option.name ? '' : option.name}
+                  onChange={(e, v) => changeGenre(v)}
+                  getOptionSelected={(o, v) => o.id === v.id}
+                  value={!state.advQuery.genre || state.advQuery.genre.length === 0 ? [] : state.advQuery.genre.map(g => ({ id: g, name: genreAuto.optionMap[g] }))}
+
+                  renderOption={(option, { selected }) => (
+                    <>
+                      <Checkbox
+                        color='primary'
+                        icon={<CheckBoxOutlineBlankIcon color='primary' fontSize="small" />}
+                        checkedIcon={<CheckBoxIcon color='primary' fontSize="small" />}
+                        checked={selected} />
+                      {option.name}
+                    </>
+                  )}
+
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label='Genre'
+                      placeholder='any'
+                      fullWidth
+                    />
+                  )}
+                />
+              </Grid>
             </Grid>
             <StyledDivider />
           </>
@@ -459,6 +527,7 @@ const SearchHeader = (props) => {
 SearchHeader.propTypes = {
   type: PropTypes.oneOf(cons.MAIN_TYPES).isRequired,
   producer: PropTypes.number.isRequired,
+  genre: PropTypes.arrayOf(PropTypes.number).isRequired,
   updateQuery: PropTypes.func.isRequired,
 };
 

@@ -30,6 +30,7 @@ const SearchContent = React.forwardRef((props, ref) => {
     page: 1,
     advQuery: {
       producer: props.producer,
+      genre: props.genre,
     },
     error: null,
   });
@@ -144,6 +145,8 @@ const SearchContent = React.forwardRef((props, ref) => {
 
 SearchContent.propTypes = {
   type: PropTypes.oneOf(cons.MAIN_TYPES).isRequired,
+  producer: PropTypes.number.isRequired,
+  genre: PropTypes.arrayOf(PropTypes.number).isRequired,
   onClick: PropTypes.func.isRequired,
 };
 

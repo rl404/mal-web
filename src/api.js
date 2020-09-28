@@ -103,6 +103,9 @@ export async function getSearch(type, query, page = 1, advQuery) {
                     baseQuery += `&magazine=${advQuery.producer}`;
                 }
             }
+            if (advQuery.genre && advQuery.genre.length > 0) {
+                baseQuery += `&genre=${advQuery.genre.join()}`;
+            }
         }
 
         const result = await fetch(`${Host}/search/${type}?${baseQuery}`)
@@ -134,6 +137,13 @@ export async function getProducers(type) {
         const result = await fetch(`${Host}/magazines`)
         return result.json()
     }
+}
+
+// Genre endpoints.
+
+export async function getGenres() {
+    const result = await fetch(`${Host}/genres`)
+    return result.json()
 }
 
 // Re-parse endpoint.

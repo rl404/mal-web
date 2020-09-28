@@ -10,11 +10,21 @@ const Search = (props) => {
   };
 
   const producer = new URLSearchParams(props.location.search).get('producer');
+  const genre = new URLSearchParams(props.location.search).get('genre');
 
   return (
     <>
-      <SearchHeader updateQuery={updateQuery} type={props.match.params.type} producer={!producer ? 0 : parseInt(producer)} />
-      <SearchContent ref={ref} onClick={props.showEntryDrawer} type={props.match.params.type} producer={!producer ? 0 : parseInt(producer)} />
+      <SearchHeader
+        updateQuery={updateQuery}
+        type={props.match.params.type}
+        genre={!genre ? [] : [parseInt(genre)]}
+        producer={!producer ? 0 : parseInt(producer)} />
+      <SearchContent
+        ref={ref}
+        onClick={props.showEntryDrawer}
+        type={props.match.params.type}
+        genre={!genre ? [] : [parseInt(genre)]}
+        producer={!producer ? 0 : parseInt(producer)} />
     </>
   )
 };

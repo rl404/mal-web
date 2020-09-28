@@ -20,6 +20,7 @@ import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import { makeStyles } from '@material-ui/core/styles';
 
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { getEntryDetail, reparse } from '../../../api';
 import * as cons from '../../../constant';
 import { capitalize, parseTime } from '../../../utils';
@@ -204,7 +205,9 @@ const AnimeDetails = (props) => {
 
               {state.data.genres.map(genre => {
                 return (
-                  <Chip size='small' label={genre.name} color='primary' key={genre.id} className={classes.genre} />
+                  <Link to={`/search/anime?genre=${genre.id}`} key={genre.id}>
+                    <Chip size='small' label={genre.name} color='primary' className={classes.genre} clickable />
+                  </Link>
                 )
               })}
             </Grid>

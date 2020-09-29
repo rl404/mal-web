@@ -63,8 +63,8 @@ const SeasonalContent = React.forwardRef((props, ref) => {
             [cons.ANIME_SPECIAL_ID]: [],
           };
           result.data.forEach(d => {
-            if (splitData.[d.type] !== undefined) {
-              splitData.[d.type].push(d);
+            if (splitData[d.type] !== undefined) {
+              splitData[d.type].push(d);
             }
           });
           setState({ ...state, data: splitData, loading: false });

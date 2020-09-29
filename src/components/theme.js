@@ -84,5 +84,5 @@ const themes = {
 }
 
 export default function getTheme(theme) {
-  return themes.[theme];
+  return themes[theme];
 }

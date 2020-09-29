@@ -81,6 +81,7 @@ const SearchHeader = (props) => {
     year: '',
     producer: props.producer,
     genre: props.genre,
+    genre2: [],
     order: '-',
   };
 
@@ -103,12 +104,18 @@ const SearchHeader = (props) => {
     loading: true,
   });
 
+  const [genre2Auto, setGenre2Auto] = React.useState({
+    options: [],
+    optionMap: [],
+    loading: true,
+  });
+
   const changeType = (e) => {
     const t = e.target.value;
-    setState({ ...state, type: t, advQuery: { ...defaultAdvQuery, producer: 0, genre: [] }, setting: false });
+    setState({ ...state, type: t, advQuery: { ...defaultAdvQuery, producer: 0, genre: [], genre2: [] }, setting: false });
     setProducerAuto({ options: [], optionMap: [], loading: true });
     setGenreAuto({ options: [], optionMap: [], loading: true });
-    props.updateQuery(t, state.query, { ...defaultAdvQuery, producer: 0, genre: [] });
+    props.updateQuery(t, state.query, { ...defaultAdvQuery, producer: 0, genre: [], genre2: [] });
   };
 
   var timeout = 0
@@ -153,12 +160,22 @@ const SearchHeader = (props) => {
         const result = await getGenres();
         if (result.status === cons.CODE_OK) {
           var m = [];
-          result.data.[state.type].forEach(k => { m[k.id] = k.name })
+          result.data[state.type].forEach(k => { m[k.id] = k.name })
 
           setGenreAuto({
             ...genreAuto,
             loading: false,
-            options: result.data.[state.type],
+            options: result.data[state.type],
+            optionMap: m,
+          });
+
+          setGenre2Auto({
+            ...genre2Auto,
+            loading: false,
+            options: result.data[state.type].map(o =>({
+              ...o,
+              id: o.id*-1,
+            })),
             optionMap: m,
           });
         }
@@ -240,6 +257,11 @@ const SearchHeader = (props) => {
 
     setState({ ...state, advQuery: { ...state.advQuery, genre: genre } });
     props.updateQuery(state.type, state.query, { ...state.advQuery, genre: genre });
+  }
+
+  const changeGenre2 = (v) => {
+    setState({ ...state, advQuery: { ...state.advQuery, genre2: v.map(g => g.id) } });
+    props.updateQuery(state.type, state.query, { ...state.advQuery, genre2: v.map(g => g.id) });
   }
 
   var orderList = {
@@ -509,7 +531,39 @@ const SearchHeader = (props) => {
                   renderInput={(params) => (
                     <TextField
                       {...params}
-                      label='Genre'
+                      label='Included Genre'
+                      placeholder='any'
+                      fullWidth
+                    />
+                  )}
+                />
+              </Grid>
+
+              <Grid lg={2} md={3} sm={4} xs={6} item>
+                <Autocomplete
+                  multiple
+                  disableCloseOnSelect
+                  loading={genre2Auto.loading}
+                  options={genre2Auto.options}
+                  getOptionLabel={(option) => !option.name ? '' : option.name}
+                  onChange={(e, v) => changeGenre2(v)}
+                  getOptionSelected={(o, v) => o.id === v.id}
+
+                  renderOption={(option, { selected }) => (
+                    <>
+                      <Checkbox
+                        color='primary'
+                        icon={<CheckBoxOutlineBlankIcon color='primary' fontSize="small" />}
+                        checkedIcon={<CheckBoxIcon color='primary' fontSize="small" />}
+                        checked={selected} />
+                      {option.name}
+                    </>
+                  )}
+
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label='Excluded Genre'
                       placeholder='any'
                       fullWidth
                     />

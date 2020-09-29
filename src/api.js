@@ -104,6 +104,9 @@ export async function getSearch(type, query, page = 1, advQuery) {
                 }
             }
             if (advQuery.genre && advQuery.genre.length > 0) {
+                if (advQuery.genre2 && advQuery.genre2.length > 0) {
+                    advQuery.genre = [...advQuery.genre, ...advQuery.genre2];
+                }
                 baseQuery += `&genre=${advQuery.genre.join()}`;
             }
         }

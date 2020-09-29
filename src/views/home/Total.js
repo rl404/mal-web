@@ -72,7 +72,7 @@ const Total = () => {
                   <Link to={'/search/' + key} className={classes.link}>
                     <StatsCard
                       width={200}
-                      icon={iconMap.[key]}
+                      icon={iconMap[key]}
                       data={state.data[key].toLocaleString()}
                       name={key}
                     />

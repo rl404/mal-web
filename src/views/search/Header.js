@@ -180,6 +180,8 @@ const SearchHeader = (props) => {
         if (result.status === cons.CODE_OK) {
           var m = [];
           result.data[state.type].forEach(k => { m[k.id] = k.name })
+          var m2 = [];
+          result.data[state.type].forEach(k => { m2[k.id * -1] = k.name })
 
           setGenreAuto({
             ...genreAuto,
@@ -195,7 +197,7 @@ const SearchHeader = (props) => {
               ...o,
               id: o.id * -1,
             })),
-            optionMap: m,
+            optionMap: m2,
           });
         }
       };
@@ -316,7 +318,7 @@ const SearchHeader = (props) => {
 
   return (
     <div className={classes.root}>
-      <Grid container alignItems='space-between' spacing={1} className={classes.top}>
+      <Grid container spacing={1} className={classes.top}>
         <Grid item xs={12} sm='auto' md='auto'>
           <Typography variant='h6'>
             <b>Search</b>
@@ -571,6 +573,7 @@ const SearchHeader = (props) => {
                   getOptionLabel={(option) => !option.name ? '' : option.name}
                   onChange={(e, v) => changeGenre2(v)}
                   getOptionSelected={(o, v) => o.id === v.id}
+                  value={!state.advQuery.genre2 || state.advQuery.genre2.length === 0 ? [] : state.advQuery.genre2.map(g => ({ id: g, name: genre2Auto.optionMap[g] }))}
 
                   renderOption={(option, { selected }) => (
                     <>

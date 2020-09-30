@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
   info: {
     position: 'sticky',
-    top: 70,
+    top: 150,
   },
   marginTop: {
     marginTop: theme.spacing(2),

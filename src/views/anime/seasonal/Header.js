@@ -18,11 +18,21 @@ import StyledDivider from '../../../components/styled/Divider';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    paddingBottom: theme.spacing(0.5),
+    background: theme.palette.background.default,
+    position: 'sticky',
+    top: 20,
+    [theme.breakpoints.up('sm')]: {
+      paddingTop: theme.spacing(2),
+      top: 64,
+    },
+    zIndex: 2,
+  },
+  top: {
     marginBottom: theme.spacing(0.5),
   },
   seasonInput: {
     verticalAlign: 'middle',
-    marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     '& .MuiInputBase-root': {
       fontFamily: theme.typography.h6.fontFamily,
@@ -33,6 +43,10 @@ const useStyles = makeStyles((theme) => ({
       '& .MuiSelect-root': {
         paddingTop: theme.spacing(0.5),
         paddingBottom: theme.spacing(0.5),
+        paddingRight: 14,
+      },
+      '& svg': {
+        display: 'none',
       },
     },
   },
@@ -88,39 +102,39 @@ const SeasonalHeader = (props) => {
   };
 
   return (
-    <>
-      <Grid container direction='row' alignItems='center' spacing={1} className={classes.root}>
-        <Grid item>
-          {iconMap[state.season]}
-        </Grid>
-        <Grid item xs>
+    <div className={classes.root}>
+      <Grid container spacing={1} className={classes.top}>
+        <Grid item xs={12} sm='auto'>
           <Typography variant='h6'>
-            <b>
-              Anime
-              <TextField
-                select
-                variant='outlined'
-                value={state.season}
-                onChange={changeSeason}
-                size='small'
-                className={classes.seasonInput}
-              >
-                {cons.SEASONS.map((s) => (
-                  <MenuItem key={s} value={s}>
-                    <b>{capitalize(s)}</b>
-                  </MenuItem>
-                ))}
-              </TextField>
-              <TextField
-                variant='outlined'
-                defaultValue={state.year}
-                onChange={changeYear}
-                size='small'
-                className={classes.yearInput} />
-            </b>
+            {iconMap[state.season]}
+            <b> Anime</b>
           </Typography>
         </Grid>
-        <Grid item>
+        <Grid item xs sm>
+          <Typography variant='h6'>
+            <TextField
+              select
+              variant='outlined'
+              value={state.season}
+              onChange={changeSeason}
+              size='small'
+              className={classes.seasonInput}
+            >
+              {cons.SEASONS.map((s) => (
+                <MenuItem key={s} value={s}>
+                  <b>{capitalize(s)}</b>
+                </MenuItem>
+              ))}
+            </TextField>
+            <TextField
+              variant='outlined'
+              defaultValue={state.year}
+              onChange={changeYear}
+              size='small'
+              className={classes.yearInput} />
+          </Typography>
+        </Grid>
+        <Grid item xs='auto'>
           <FormControlLabel
             control={<Checkbox checked={state.hentai}
               onChange={setHentai}
@@ -131,7 +145,7 @@ const SeasonalHeader = (props) => {
         </Grid>
       </Grid>
       <StyledDivider />
-    </>
+    </div>
   );
 };
 

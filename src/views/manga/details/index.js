@@ -78,6 +78,15 @@ const useStyles = makeStyles((theme) => ({
   },
   tab: {
     marginBottom: theme.spacing(2),
+    position: 'sticky',
+    top: 52,
+    [`${theme.breakpoints.up('xs')} and (orientation: landscape)`]: {
+      top: 48,
+    },
+    [theme.breakpoints.up('sm')]: {
+      top: 60,
+    },
+    zIndex: 2,
   },
   message: {
     marginTop: 5,

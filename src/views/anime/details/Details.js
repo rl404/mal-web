@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
   info: {
     position:'sticky',
-    top: 70.
+    top: 150.
   },
   relation: {
     height: 130,

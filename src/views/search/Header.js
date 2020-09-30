@@ -23,7 +23,26 @@ import { getGenres, getProducers } from '../../api';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginBottom: theme.spacing(0.5),
+    paddingTop: theme.spacing(2),
+    background: theme.palette.background.default,
+    position: 'sticky',
+    top: 56,
+    [`${theme.breakpoints.up('xs')} and (orientation: landscape)`]: {
+      top: 48,
+    },
+    [theme.breakpoints.up('sm')]: {
+      top: 64,
+    },
+    zIndex: 2,
+  },
+  top: {
+    marginBottom: theme.spacing(1),
+  },
+  adv: {
+    paddingBottom: theme.spacing(2),
+  },
+  advIcon: {
+    textAlign: 'right',
   },
   link: {
     textDecoration: 'none',
@@ -62,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
       '& .MuiInputBase-input': {
         paddingTop: theme.spacing(1),
         paddingBottom: theme.spacing(1),
-        width: 300,
+        maxWidth: 300,
       },
     },
   },
@@ -172,9 +191,9 @@ const SearchHeader = (props) => {
           setGenre2Auto({
             ...genre2Auto,
             loading: false,
-            options: result.data[state.type].map(o =>({
+            options: result.data[state.type].map(o => ({
               ...o,
-              id: o.id*-1,
+              id: o.id * -1,
             })),
             optionMap: m,
           });
@@ -296,9 +315,9 @@ const SearchHeader = (props) => {
   };
 
   return (
-    <>
-      <Grid container alignItems='center' spacing={1} className={classes.root}>
-        <Grid item xs>
+    <div className={classes.root}>
+      <Grid container alignItems='space-between' spacing={1} className={classes.top}>
+        <Grid item xs={12} sm='auto' md='auto'>
           <Typography variant='h6'>
             <b>Search</b>
             <TextField
@@ -315,6 +334,10 @@ const SearchHeader = (props) => {
                 </MenuItem>
               ))}
             </TextField>
+          </Typography>
+        </Grid>
+        <Grid item xs={12} sm='auto' md>
+          <Typography variant='h6'>
             <TextField
               placeholder='Search...'
               variant='outlined'
@@ -331,7 +354,7 @@ const SearchHeader = (props) => {
               }} />
           </Typography>
         </Grid>
-        <Grid item>
+        <Grid item xs={6} sm={6} md='auto' >
           <TextField
             select
             label='Sort'
@@ -347,7 +370,7 @@ const SearchHeader = (props) => {
           </TextField>
         </Grid>
         {state.type !== cons.ANIME_TYPE && state.type !== cons.MANGA_TYPE ? null :
-          <Grid item>
+          <Grid item xs={6} sm={6} md='auto' className={classes.advIcon}>
             <Tooltip title='Advanced Query' placement='left'>
               <IconButton onClick={toggleSetting}>
                 <TuneIcon />
@@ -360,7 +383,7 @@ const SearchHeader = (props) => {
       {
         !state.setting ? null :
           <>
-            <Grid container spacing={1}>
+            <Grid container spacing={2} className={classes.adv}>
               <Grid lg={2} md={3} sm={4} xs={6} item>
                 <Autocomplete
                   loading={producerAuto.loading}
@@ -574,7 +597,7 @@ const SearchHeader = (props) => {
             <StyledDivider />
           </>
       }
-    </>
+    </div>
   )
 };
 

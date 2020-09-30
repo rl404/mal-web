@@ -13,6 +13,19 @@ import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    paddingTop: theme.spacing(2),
+    background: theme.palette.background.default,
+    position: 'sticky',
+    top: 56,
+    [`${theme.breakpoints.up('xs')} and (orientation: landscape)`]: {
+      top: 48,
+    },
+    [theme.breakpoints.up('sm')]: {
+      top: 64,
+    },
+    zIndex: 2,
+  },
+  top: {
     marginBottom: theme.spacing(0.5),
   },
   link: {
@@ -88,8 +101,8 @@ const TopHeader = (props) => {
   };
 
   return (
-    <>
-      <Grid container alignItems='center' spacing={1} className={classes.root}>
+    <div className={classes.root}>
+      <Grid container alignItems='center' spacing={1} className={classes.top}>
         <Grid item xs>
           <Typography variant='h6'>
             <b>Top</b>
@@ -128,7 +141,7 @@ const TopHeader = (props) => {
         </Grid>
       </Grid>
       <StyledDivider />
-    </>
+    </div>
   );
 };
 

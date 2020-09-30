@@ -15,14 +15,21 @@ import CoverCardLoading from '../../../components/card/loading/Cover';
 
 const useStyles = makeStyles((theme) => ({
   tabArea: {
-    minWidth: 100,
+    [theme.breakpoints.down('xs')]: {
+      background: theme.palette.background.default,
+      width: 0,
+    },
+    position: 'sticky',
+    top: 119,
+    zIndex: 2,
   },
   tabs: {
     position: 'sticky',
-    top: 70,
+    top: 150,
+    zIndex: 2,
     borderRight: `1px solid ${theme.palette.divider}`,
     '& .MuiTab-root': {
-      minWidth: 90
+      minWidth: 90,
     },
     [theme.breakpoints.down('xs')]: {
       display: 'none',
@@ -121,7 +128,9 @@ const SeasonalContent = React.forwardRef((props, ref) => {
                   onChange={tabChange}
                   indicatorColor='primary'
                   textColor='primary'
-                  variant='fullWidth'
+                  centered
+                  variant="scrollable"
+                  scrollButtons="on"
                   className={classes.tabsMobile}
                 >
                   {Object.keys(state.data).map((key, i) => {

@@ -138,22 +138,22 @@ const PeopleDetails = (props) => {
 
             <Grid item md xs={12}>
               <Grid container spacing={1}>
-                <Grid item xs>
+                <Grid item xs={12} sm>
                   <Typography variant='h6'>
                     <b>{state.data.name}</b>
                   </Typography>
                 </Grid>
-                <Grid item>
+                <Grid item xs sm='auto'>
                   <Typography variant='subtitle2' className={classes.favorite}>
                     Favorites: {state.data.favorite.toLocaleString()}
                   </Typography>
                 </Grid>
-                <Grid item>
+                <Grid item xs='auto'>
                   <Typography variant='subtitle2' className={classes.favorite}>
                     {refreshState.message}
                   </Typography>
                 </Grid>
-                <Grid item>
+                <Grid item xs='auto'>
                   <Tooltip placement='bottom-end' title={parseTime(state.meta.parsedAt, 'YYYY-MM-DD HH:mm:ss')}>
                     {refreshState.loading ?
                       <CircularProgress color='inherit' size={15} className={classes.favorite} /> :
@@ -163,7 +163,7 @@ const PeopleDetails = (props) => {
                     }
                   </Tooltip>
                 </Grid>
-                <Grid item>
+                <Grid item xs='auto'>
                   <a href={`${cons.MAL_URL}/${cons.PEOPLE_TYPE}/${state.data.id}`} target='_blank' rel='noopener noreferrer'>
                     <Tooltip placement='bottom-end' title='MyAnimeList Page'>
                       <IconButton size='small'>

@@ -145,7 +145,7 @@ const CharacterDetails = (props) => {
 
             <Grid item md xs={12}>
               <Grid container spacing={1}>
-                <Grid item xs>
+                <Grid item xs={12} sm>
                   <Typography variant="h6">
                     <b>{state.data.name}</b>
                     {state.data.nickname === '' && state.data.kanjiName === '' ? null :
@@ -157,17 +157,17 @@ const CharacterDetails = (props) => {
                     }
                   </Typography>
                 </Grid>
-                <Grid item>
+                <Grid item xs sm='auto'>
                   <Typography variant="subtitle2" className={classes.favorite}>
                     Favorites: {state.data.favorite.toLocaleString()}
                   </Typography>
                 </Grid>
-                <Grid item>
+                <Grid item xs='auto'>
                   <Typography variant='subtitle2' className={classes.favorite}>
                     {refreshState.message}
                   </Typography>
                 </Grid>
-                <Grid item>
+                <Grid item xs='auto'>
                   <Tooltip placement='bottom-end' title={parseTime(state.meta.parsedAt, 'YYYY-MM-DD HH:mm:ss')}>
                     {refreshState.loading ?
                       <CircularProgress color='inherit' size={15} className={classes.favorite} /> :
@@ -177,7 +177,7 @@ const CharacterDetails = (props) => {
                     }
                   </Tooltip>
                 </Grid>
-                <Grid item>
+                <Grid item xs='auto'>
                   <a href={`${cons.MAL_URL}/${cons.CHAR_TYPE}/${state.data.id}`} target='_blank' rel='noopener noreferrer'>
                     <Tooltip placement='bottom-end' title='MyAnimeList Page'>
                       <IconButton size='small'>
@@ -214,9 +214,9 @@ const CharacterDetails = (props) => {
                   indicatorColor='primary'
                   textColor='primary'
                   centered
-                >
-                  <Tab label='Animeography' {...a11yProps(0)} />
-                  <Tab label='Mangaography' {...a11yProps(1)} />
+                  >
+                  <Tab label='Anime' {...a11yProps(0)} />
+                  <Tab label='Manga' {...a11yProps(1)} />
                   <Tab label='Voice Actors' {...a11yProps(2)} />
                 </Tabs>
               </Paper>

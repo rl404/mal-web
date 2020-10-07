@@ -3,7 +3,7 @@ version: '2.4'
 services:
   mal-web:
     container_name: mal-web
-    image: malweb:0.6.1
+    image: malweb:0.6.2
     build: .
     ports:
       - 3001:80

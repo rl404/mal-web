@@ -1,0 +1,22 @@
+name: deploy
+
+on:
+  push:
+    tags:
+      - '*'
+jobs:
+  deploy:
+    Name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH and deploy
+        uses: appleboy/ssh-action@v0.1.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.KEY }}
+          script: |
+            cd ${{ secrets.MALPATH }}
+            git pull
+            docker-compose build
+            kubectl apply -f deployment.yml

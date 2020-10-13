@@ -2,67 +2,68 @@ import * as cons from './constant';
 
 const Host = process.env.REACT_APP_API_HOST
 
+// Cache handling.
+var cache = []
+async function getCache(url) {
+    if (cache[url]) {
+        return cache[url]
+    }
+    const result = await fetch(url)
+    const data = await result.json()
+    cache[url] = data
+    return data
+}
+
 // Summary endpoints.
 
 export async function getMainTotal() {
-    const result = await fetch(`${Host}/summary/main-total`)
-    return result.json()
+    return getCache(`${Host}/summary/main-total`)
 }
 
 export async function getYearlyScore() {
-    const result = await fetch(`${Host}/summary/yearly-score`)
-    return result.json()
+    return getCache(`${Host}/summary/yearly-score`)
 }
 
 // Entry (anime, manga, character, people) endpoints.
 
 export async function getEntryDetail(type, id) {
-    const result = await fetch(`${Host}/${type}/${id}`)
-    return result.json()
+    return getCache(`${Host}/${type}/${id}`)
 }
 
 export async function getEntryStats(type, id) {
-    const result = await fetch(`${Host}/${type}/${id}/stats`)
-    return result.json()
+    return getCache(`${Host}/${type}/${id}/stats`)
 }
 
 export async function getEntryCharacters(type, id) {
-    const result = await fetch(`${Host}/${type}/${id}/characters`)
-    return result.json()
+    return getCache(`${Host}/${type}/${id}/characters`)
 }
 
 export async function getEntryStaff(type, id) {
-    const result = await fetch(`${Host}/${type}/${id}/staff`)
-    return result.json()
+    return getCache(`${Host}/${type}/${id}/staff`)
 }
 
 export async function getEntryAnime(type, id) {
-    const result = await fetch(`${Host}/${type}/${id}/anime`)
-    return result.json()
+    return getCache(`${Host}/${type}/${id}/anime`)
 }
 
 export async function getEntryManga(type, id) {
-    const result = await fetch(`${Host}/${type}/${id}/manga`)
-    return result.json()
+    return getCache(`${Host}/${type}/${id}/manga`)
 }
 
 export async function getEntryVA(type, id) {
-    const result = await fetch(`${Host}/${type}/${id}/va`)
-    return result.json()
+    return getCache(`${Host}/${type}/${id}/va`)
 }
 
 // Seasonal anime endpoints.
 
 export async function getSeasonalAnime(season, year) {
-    const result = await fetch(`${Host}/season?season=${season}&year=${year}`)
-    return result.json()
+    return getCache(`${Host}/season?season=${season}&year=${year}`)
 }
 
 // Top list endpoints.
 
 export async function getTopList(mainType, topType, page, season = '', year = 0) {
-    const result = await fetch(`${Host}/top/${mainType}?type=${topType}&page=${page}&season=${season}&year=${year}`)
-    return result.json()
+    return getCache(`${Host}/top/${mainType}?type=${topType}&page=${page}&season=${season}&year=${year}`)
 }
 
 // Search endpoints.
@@ -116,8 +117,7 @@ export async function getSearch(type, query, page = 1, advQuery) {
             }
         }
 
-        const result = await fetch(`${Host}/search/${type}?${baseQuery}`)
-        return result.json()
+        return getCache(`${Host}/search/${type}?${baseQuery}`)
     } else if (type === cons.CHAR_TYPE || type === cons.PEOPLE_TYPE) {
         let baseQuery = `query=${query}&page=${page}`;
 
@@ -127,11 +127,9 @@ export async function getSearch(type, query, page = 1, advQuery) {
             }
         }
 
-        const result = await fetch(`${Host}/search/${type}?${baseQuery}`)
-        return result.json()
+        return getCache(`${Host}/search/${type}?${baseQuery}`)
     } else {
-        const result = await fetch(`${Host}/search?query=${query}`)
-        return result.json()
+        return getCache(`${Host}/search?query=${query}`)
     }
 }
 
@@ -139,24 +137,20 @@ export async function getSearch(type, query, page = 1, advQuery) {
 
 export async function getProducers(type) {
     if (type === cons.ANIME_TYPE) {
-        const result = await fetch(`${Host}/producers`)
-        return result.json()
+        return getCache(`${Host}/producers`)
     } else {
-        const result = await fetch(`${Host}/magazines`)
-        return result.json()
+        return getCache(`${Host}/magazines`)
     }
 }
 
 // Genre endpoints.
 
 export async function getGenres() {
-    const result = await fetch(`${Host}/genres`)
-    return result.json()
+    return getCache(`${Host}/genres`)
 }
 
 // Re-parse endpoint.
 
 export async function reparse(type, id) {
-    const result = await fetch(`${Host}/enqueue?type=${type}&id=${id}`)
-    return result.json()
+    return getCache(`${Host}/enqueue?type=${type}&id=${id}`)
 }

@@ -20,6 +20,16 @@ const useStyles = makeStyles((theme) => ({
     height: props => props.height,
     objectFit: 'cover',
   },
+  leftArea: {
+    backgroundImage: props => `url(${theme.overlay.image}), url(${props.left.image})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center center',
+  },
+  rightArea: {
+    backgroundImage: props => `url(${theme.overlay.image}), url(${!props.right ? '' : props.right.image})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center center',
+  },
   leftContent: {
     paddingLeft: theme.spacing(1),
   },
@@ -48,7 +58,7 @@ const DualCard = (props) => {
   return (
     <Card className={classes.root}>
       <Grid container className={classes.height}>
-        <Grid item xs={6}>
+        <Grid item xs={6} className={classes.leftArea}>
           <CardActionArea onClick={() => props.onClick(left.type, left.id)}>
             <Grid container className={classes.height}>
               <Grid item xs={4}>
@@ -74,7 +84,7 @@ const DualCard = (props) => {
           </CardActionArea>
         </Grid>
         {!right ? null :
-          <Grid item xs={6}>
+          <Grid item xs={6} className={classes.rightArea}>
             <CardActionArea onClick={() => props.onClick(right.type, right.id)}>
               <Grid container className={classes.height}>
                 <Grid item xs={8} container direction='column' justify="center" className={classes.rightContent}>

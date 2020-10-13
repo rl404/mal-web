@@ -21,12 +21,12 @@ const useStyles = makeStyles((theme) => ({
     },
     position: 'sticky',
     top: 119,
-    zIndex: 2,
+    zIndex: 1,
   },
   tabs: {
     position: 'sticky',
     top: 150,
-    zIndex: 2,
+    zIndex: 1,
     borderRight: `1px solid ${theme.palette.divider}`,
     '& .MuiTab-root': {
       minWidth: 90,
@@ -128,9 +128,8 @@ const SeasonalContent = React.forwardRef((props, ref) => {
                   onChange={tabChange}
                   indicatorColor='primary'
                   textColor='primary'
-                  centered
-                  variant="scrollable"
-                  scrollButtons="on"
+                  variant='scrollable'
+                  scrollButtons='on'
                   className={classes.tabsMobile}
                 >
                   {Object.keys(state.data).map((key, i) => {

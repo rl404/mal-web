@@ -26,7 +26,7 @@ const TopContent = React.forwardRef((props, ref) => {
     data: null,
     loading: true,
     type: props.type,
-    order: 0,
+    order: props.order,
     page: 1,
     error: null,
   });

@@ -4,7 +4,7 @@
 
 *MyAnimeList Drive-Thru* or *MAL-DT* is a website where you can quick look at [MyAnimeList](https://myanimelist.net)'s contents (anime, manga, character, and voice actor). That's why it's called *drive-thru*.
 
-Powered by my [go-malscraper](https://github.com/rl404/go-malscraper) as backend. Using at least version `v0.13.1` for the backend.
+Powered by my [go-malscraper](https://github.com/rl404/go-malscraper) as backend. Using at least version `v0.16.0` for the backend.
 
 Yes, everything is open-source and you can host both the backend and frontend by yourself.
 

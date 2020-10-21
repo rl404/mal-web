@@ -8,6 +8,7 @@ const CharacterDetails = React.lazy(() => import('./views/character/details'));
 const PeopleDetails = React.lazy(() => import('./views/people/details'));
 const Search = React.lazy(() => import('./views/search'));
 const Top = React.lazy(() => import('./views/top'));
+const User = React.lazy(() => import('./views/user/profile'));
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -19,6 +20,8 @@ const routes = [
   { path: '/people/:id/:name?', exact: true, name: 'People Details', component: PeopleDetails },
   { path: '/search/:type', exact: true, name: 'Search', component: Search },
   { path: '/top/:type', exact: true, name: 'Top List', component: Top },
+  { path: '/user/:username', exact: true, name: 'User Profile', component: User },
+  { path: '/user', exact: true, name: 'User Form', component: User },
 ];
 
 export default routes;

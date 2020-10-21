@@ -1,11 +1,11 @@
 import React from 'react'
 import Grid from '@material-ui/core/Grid';
 import Skeleton from '@material-ui/lab/Skeleton';
+import BarChartIcon from '@material-ui/icons/BarChart';
 
 import * as cons from '../../../constant'
 import { getEntryStats } from '../../../api';
 import BarChart from '../../../components/chart/BarChart';
-import BarChartIcon from '@material-ui/icons/BarChart';
 import StyledDivider from '../../../components/styled/Divider';
 import ErrorArea from '../../../components/error/Error';
 import StyledTitle from '../../../components/styled/Title';

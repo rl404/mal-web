@@ -182,3 +182,44 @@ export const MANGA_STATUS = [
   MANGA_STATUS_HIATUS,
   MANGA_STATUS_DISCONTINUED,
 ]
+
+// User status.
+export const ANIME_STATUS_WATCHING_ID = 1
+export const ANIME_STATUS_COMPLETED_ID = 2
+export const ANIME_STATUS_ONHOLD_ID = 3
+export const ANIME_STATUS_DROPPED_ID = 4
+export const ANIME_STATUS_PLANNED_ID = 6
+export const ANIME_STATUS_WATCHING = 'Watching'
+export const ANIME_STATUS_COMPLETED = 'Completed'
+export const ANIME_STATUS_ONHOLD = 'On-hold'
+export const ANIME_STATUS_DROPPED = 'Dropped'
+export const ANIME_STATUS_PLANNED = 'Planned'
+export const ANIME_USER_STATUS = [
+  '?',
+  ANIME_STATUS_WATCHING,
+  ANIME_STATUS_COMPLETED,
+  ANIME_STATUS_ONHOLD,
+  ANIME_STATUS_DROPPED,
+  '?',
+  ANIME_STATUS_PLANNED,
+]
+
+export const MANGA_STATUS_READING_ID = 1
+export const MANGA_STATUS_COMPLETED_ID = 2
+export const MANGA_STATUS_ONHOLD_ID = 3
+export const MANGA_STATUS_DROPPED_ID = 4
+export const MANGA_STATUS_PLANNED_ID = 6
+export const MANGA_STATUS_READING = 'Reading'
+export const MANGA_STATUS_COMPLETED = 'Completed'
+export const MANGA_STATUS_ONHOLD = 'On-hold'
+export const MANGA_STATUS_DROPPED = 'Dropped'
+export const MANGA_STATUS_PLANNED = 'Planned'
+export const MANGA_USER_STATUS = [
+  '?',
+  MANGA_STATUS_READING,
+  MANGA_STATUS_COMPLETED,
+  MANGA_STATUS_ONHOLD,
+  MANGA_STATUS_DROPPED,
+  '?',
+  MANGA_STATUS_PLANNED,
+]

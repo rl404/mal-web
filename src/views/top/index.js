@@ -14,7 +14,7 @@ const Top = (props) => {
   return (
     <>
       <TopHeader updateQuery={updateQuery} type={props.match.params.type} order={!order ? 0 : parseInt(order)} />
-      <TopContent ref={ref} onClick={props.showEntryDrawer} type={props.match.params.type} />
+      <TopContent ref={ref} onClick={props.showEntryDrawer} type={props.match.params.type} order={!order ? 0 : parseInt(order)} />
     </>
   )
 };

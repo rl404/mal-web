@@ -108,3 +108,26 @@ export function ellipsis(str, limit) {
     }
     return str;
 }
+
+export function statsToString(key, type) {
+    switch (key) {
+        case 'current':
+            return type === cons.ANIME_TYPE ? 'Watching' : 'Reading';
+        case 'completed':
+            return 'Completed';
+        case 'onHold':
+            return 'On-Hold';
+        case 'dropped':
+            return 'Dropped';
+        case 'planned':
+            return type === cons.ANIME_TYPE ? 'Plan to Watch' : 'Plan to Read';
+        case 'total':
+            return 'Total Entries';
+        case 'progress':
+            return type === cons.ANIME_TYPE ? 'Episodes' : 'Chapters';
+        case 'score':
+            return 'Mean Score';
+        default:
+            return '';
+    }
+}

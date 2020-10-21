@@ -5,6 +5,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import ListIcon from '@material-ui/icons/List';
 import PersonIcon from '@material-ui/icons/Person';
 import GradeIcon from '@material-ui/icons/Grade';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
 
 export default [
   {
@@ -86,6 +87,19 @@ export default [
         name: 'Top People',
         icon: <GradeIcon />,
         link: '/top/people',
+      },
+    ],
+  },
+  {
+    id: 5,
+    name: 'User',
+    icon: <PersonIcon />,
+    subItems: [
+      {
+        id: 1,
+        name: 'Profile',
+        icon: <AccountBoxIcon />,
+        link: '/user',
       },
     ],
   },

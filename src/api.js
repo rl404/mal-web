@@ -149,8 +149,52 @@ export async function getGenres() {
     return getCache(`${Host}/genres`)
 }
 
+// User endpoints.
+
+export async function getUser(usernamme) {
+    return getCache(`${Host}/user/${usernamme}`)
+}
+
+export async function getUserList(username, type) {
+    if (type === cons.ANIME_TYPE) {
+        return getCache(`${Host}/user/${username}/anime`)
+    } else if (type === cons.MANGA_TYPE) {
+        return getCache(`${Host}/user/${username}/manga`)
+    }
+}
+
+export async function getUserStats(username) {
+    return getCache(`${Host}/user/${username}/stats`)
+}
+
+export async function getUserScore(username) {
+    return getCache(`${Host}/user/${username}/score`)
+}
+
+export async function getUserType(username) {
+    return getCache(`${Host}/user/${username}/type`)
+}
+
+export async function getUserGenre(username) {
+    return getCache(`${Host}/user/${username}/genre`)
+}
+
+export async function getUserStudioAuthor(username, type) {
+    if (type === cons.ANIME_TYPE) {
+        return getCache(`${Host}/user/${username}/studio`)
+    } else if (type === cons.MANGA_TYPE) {
+        return getCache(`${Host}/user/${username}/author`)
+    }
+}
+
+export async function reparseUser(username) {
+    const result = await fetch(`${Host}/user/${username}/enqueue`)
+    return result.json()
+}
+
 // Re-parse endpoint.
 
 export async function reparse(type, id) {
-    return getCache(`${Host}/enqueue?type=${type}&id=${id}`)
+    const result = await fetch(`${Host}/enqueue?type=${type}&id=${id}`)
+    return result.json()
 }

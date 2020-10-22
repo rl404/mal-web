@@ -62,6 +62,12 @@ const TopHeader = (props) => {
     order: props.order,
   });
 
+  React.useEffect(() => {
+    if (props.type !== state.type) {
+      changeType({ target: { value: props.type } })
+    }
+  })
+
   const changeType = (e) => {
     const t = e.target.value;
     setState({ ...state, type: t, order: 0 });

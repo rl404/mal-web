@@ -19,13 +19,19 @@ import {
 const BarLineChart = (props) => {
   const theme = useTheme();
 
-  var barColor = props.color;
+  var barColor = props.barColor;
   if (!barColor) {
     barColor = theme.palette.primary.chart;
   }
 
+  var lineColor = props.lineColor;
+  if (!lineColor) {
+    lineColor = theme.palette.secondary.chart;
+  }
+
   const [target, changeHover] = React.useState(null);
   const tooltipContent = ({ targetItem, text, ...restProps }) => {
+    console.log(targetItem, text, restProps)
     return (
       <div>
         <Tooltip.Content
@@ -35,17 +41,6 @@ const BarLineChart = (props) => {
       </div>
     );
   };
-
-  const maxBar = () => {
-    var max = 0;
-    props.data.forEach(d => {
-      if (d.count > max) {
-        max = d.count
-      }
-    })
-    console.log(max)
-    return max
-  }
 
   return (
     <Chart data={props.data} height={props.height}>
@@ -66,7 +61,7 @@ const BarLineChart = (props) => {
       <LineSeries
         valueField='lineValue'
         argumentField='key'
-        color={barColor}
+        color={lineColor}
         scaleName='line'
       />
       <HoverState
@@ -82,20 +77,16 @@ const BarLineChart = (props) => {
 };
 
 BarLineChart.propTypes = {
-  data: PropTypes.shape({
-    bar: PropTypes.arrayOf(
-      PropTypes.shape({
-        key: PropTypes.string.isRequired,
-        value: PropTypes.number.isRequired,
-      })),
-    line: PropTypes.arrayOf(
-      PropTypes.shape({
-        key: PropTypes.string.isRequired,
-        value: PropTypes.number.isRequired,
-      })),
-  }),
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.string.isRequired,
+      barValue: PropTypes.number.isRequired,
+      lineValue: PropTypes.number.isRequired,
+    }),
+  ),
   height: PropTypes.number,
-  color: PropTypes.string,
+  barColor: PropTypes.string,
+  lineColor: PropTypes.string,
 };
 
 BarLineChart.defaultProps = {

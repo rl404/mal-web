@@ -129,6 +129,12 @@ const SearchHeader = (props) => {
     loading: true,
   });
 
+  React.useEffect(() => {
+    if (props.type !== state.type) {
+      changeType({ target: { value: props.type } })
+    }
+  })
+
   const changeType = (e) => {
     const t = e.target.value;
     setState({ ...state, type: t, advQuery: { ...defaultAdvQuery, producer: 0, genre: [], genre2: [] }, setting: false });

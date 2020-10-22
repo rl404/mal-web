@@ -8,6 +8,8 @@ import StatsType from './stats-type';
 import StatsScore from './stats-score';
 import StatsGenre from './stats-genre';
 import StatsStudioAuthor from './stats-studio-author';
+import StatsProgress from './stats-progress';
+import StatsYear from './stats-year';
 
 const Stats = (props) => {
   return (
@@ -20,6 +22,12 @@ const Stats = (props) => {
       </Grid>
       <Grid item xs={12} md={6}>
         <StatsScore username={props.username} type={props.type} />
+      </Grid>
+      <Grid item xs={12} md={6}>
+        <StatsProgress username={props.username} type={props.type} />
+      </Grid>
+      <Grid item xs={12} md={6}>
+        <StatsYear username={props.username} type={props.type} />
       </Grid>
       <Grid item xs={12} md={6}>
         <StatsGenre username={props.username} type={props.type} />

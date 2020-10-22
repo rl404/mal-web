@@ -175,6 +175,14 @@ export async function getUserType(username) {
     return getCache(`${Host}/user/${username}/type`)
 }
 
+export async function getUserProgress(username) {
+    return getCache(`${Host}/user/${username}/progress`)
+}
+
+export async function getUserYear(username) {
+    return getCache(`${Host}/user/${username}/year`)
+}
+
 export async function getUserGenre(username) {
     return getCache(`${Host}/user/${username}/genre`)
 }

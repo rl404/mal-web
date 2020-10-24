@@ -71,6 +71,7 @@ const Profile = (props) => {
         const result = await getUser(urlUsername);
         if (result.status === cons.CODE_OK) {
           setState({ ...state, data: result.data, meta: result.meta, loading: false });
+          saveToRecent(result.data.username);
         } else {
           setState({ ...state, error: { code: result.status, message: result.message }, loading: false });
         }
@@ -81,6 +82,26 @@ const Profile = (props) => {
       }
     }
   });
+
+  const saveToRecent = (username) => {
+    const recentUsers = localStorage.getItem('recentUser');
+    if (!recentUsers) {
+      localStorage.setItem('recentUser', JSON.stringify([username]));
+      return
+    }
+
+    var arrUser = JSON.parse(recentUsers);
+    var isDuplicate = false;
+    arrUser.forEach(u => {
+      if (u === username) {
+        isDuplicate = true;
+      }
+    })
+    if (!isDuplicate) {
+      arrUser.push(username);
+      localStorage.setItem('recentUser', JSON.stringify(arrUser.slice(-10)));
+    }
+  }
 
   const changeTab = (event, newValue) => {
     setState({ ...state, tabValue: newValue });

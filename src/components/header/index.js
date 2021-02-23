@@ -68,9 +68,7 @@ const Header = (props) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography className={classes.title} variant='h6' noWrap>
-            Title
-          </Typography>
+          <Typography className={classes.title} variant='h6' noWrap />
           <QuickSearch />
           <ThemeTooltop
             title={<ThemeChanger changeTheme={props.changeTheme} />}

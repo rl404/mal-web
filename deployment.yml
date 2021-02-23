@@ -30,7 +30,7 @@ spec:
         app: mal-web
     spec:
       containers:
-        - name: mal_web
+        - name: mal-web
           image: mal-web:latest
           ports:
             - containerPort: 80

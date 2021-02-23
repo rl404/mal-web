@@ -1,17 +1,13 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import FastForwardIcon from '@material-ui/icons/FastForward';
-
-import * as cons from '../../constant';
-import PropTypes from 'prop-types';
-import Seasonal from './Seasonal';
-import TopList from './TopList';
 import Total from './Total';
+import Grid from '@material-ui/core/Grid';
 import YearChart from './YearChart';
+import PropTypes from 'prop-types';
+import Top from './Top';
+import { getCurrentSeason } from '../../utils';
+import * as cons from '../../constant';
 
 const Home = (props) => {
-  // props.setTitle('Home')
   return (
     <Grid container spacing={1}>
       <Grid item xs={12}>
@@ -21,16 +17,39 @@ const Home = (props) => {
         <YearChart />
       </Grid>
       <Grid item xs={12}>
-        <Seasonal showEntryDrawer={props.showEntryDrawer} />
+        <Top
+          title='Top Current Season'
+          advQuery={{
+            season: getCurrentSeason(),
+            year: new Date().getFullYear(),
+            type: cons.ANIME_TV_ID,
+            order: '-score',
+          }}
+          link={`/search/anime?season=${getCurrentSeason()}&type=${cons.ANIME_TV_ID}&order=-score`}
+          showEntryDrawer={props.showEntryDrawer} />
       </Grid>
       <Grid item xs={12}>
-        <TopList type={cons.ANIME_TOP_AIRING} title='Top Airing Anime' icon={<PlayArrowIcon />} onClick={props.showEntryDrawer} />
+        <Top
+          title='Top Airing'
+          advQuery={{
+            status: cons.ANIME_STATUS_AIRING_ID,
+            order: '-score',
+          }}
+          link={`/search/anime?status=${cons.ANIME_STATUS_AIRING_ID}&order=-score`}
+          showEntryDrawer={props.showEntryDrawer} />
       </Grid>
       <Grid item xs={12}>
-        <TopList type={cons.ANIME_TOP_UPCOMING} title='Top Upcoming Anime' icon={<FastForwardIcon />} onClick={props.showEntryDrawer} />
+        <Top
+          title='Top Upcoming'
+          advQuery={{
+            status: cons.ANIME_STATUS_NOT_ID,
+            order: '-member',
+          }}
+          link={`/search/anime?status=${cons.ANIME_STATUS_NOT_ID}`}
+          showEntryDrawer={props.showEntryDrawer} />
       </Grid>
     </Grid>
-  );
+  )
 };
 
 Home.propTypes = {

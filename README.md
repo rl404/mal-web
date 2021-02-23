@@ -1,65 +1,70 @@
-<p align=center>
-    <img src="https://raw.githubusercontent.com/rl404/mal-web/master/public/images/logo.svg" width='50%'>
-</p>
+# Getting Started with Create React App
 
-*MyAnimeList Drive-Thru* or *MAL-DT* is a website where you can quick look at [MyAnimeList](https://myanimelist.net)'s contents (anime, manga, character, and voice actor). That's why it's called *drive-thru*.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Powered by my [go-malscraper](https://github.com/rl404/go-malscraper) as backend. Using at least version `v0.17.0` for the backend.
+## Available Scripts
 
-Yes, everything is open-source and you can host both the backend and frontend by yourself.
+In the project directory, you can run:
 
-## Feature
+### `npm start`
 
-- Simple dashboard (total entries count and graph)
-- Simple and modern style
-- Details for every entries (anime, manga, character, and voice actor/staff)
-- Entries search
-- Seasonal anime list
-- Top list
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-## Development
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
 
-### Requirement
+### `npm test`
 
-- [NodeJS](https://nodejs.org)
-- [Backend service](https://github.com/rl404/go-malscraper)
-- [Docker](https://docker.com) + [Docker compose](https://docs.docker.com/compose/) (optional)
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### Step
+### `npm run build`
 
-1. Clone the repo.
-    ```
-    git clone https://github.com/rl404/mal-web
-    ```
-2. Go inside the folder.
-    ```
-    cd mal-web
-    ```
-3. Modify `.env` file.
-4. Install dependecies.
-    ```
-    npm ci
-    ```
-    If using Docker, let's build and start the container. Then skip to step 6.
-    ```
-    docker-compose up
-    ```
-5. Start.
-    ```
-    npm start
-    ```
-6. [http://localhost:3001](http://localhost:3001) is ready*.
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-**Port depends on `PORT` in `.env` file.*
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-## Disclamer
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-_myanimelist drive-thru_ is meant for educational purpose and personal usage only. Use it responsibly according to MyAnimeList's [Terms Of Service](https://myanimelist.net/about/terms_of_use).
+### `npm run eject`
 
-All data (including anime, manga, people, etc) and MyAnimeList logos belong to their respective copyrights owners. *myanimelist drive-thru* does not have any affiliation with content providers.
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-## License
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-MIT License
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-Copyright (c) 2020 Axel
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

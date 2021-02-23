@@ -1,6 +1,7 @@
 {
   "name": "mal-web",
   "version": "0.1.0",
+  "private": true,
   "description": "mal-web description",
   "author": {
     "name": "mal-web",
@@ -13,28 +14,26 @@
       "url": "https://github.com/rl404"
     }
   ],
-  "copyright": "Copyright 2020 Axel",
+  "copyright": "Copyright 2021 Axel",
   "license": "MIT",
-  "private": true,
   "repository": {
     "type": "git",
     "url": "git@github.com:rl404/mal-web.git"
   },
   "dependencies": {
-    "@devexpress/dx-react-chart": "^2.7.0",
-    "@devexpress/dx-react-chart-material-ui": "^2.7.0",
-    "@devexpress/dx-react-core": "^2.7.0",
-    "@material-ui/core": "^4.11.0",
-    "@material-ui/icons": "^4.9.1",
-    "@material-ui/lab": "^4.0.0-alpha.56",
-    "fontsource-roboto": "^3.0.3",
-    "moment": "^2.27.0",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-router-dom": "^5.2.0"
-  },
-  "devDependencies": {
-    "react-scripts": "^3.4.3"
+    "@devexpress/dx-react-chart": "^2.7.4",
+    "@devexpress/dx-react-chart-material-ui": "^2.7.4",
+    "@devexpress/dx-react-core": "^2.7.4",
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.57",
+    "moment": "^2.29.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-lazyload": "^3.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.2",
+    "web-vitals": "^1.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -43,16 +42,21 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 10",
-    "not op_mini all"
-  ],
-  "engines": {
-    "node": ">=10",
-    "npm": ">=6"
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

@@ -1,45 +1,27 @@
 import React from 'react';
-import ErrorIcon from '@material-ui/icons/Error';
-import Typography from '@material-ui/core/Typography';
-
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    margin: 'auto',
-    display: 'flex',
-    maxWidth: 135,
-  },
-  iconArea: {
+    color: theme.palette.error.contrastText,
+    backgroundColor: theme.palette.error.main,
     textAlign: 'center',
-    paddingRight: theme.spacing(1),
   },
 }));
 
-const ErrorArea = (props) => {
+const Error = (props) => {
   const classes = useStyles();
-
   return (
     <div className={classes.root}>
-      <div className={classes.iconArea}>
-        <ErrorIcon />
-      </div>
-      <div className={classes.content}>
-        <Typography variant='h5'>
-          Error {props.code}
-        </Typography>
-        <Typography variant='subtitle1'>
-          {props.message}
-        </Typography>
-      </div>
+      {props.code} - {props.message}
     </div>
   );
 };
 
-ErrorArea.propTypes = {
+Error.propTypes = {
   code: PropTypes.number.isRequired,
   message: PropTypes.string.isRequired,
 };
 
-export default ErrorArea;
+export default Error;

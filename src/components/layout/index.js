@@ -1,13 +1,13 @@
 import React from 'react';
 import Header from '../header';
-import Sidebar from '../sidebar';
 import Content from './Content';
-import Footer from '../footer';
-import getTheme from '../theme';
-
+import Sidebar from '../sidebar';
+import ScrollTop from '../header/ScrollTop';
+import { getTheme } from '../theme';
+import Container from '@material-ui/core/Container';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
-import { Container, CssBaseline } from '@material-ui/core';
-import SummaryDrawer from '../drawer/Summary';
+import Summary from '../drawer/Summary';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,9 +19,9 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     marginBottom: theme.spacing(4),
   },
-}))
+}));
 
-const Layout = () => {
+const Layout = (props) => {
   const classes = useStyles();
 
   const [mobileState, setMobileState] = React.useState(false);
@@ -29,17 +29,10 @@ const Layout = () => {
     setMobileState(!mobileState);
   };
 
-  const defaultDarkState = localStorage.getItem('darkState') ? localStorage.getItem('darkState') === 'true' : false;
-
-  const [darkState, setDarkState] = React.useState(defaultDarkState);
-  const darkToggle = () => {
-    setDarkState(!darkState);
-    localStorage.setItem('darkState', !darkState);
-  };
-
-  const headerRef = React.useRef(null);
-  const setTitle = (title) => {
-    headerRef.current.setTitle(title);
+  const defaultThemeState = localStorage.getItem('themeState') ? localStorage.getItem('themeState') : 'defaultTheme';
+  const [themeState, setThemeState] = React.useState(defaultThemeState);
+  const changeTheme = (name) => {
+    setThemeState(name);
   };
 
   const summaryRef = React.useRef(null);
@@ -48,20 +41,20 @@ const Layout = () => {
   };
 
   return (
-    <ThemeProvider theme={darkState ? getTheme('dark') : getTheme('light')}>
+    <ThemeProvider theme={getTheme(themeState)}>
       <CssBaseline />
       <div className={classes.root}>
-        <Header mobileToggle={mobileToggle} darkToggle={darkToggle} darkState={darkState} ref={headerRef} />
+        <Header changeTheme={changeTheme} mobileToggle={mobileToggle} />
         <Sidebar mobileState={mobileState} mobileToggle={mobileToggle} />
         <main className={classes.content}>
-          <div className={classes.toolbar} />
+          <div className={classes.toolbar} id='top-anchor' />
           <Container>
-            <Content setTitle={setTitle} showEntryDrawer={showEntryDrawer} />
+            <Content showEntryDrawer={showEntryDrawer} />
           </Container>
-          <Footer />
         </main>
-        <SummaryDrawer ref={summaryRef} />
+        <ScrollTop {...props} />
       </div>
+      <Summary ref={summaryRef} />
     </ThemeProvider>
   );
 }

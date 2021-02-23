@@ -1,88 +1,98 @@
-import React from 'react'
+import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-
+import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import * as cons from '../../constant';
 import { ellipsis } from '../../utils';
+import { CardContent } from '@material-ui/core';
+import LazyLoad from 'react-lazyload';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundImage: props => `url(${theme.overlay.image}), url(${props.image})`,
+    paddingTop: '35%',
+    position: 'relative',
+    backgroundImage: props =>
+      props.props.image2 && props.props.image2 !== '' ?
+        !props.state ?
+          `url(${theme.overlay}), url(${props.props.image2})` :
+          `url(${theme.overlay}), url(${props.props.image})` :
+        `url(${theme.overlay}), url(${props.props.image})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center center',
+    overflow: 'hidden',
+  },
+  content: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+  },
+  grid: {
+    height: '100%',
+  },
+  image: {
+    background: theme.palette.primary.main,
+    backgroundImage: props =>
+      !props.state || !props.props.image2 || props.props.image2 === '' ?
+        `url(${props.props.image})` :
+        `url(${props.props.image2})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center center',
   },
-  height: {
-    height: props => props.height,
-  },
-  content: {
-    height: props => props.height,
-    '& h6': {
-      lineHeight: '1.2',
-    },
-  },
-  media: {
-    width: '100%',
-    height: props => props.height,
-    objectFit: 'cover',
-  },
-}))
+  data: {
 
-const EntryCard = (props) => {
-  const classes = useStyles(props);
-  const theme = useTheme();
+  },
+  detail: {
+    color: theme.palette.grey[500],
+  },
+}));
 
-  var imageURL = props.image;
-  if (!imageURL || imageURL === '') {
-    imageURL = theme.error.image;
-  }
+const Entry = (props) => {
+  const [state, setState] = React.useState(false);
+  const hover = () => setState(true);
+  const unhover = () => setState(false);
+
+  const classes = useStyles({ props: props, state: state });
 
   return (
-    <Card className={classes.root}>
-      <CardActionArea onClick={() => props.onClick(props.type, props.id)}>
-        <Grid container spacing={1} className={classes.height}>
-          <Grid item xs={4}>
-            <img
-              className={classes.media}
-              src={imageURL}
-              alt={props.title}
-            />
-          </Grid>
-          <Grid item xs container direction='column' spacing={1} justify="center" className={classes.content}>
-            <Grid item>
-              <Typography variant="subtitle1">
-                <b>{ellipsis(props.title, 40)}</b>
-              </Typography>
-            </Grid>
-            {!props.detail || props.detail.length === 0 ? null :
-              <Grid item>
-                <Typography variant="caption">
-                  {props.detail.map((d) => d).reduce((prev, curr) => [prev, ' · ', curr])}
+    <LazyLoad>
+      <Card className={classes.root} onMouseEnter={hover} onMouseLeave={unhover}>
+        <CardActionArea className={classes.content} onClick={() => !props.onClick ? null : props.onClick(props.type, props.id)}>
+          <Grid container className={classes.grid}>
+            <Grid item xs={4} className={classes.image} />
+            <Grid item xs={8}>
+              <CardContent className={classes.data}>
+                <Typography variant="subtitle2">
+                  <b>{ellipsis(!state || !props.title2 || props.title2 === '' ? props.title : props.title2, 25)}</b>
                 </Typography>
-              </Grid>
-            }
+                {!props.detail ? null :
+                  <Typography variant="caption" className={classes.detail}>
+                    {!state || !props.detail2 || props.detail2 === '' ? props.detail : props.detail2}
+                  </Typography>
+                }
+              </CardContent>
+            </Grid>
           </Grid>
-        </Grid>
-      </CardActionArea>
-    </Card>
+        </CardActionArea>
+      </Card>
+    </LazyLoad>
   );
 };
 
-EntryCard.propTypes = {
+Entry.propTypes = {
   id: PropTypes.number,
   type: PropTypes.oneOf(cons.MAIN_TYPES),
   image: PropTypes.string,
+  image2: PropTypes.string,
   title: PropTypes.string.isRequired,
-  detail: PropTypes.arrayOf(PropTypes.string),
+  title2: PropTypes.string,
+  detail: PropTypes.string,
+  detail2: PropTypes.string,
   onClick: PropTypes.func,
-  height: PropTypes.number,
 };
 
-EntryCard.defaultProps = {
-  height: 130,
-};
-
-export default EntryCard;
+export default Entry;

@@ -223,3 +223,34 @@ export const MANGA_USER_STATUS = [
   '?',
   MANGA_STATUS_PLANNED,
 ]
+
+export const ORDERS = {
+  [ANIME_TYPE]: {
+    'member': 'Member asc',
+    '-': 'Member desc',
+    'title': "Title asc",
+    '-title': "Title desc",
+    'score': "Score asc",
+    '-score': "Score desc",
+  },
+  [MANGA_TYPE]: {
+    'member': 'Member asc',
+    '-': 'Member desc',
+    'title': "Title asc",
+    '-title': "Title desc",
+    'score': "Score asc",
+    '-score': "Score desc",
+  },
+  [CHAR_TYPE]: {
+    'favorite': 'Favorite asc',
+    '-': 'Favorite desc',
+    'name': "Name asc",
+    '-name': "Name desc",
+  },
+  [PEOPLE_TYPE]: {
+    'favorite': 'Favorite asc',
+    '-': 'Favorite desc',
+    'name': "Name asc",
+    '-name': "Name desc",
+  },
+};

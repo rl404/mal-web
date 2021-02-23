@@ -1,39 +1,55 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-
-const useStyles = makeStyles({
-  error: {
-    width: props => props.width,
-    height: props => props.width * 4 / 3,
-  },
-  image: {
-    maxHeight: props => props.height,
-    maxWidth: '100%',
-  },
-});
+import LazyLoad from 'react-lazyload';
+import { useTheme } from '@material-ui/core/styles';
 
 const Img = (props) => {
-  const classes = useStyles(props);
   const theme = useTheme();
 
-  if (!props.src || props.src === '') {
-    return <img src={theme.error.image} alt={props.alt} className={classes.error} />
-  } else {
-    return <img src={props.src} alt={props.alt} className={classes.image} />
-  }
+  var w = props.width
+  var h = props.height
+
+  // if (!props.height || props.height === 0) {
+  //   h = w * 4 / 3;
+  //   if (w === '100%') {
+  //     h = '100%';
+  //   }
+  // }
+
+  // if (!props.width || props.width === 0) {
+  //   w = h * 3 / 4;
+  //   if (h === '100%') {
+  //     w = '100%';
+  //   }
+  // }
+
+  return (
+    <LazyLoad height={h} width={w}>
+      {!props.src || props.src === '' ?
+        <div style={{
+          width: w === '100%' ? '100vw' : w,
+          height: h === '100%' ? '100vh' : h,
+          backgroundColor: theme.palette.primary.main,
+          opacity: 0.5,
+        }} />
+        :
+        <img src={props.src} alt={props.alt} style={{
+          objectFit: 'cover',
+          width: w,
+          height: h,
+          filter: props.filter,
+        }} />
+      }
+    </LazyLoad>
+  );
 };
 
 Img.propTypes = {
-  width: PropTypes.number,
-  height: PropTypes.number,
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   src: PropTypes.string,
   alt: PropTypes.string,
-};
-
-Img.defaultProps = {
-  height: 220,
-  width: 160,
+  filter: PropTypes.string,
 };
 
 export default Img;

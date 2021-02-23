@@ -1,112 +1,110 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
-import Chip from '@material-ui/core/Chip';
-import Grid from '@material-ui/core/Grid';
+import Error from '../error/Error';
 import { makeStyles } from '@material-ui/core/styles';
-
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { slugify } from '../../utils';
 import * as cons from '../../constant';
-import EllipsisText from '../text/EllipsisText';
-import EntryDrawerLoading from './loading/Entry';
-import ErrorArea from '../error/Error';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import { slugify } from '../../utils';
 import Img from '../image/Img';
-import StyledDivider from '../styled/Divider';
+import Ellipsis from '../text/Ellipsis';
+import Chip from '@material-ui/core/Chip';
+import Skeleton from '@material-ui/lab/Skeleton';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
-  genre: {
-    margin: 2,
-  },
   link: {
-    color: theme.palette.text.primary,
     textDecoration: 'none',
+    color: theme.palette.text.primary,
     '&:hover': {
       color: theme.palette.primary.main,
     },
   },
   title: {
-    paddingTop: theme.spacing(2),
-    lineHeight: theme.typography.body1.lineHeight,
+    lineHeight: theme.typography.body2.lineHeight,
   },
   center: {
     textAlign: 'center',
   },
   categoryName: {
-    color: theme.palette.primary.main,
+    color: theme.palette.icon,
   },
   synopsis: {
     whiteSpace: 'pre-line',
   },
+  divider: {
+    marginBottom: theme.spacing(0.5),
+  },
+  genre: {
+    margin: theme.spacing(0.5),
+  },
 }));
 
-const EntryDrawer = (props) => {
+const Entry = (props) => {
   const classes = useStyles();
   const state = props.state;
-
   return (
     <>
-      {!state ? null : state.loading ? <EntryDrawerLoading /> :
-        state.error !== null ? <ErrorArea code={state.error.code} message={state.error.message} /> :
-          <>
-            <Link to={`/${state.entryType}/${state.entryId}/${slugify(state.data.title)}`} className={classes.link}>
-              <Typography variant='subtitle1' gutterBottom align='center' className={classes.title}>
-                <b>{state.data.title}</b>
-              </Typography>
-            </Link>
-            <StyledDivider />
-            <Grid container spacing={1}>
-              <Grid item xs={12} className={classes.center}>
-                <Img src={state.data.cover} alt={state.data.title} />
-              </Grid>
-              <Grid item xs={4}>
-                <Typography variant='subtitle2' align='center' className={classes.categoryName}>
-                  Rank
-              </Typography>
-                <Typography variant='h6' align='center'>
-                  <b>#{state.data.rank.toLocaleString()}</b>
+      {!state ? null : state.loading ? <Loading /> :
+        state.error !== null ? <Error code={state.error.code} message={state.error.message} /> :
+          <Grid container spacing={1}>
+            <Grid item xs={12}>
+              <Link to={`/${state.entryType}/${state.entryId}/${slugify(state.data.title)}`} className={classes.link}>
+                <Typography variant='h6' align='center' className={classes.title}>
+                  <b>{state.data.title}</b>
                 </Typography>
-              </Grid>
-              <Grid item xs={4}>
-                <Typography variant='subtitle2' align='center' className={classes.categoryName}>
-                  Score
-              </Typography>
-                <Typography variant='h6' align='center'>
-                  <b>{Number(state.data.score).toFixed(2)}</b>
-                </Typography>
-              </Grid>
-              <Grid item xs={4}>
-                <Typography variant='subtitle2' align='center' className={classes.categoryName}>
-                  Popularity
-              </Typography>
-                <Typography variant='h6' align='center'>
-                  <b>#{state.data.popularity.toLocaleString()}</b>
-                </Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography variant='subtitle2' className={classes.categoryName}>
-                  Synopsis
-              </Typography>
-                <Typography variant='body2' className={classes.synopsis}>
-                  <EllipsisText text={state.data.synopsis} limit={500} />
-                </Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <StyledDivider />
-                {state.data.genres.map(genre => {
-                  return (
-                    <Chip size='small' label={genre.name} color='primary' key={genre.id} className={classes.genre} />
-                  )
-                })}
-              </Grid>
+              </Link>
+              <Divider />
             </Grid>
-          </>
+            <Grid item xs={12} className={classes.center}>
+              <Img src={state.data.image} alt={state.data.title} width='100%' />
+            </Grid>
+            <Grid item xs={4}>
+              <Typography variant='subtitle2' align='center' className={classes.categoryName}>
+                Rank
+              </Typography>
+              <Typography variant='h6' align='center'>
+                <b>#{state.data.rank.toLocaleString()}</b>
+              </Typography>
+            </Grid>
+            <Grid item xs={4}>
+              <Typography variant='subtitle2' align='center' className={classes.categoryName}>
+                Score
+              </Typography>
+              <Typography variant='h6' align='center'>
+                <b>{Number(state.data.score).toFixed(2)}</b>
+              </Typography>
+            </Grid>
+            <Grid item xs={4}>
+              <Typography variant='subtitle2' align='center' className={classes.categoryName}>
+                Popularity
+              </Typography>
+              <Typography variant='h6' align='center'>
+                <b>#{state.data.popularity.toLocaleString()}</b>
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant='subtitle2' className={classes.categoryName}>
+                Synopsis
+              </Typography>
+              <Typography className={classes.synopsis}>
+                <Ellipsis text={state.data.synopsis} limit={500} />
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Divider className={classes.divider} />
+              {state.data.genres.map(genre => {
+                return <Chip size='small' label={genre.name} color='primary' key={genre.id} className={classes.genre} />;
+              })}
+            </Grid>
+          </Grid>
       }
     </>
   );
 };
 
-EntryDrawer.propTypes = {
+Entry.propTypes = {
   state: PropTypes.shape({
     data: PropTypes.shape({
       title: PropTypes.string.isRequired,
@@ -132,4 +130,54 @@ EntryDrawer.propTypes = {
   }),
 };
 
-export default EntryDrawer;
+export default Entry;
+
+const Loading = () => {
+  return (
+    <Grid container spacing={1}>
+      <Grid item xs={12}>
+        <Skeleton height={40} />
+        <Divider />
+      </Grid>
+      <Grid item xs={12}>
+        <Skeleton variant='rect' height={200} width={160} style={{ margin: 'auto' }} />
+      </Grid>
+      <Grid item xs={4}>
+        <Skeleton height={30} />
+        <Skeleton height={40} />
+      </Grid>
+      <Grid item xs={4}>
+        <Skeleton height={30} />
+        <Skeleton height={40} />
+      </Grid>
+      <Grid item xs={4}>
+        <Skeleton height={30} />
+        <Skeleton height={40} />
+      </Grid>
+      <Grid item xs={12}>
+        <Skeleton height={30} width={70} />
+        <Skeleton />
+        <Skeleton />
+        <Skeleton />
+        <Skeleton />
+        <Skeleton />
+        <Skeleton />
+        <Skeleton width={80} />
+      </Grid>
+      <Grid item xs={12}>
+        <Divider />
+        <Grid container spacing={2}>
+          <Grid item xs={4}>
+            <Skeleton height={40} />
+          </Grid>
+          <Grid item xs={4}>
+            <Skeleton height={40} />
+          </Grid>
+          <Grid item xs={4}>
+            <Skeleton height={40} />
+          </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
+  );
+};

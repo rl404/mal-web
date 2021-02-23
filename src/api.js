@@ -1,6 +1,6 @@
 import * as cons from './constant';
 
-const Host = process.env.REACT_APP_API_HOST
+const Host = process.env.REACT_APP_API_HOST;
 
 // Cache handling.
 var cache = []
@@ -16,61 +16,19 @@ async function getCache(url) {
 
 // Summary endpoints.
 
-export async function getMainTotal() {
-    return getCache(`${Host}/summary/main-total`)
+export async function getSummaryTotal() {
+    return getCache(`${Host}/summary/total`)
 }
 
-export async function getYearlyScore() {
-    return getCache(`${Host}/summary/yearly-score`)
-}
-
-// Entry (anime, manga, character, people) endpoints.
-
-export async function getEntryDetail(type, id) {
-    return getCache(`${Host}/${type}/${id}`)
-}
-
-export async function getEntryStats(type, id) {
-    return getCache(`${Host}/${type}/${id}/stats`)
-}
-
-export async function getEntryCharacters(type, id) {
-    return getCache(`${Host}/${type}/${id}/characters`)
-}
-
-export async function getEntryStaff(type, id) {
-    return getCache(`${Host}/${type}/${id}/staff`)
-}
-
-export async function getEntryAnime(type, id) {
-    return getCache(`${Host}/${type}/${id}/anime`)
-}
-
-export async function getEntryManga(type, id) {
-    return getCache(`${Host}/${type}/${id}/manga`)
-}
-
-export async function getEntryVA(type, id) {
-    return getCache(`${Host}/${type}/${id}/va`)
-}
-
-// Seasonal anime endpoints.
-
-export async function getSeasonalAnime(season, year) {
-    return getCache(`${Host}/season?season=${season}&year=${year}`)
-}
-
-// Top list endpoints.
-
-export async function getTopList(mainType, topType, page, season = '', year = 0) {
-    return getCache(`${Host}/top/${mainType}?type=${topType}&page=${page}&season=${season}&year=${year}`)
+export async function getSummaryYear() {
+    return getCache(`${Host}/summary/year`)
 }
 
 // Search endpoints.
 
-export async function getSearch(type, query, page = 1, advQuery) {
+export async function getSearch(type, query, page = 1, limit = 20, advQuery) {
     if (type === cons.ANIME_TYPE || type === cons.MANGA_TYPE) {
-        let baseQuery = `title=${query}&page=${page}`;
+        let baseQuery = `title=${query.trim()}&page=${page}&limit=${limit}`;
 
         if (advQuery) {
             if (advQuery.score && advQuery.score > 0) {
@@ -98,11 +56,10 @@ export async function getSearch(type, query, page = 1, advQuery) {
                 baseQuery += `&order=${advQuery.order}`;
             }
             if (advQuery.producer && advQuery.producer > 0) {
-                if (type === cons.ANIME_TYPE) {
-                    baseQuery += `&producer=${advQuery.producer}`;
-                } else {
-                    baseQuery += `&magazine=${advQuery.producer}`;
-                }
+                baseQuery += `&producer=${advQuery.producer}`;
+            }
+            if (advQuery.magazine && advQuery.magazine > 0) {
+                baseQuery += `&magazine=${advQuery.magazine}`;
             }
 
             var genreList = [];
@@ -119,7 +76,7 @@ export async function getSearch(type, query, page = 1, advQuery) {
 
         return getCache(`${Host}/search/${type}?${baseQuery}`)
     } else if (type === cons.CHAR_TYPE || type === cons.PEOPLE_TYPE) {
-        let baseQuery = `query=${query}&page=${page}`;
+        let baseQuery = `name=${query.trim()}&page=${page}&limit=${limit}`;
 
         if (advQuery) {
             if (advQuery.order && advQuery.order !== '' && advQuery.order !== '-') {
@@ -129,8 +86,34 @@ export async function getSearch(type, query, page = 1, advQuery) {
 
         return getCache(`${Host}/search/${type}?${baseQuery}`)
     } else {
-        return getCache(`${Host}/search?query=${query}`)
+        return getCache(`${Host}/search?query=${query.trim()}`)
     }
+}
+
+// Entry (anime, manga, character, people) endpoints.
+
+export async function getEntryDetail(type, id) {
+    return getCache(`${Host}/${type}/${id}`)
+}
+
+export async function getEntryStats(type, id) {
+    return getCache(`${Host}/${type}/${id}/stats`)
+}
+
+export async function getEntryCharacters(type, id, page = 1, limit = 10) {
+    return getCache(`${Host}/${type}/${id}/characters?page=${page}&limit=${limit}`)
+}
+
+export async function getEntryStaff(type, id, page = 1, limit = 10) {
+    return getCache(`${Host}/${type}/${id}/staff?page=${page}&limit=${limit}`)
+}
+
+export async function getEntryOgraphy(type, id, oType, page = 1, limit = 10) {
+    return getCache(`${Host}/${type}/${id}/${oType}?page=${page}&limit=${limit}`)
+}
+
+export async function getEntryVA(type, id, page = 1, limit = 10) {
+    return getCache(`${Host}/${type}/${id}/va?page=${page}&limit=${limit}`)
 }
 
 // Producer/magazine endpoints.
@@ -145,64 +128,17 @@ export async function getProducers(type) {
 
 // Genre endpoints.
 
-export async function getGenres() {
-    return getCache(`${Host}/genres`)
-}
-
-// User endpoints.
-
-export async function getUser(usernamme) {
-    return getCache(`${Host}/user/${usernamme}`)
-}
-
-export async function getUserList(username, type) {
-    if (type === cons.ANIME_TYPE) {
-        return getCache(`${Host}/user/${username}/anime`)
-    } else if (type === cons.MANGA_TYPE) {
-        return getCache(`${Host}/user/${username}/manga`)
-    }
-}
-
-export async function getUserStats(username) {
-    return getCache(`${Host}/user/${username}/stats`)
-}
-
-export async function getUserScore(username) {
-    return getCache(`${Host}/user/${username}/score`)
-}
-
-export async function getUserType(username) {
-    return getCache(`${Host}/user/${username}/type`)
-}
-
-export async function getUserProgress(username) {
-    return getCache(`${Host}/user/${username}/progress`)
-}
-
-export async function getUserYear(username) {
-    return getCache(`${Host}/user/${username}/year`)
-}
-
-export async function getUserGenre(username) {
-    return getCache(`${Host}/user/${username}/genre`)
-}
-
-export async function getUserStudioAuthor(username, type) {
-    if (type === cons.ANIME_TYPE) {
-        return getCache(`${Host}/user/${username}/studio`)
-    } else if (type === cons.MANGA_TYPE) {
-        return getCache(`${Host}/user/${username}/author`)
-    }
-}
-
-export async function reparseUser(username) {
-    const result = await fetch(`${Host}/user/${username}/enqueue`)
-    return result.json()
+export async function getGenres(type) {
+    return getCache(`${Host}/genres/${type}`)
 }
 
 // Re-parse endpoint.
 
 export async function reparse(type, id) {
-    const result = await fetch(`${Host}/enqueue?type=${type}&id=${id}`)
+    const result = await fetch(`${Host}/enqueue`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: type, id: parseInt(id) }),
+    })
     return result.json()
 }

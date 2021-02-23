@@ -1,22 +1,20 @@
 import React from 'react';
-import Drawer from '@material-ui/core/Drawer';
 import { makeStyles } from '@material-ui/core/styles';
-
 import { getEntryDetail } from '../../api';
 import * as cons from '../../constant';
-import EntryDrawer from './Entry';
-import CharacterDrawer from './Character';
-import PeopleDrawer from './People';
+import Drawer from '@material-ui/core/Drawer';
+import Entry from './Entry';
+import Character from './Character';
+import People from './People';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: theme.drawer.width,
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
+    padding: theme.spacing(2),
   },
 }));
 
-const SummaryDrawer = React.forwardRef((props, ref) => {
+const Summary = React.forwardRef((props, ref) => {
   const classes = useStyles();
 
   const defaultState = {
@@ -30,19 +28,18 @@ const SummaryDrawer = React.forwardRef((props, ref) => {
 
   const [state, setState] = React.useState(defaultState);
 
-  React.useEffect(() => {
-    if (state.show && state.data === null && state.error === null) {
-      const getData = async () => {
-        const result = await getEntryDetail(state.entryType, state.entryId);
-        if (result.status === cons.CODE_OK) {
-          setState({ ...state, data: result.data, loading: false });
-        } else {
-          setState({ ...state, error: { code: result.status, message: result.message }, loading: false });
-        }
-      };
-      getData();
+  const getData = async () => {
+    const result = await getEntryDetail(state.entryType, state.entryId);
+    if (result.status === cons.CODE_OK) {
+      setState({ ...state, data: result.data, loading: false });
+    } else {
+      setState({ ...state, error: { code: result.status, message: result.message }, loading: false });
     }
-  });
+  };
+
+  React.useEffect(() => {
+    if (state.entryId > 0) getData();
+  }, [state.show]);
 
   const showDrawer = (type, id) => {
     setState({ ...defaultState, show: true, entryType: type, entryId: id });
@@ -70,16 +67,16 @@ const SummaryDrawer = React.forwardRef((props, ref) => {
       }}
     >
       {state.entryType === cons.ANIME_TYPE || state.entryType === cons.MANGA_TYPE ?
-        <EntryDrawer state={state} /> : null
+        <Entry state={state} /> : null
       }
       {state.entryType === cons.CHAR_TYPE ?
-        <CharacterDrawer state={state} /> : null
+        <Character state={state} /> : null
       }
       {state.entryType === cons.PEOPLE_TYPE ?
-        <PeopleDrawer state={state} /> : null
+        <People state={state} /> : null
       }
     </Drawer>
   );
 });
 
-export default SummaryDrawer;
+export default Summary;

@@ -1,112 +1,92 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-
 import PropTypes from 'prop-types';
 import * as cons from '../../constant';
+import Img from '../image/Img';
 import { ellipsis } from '../../utils';
-import ScoreBadge from '../badge/Score';
-import FormatBadge from '../badge/Format';
-import RankBadge from '../badge/Rank';
+import Score from '../badge/Score';
+import Format from '../badge/Format';
+import Rank from '../badge/Rank';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 160,
-    minWidth: 144,
-    margin: 'auto',
-    background: `url(${theme.error.image})`,
+    paddingTop: '133%',
+    position: 'relative',
   },
-  media: {
-    height: 220,
-    filter: props => props.state ? 'blur(1px)' : '',
+  content: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
   },
   title: {
     display: 'block',
     position: 'absolute',
     width: '100%',
     bottom: 0,
-    padding: theme.spacing(1),
-    background: theme.transparent.black[70],
-    color: theme.palette.primary.contrastText,
-    '& span': {
-      color: 'white',
-      lineHeight: 1.2,
-    },
+    padding: theme.spacing(0.5),
+    background: theme.palette.transparent.black[70],
+    color: theme.palette.common.white,
   },
   score: {
     display: 'block',
     position: 'absolute',
     top: 0,
     right: 0,
-    padding: theme.spacing(1),
   },
   format: {
     display: 'block',
     position: 'absolute',
     top: 0,
-    padding: theme.spacing(1),
-  },
-  rank: {
-    display: 'block',
-    position: 'absolute',
-    top: 0,
-    padding: theme.spacing(1),
   },
 }));
 
-const CoverCard = (props) => {
-  const theme = useTheme();
+const Cover = (props) => {
+  const [hoverState, setHoverState] = React.useState(false);
+  const hover = () => { setHoverState(true); };
+  const unhover = () => { setHoverState(false); };
 
-  var imageURL = props.image;
-  if (!imageURL || imageURL === '') {
-    imageURL = theme.error.image;
-  }
-
-  const [state, setState] = React.useState(false);
-  const hover = () => {
-    setState(true);
-  };
-  const unhover = () => {
-    setState(false);
-  };
-
-  const classes = useStyles({ state: state });
+  const classes = useStyles({ hoverState: hoverState });
 
   return (
-    <Card className={classes.root}>
-      <CardActionArea
-        onMouseEnter={hover}
-        onMouseOut={unhover}
-        onClick={() => !props.onClick ? null : props.onClick(props.type, props.id)}>
-        <CardMedia
-          className={classes.media}
-          image={imageURL}
-          title={props.title}
+    <Card
+      className={classes.root}
+      onMouseEnter={hover}
+      onMouseOut={unhover}
+      onClick={() => !props.onClick ? null : props.onClick(props.type, props.id)}
+    >
+      <CardActionArea className={classes.content}>
+        <Img
+          src={props.image}
+          alt={props.title}
+          width='100%'
+          filter={hoverState ? 'blur(1px)' : ''}
         />
         <CardContent className={classes.title}>
-          <Typography variant="caption">
-            {state ? props.title : ellipsis(props.title, 20)}
+          <Typography variant='caption'>
+            {hoverState ? props.title : ellipsis(props.title, 20)}
           </Typography>
         </CardContent>
         <CardContent className={classes.score}>
-          {state && props.score ? <ScoreBadge score={props.score} /> : null}
+          {hoverState && props.score ? <Score score={props.score} /> : null}
         </CardContent>
         <CardContent className={classes.format}>
-          {state && props.format ? <FormatBadge type={props.type} format={props.format} /> : null}
+          {hoverState && props.format ? <Format type={props.type} format={props.format} /> : null}
         </CardContent>
-        <CardContent className={classes.rank}>
-          {state || !props.rank ? null : <RankBadge rank={props.rank} />}
+        <CardContent className={classes.format}>
+          {hoverState || !props.rank ? null : <Rank rank={props.rank} />}
         </CardContent>
       </CardActionArea>
     </Card>
   );
 };
 
-CoverCard.propTypes = {
+Cover.propTypes = {
   id: PropTypes.number,
   type: PropTypes.oneOf(cons.MAIN_TYPES),
   image: PropTypes.string,
@@ -117,4 +97,4 @@ CoverCard.propTypes = {
   rank: PropTypes.number,
 };
 
-export default CoverCard;
+export default Cover;

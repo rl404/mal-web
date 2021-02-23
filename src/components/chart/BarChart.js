@@ -19,7 +19,7 @@ const BarChart = (props) => {
 
   var barColor = props.color;
   if (!barColor) {
-    barColor = theme.palette.primary.chart;
+    barColor = theme.palette.primary.main;
   }
 
   const [target, changeHover] = React.useState(null);

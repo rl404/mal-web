@@ -1,93 +1,84 @@
 import React from 'react';
+import Error from '../error/Error';
+import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+import * as cons from '../../constant';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import * as cons from '../../constant';
+import Divider from '@material-ui/core/Divider';
 import { slugify } from '../../utils';
-import EllipsisText from '../text/EllipsisText';
-import CharacterDrawerLoading from './loading/Character';
-import ErrorArea from '../error/Error';
-import StyledDivider from '../styled/Divider';
 import Img from '../image/Img';
+import Ellipsis from '../text/Ellipsis';
+import Skeleton from '@material-ui/lab/Skeleton';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    width: 240,
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
+  link: {
+    textDecoration: 'none',
+    color: theme.palette.text.primary,
+    '&:hover': {
+      color: theme.palette.primary.main
+    },
   },
   title: {
-    paddingTop: theme.spacing(2),
-    lineHeight: theme.typography.body1.lineHeight,
-    '& a': {
-      color: theme.palette.text.primary,
-      textDecoration: 'none',
-      '&:hover': {
-        color: theme.palette.primary.main
-      }
-    }
+    lineHeight: theme.typography.body2.lineHeight,
   },
   center: {
-    textAlign: 'center'
+    textAlign: 'center',
   },
   categoryName: {
-    color: theme.palette.primary.main
+    color: theme.palette.icon,
   },
   synopsis: {
-    whiteSpace: 'pre-line'
+    whiteSpace: 'pre-line',
   },
-  cover: {
-    maxHeight: 220,
-    maxWidth: '100%',
+  divider: {
+    marginBottom: theme.spacing(0.5),
   },
 }));
 
-const CharacterDrawer = (props) => {
+const Character = (props) => {
   const classes = useStyles();
   const state = props.state;
-
   return (
     <>
-      {!state ? null : state.loading ? <CharacterDrawerLoading /> :
-        state.error !== null ? <ErrorArea code={state.error.code} message={state.error.message} /> :
-          <>
-            <Typography variant="subtitle1" gutterBottom align='center' className={classes.title}>
-              <Link to={`/character/${state.entryId}/${slugify(state.data.name)}`}>
-                <b>{state.data.name}</b>
-              </Link>
-            </Typography>
-            <Typography align='center'>
-              {state.data.kanjiName}
-            </Typography>
-            <StyledDivider />
-            <Grid container spacing={1}>
-              <Grid item xs={12} className={classes.center}>
-                <Img src={state.data.image} alt={state.data.name} />
-              </Grid>
-              <Grid item xs={12}>
-                <Typography variant="subtitle2" className={classes.categoryName}>
-                  About
-              </Typography>
-                <Typography variant="body2" className={classes.synopsis}>
-                  <EllipsisText text={state.data.about} limit={500} />
+      {!state ? null : state.loading ? <Loading /> :
+        state.error !== null ? <Error code={state.error.code} message={state.error.message} /> :
+          <Grid container spacing={1}>
+            <Grid item xs={12}>
+              <Link to={`/${state.entryType}/${state.entryId}/${slugify(state.data.name)}`} className={classes.link}>
+                <Typography variant='h6' align='center' className={classes.title}>
+                  <b>{state.data.name}</b>
                 </Typography>
-              </Grid>
+                <Typography align='center'>
+                  {state.data.japaneseName}
+                </Typography>
+              </Link>
+              <Divider />
             </Grid>
-          </>
+            <Grid item xs={12} className={classes.center}>
+              <Img src={state.data.image} alt={state.data.name} width='100%' />
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant='subtitle2' className={classes.categoryName}>
+                About
+              </Typography>
+              <Typography className={classes.synopsis}>
+                <Ellipsis text={state.data.about} limit={500} />
+              </Typography>
+            </Grid>
+          </Grid>
       }
     </>
   );
 };
 
-CharacterDrawer.propTypes = {
+Character.propTypes = {
   state: PropTypes.shape({
     data: PropTypes.shape({
       name: PropTypes.string.isRequired,
       image: PropTypes.string,
-      kanjiName: PropTypes.string,
+      japaneseName: PropTypes.string,
       about: PropTypes.string.isRequired,
     }),
     loading: PropTypes.bool.isRequired,
@@ -100,4 +91,28 @@ CharacterDrawer.propTypes = {
   }),
 };
 
-export default CharacterDrawer;
+export default Character;
+
+const Loading = () => {
+  return (
+    <Grid container spacing={1}>
+      <Grid item xs={12}>
+        <Skeleton height={40} />
+        <Divider />
+      </Grid>
+      <Grid item xs={12}>
+        <Skeleton variant='rect' height={200} width={160} style={{ margin: 'auto' }} />
+      </Grid>
+      <Grid item xs={12}>
+        <Skeleton height={30} width={70} />
+        <Skeleton />
+        <Skeleton />
+        <Skeleton />
+        <Skeleton />
+        <Skeleton />
+        <Skeleton />
+        <Skeleton width={80} />
+      </Grid>
+    </Grid>
+  );
+};

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
+import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -11,23 +11,12 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-
 import PropTypes from 'prop-types';
 import navigation from './_nav';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  drawer: {
-    [theme.breakpoints.up('lg')]: {
-      width: theme.drawer.width,
-      flexShrink: 0,
-    },
-  },
-  // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
-  drawerPaper: {
-    width: theme.drawer.width,
-  },
   logoArea: {
     display: 'flex',
     flexDirection: 'column',
@@ -35,15 +24,28 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     padding: theme.spacing(1),
   },
-  nested: {
-    paddingLeft: theme.spacing(4),
-  },
   logo: {
     width: '100%',
+  },
+  iconList: {
+    color: theme.palette.icon,
+  },
+  drawer: {
+    [theme.breakpoints.up('lg')]: {
+      width: theme.drawer.width,
+      flexShrink: 0,
+    },
+  },
+  drawerPaper: {
+    width: theme.drawer.width,
+  },
+  nested: {
+    paddingLeft: theme.spacing(4),
   },
 }));
 
 const Sidebar = (props) => {
+  const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
 
@@ -54,10 +56,10 @@ const Sidebar = (props) => {
 
   const drawer = (
     <>
-      <div className={classes.toolbar}>
+      <div className={classes.toolbar} >
         <Grid className={classes.logoArea} container justify='center' alignItems='center'>
           <Link to='/'>
-            <img src={theme.logo.image} alt={process.env.REACT_APP_APP_NAME} className={classes.logo} />
+            <img src={theme.logo.image} alt='home' className={classes.logo} />
           </Link>
         </Grid>
       </div>
@@ -67,7 +69,7 @@ const Sidebar = (props) => {
           return (
             <div key={list.id}>
               <ListItem button onClick={() => toggleList(list.name)}>
-                <ListItemIcon>
+                <ListItemIcon className={classes.iconList}>
                   {list.icon}
                 </ListItemIcon>
                 <ListItemText primary={list.name} />
@@ -78,7 +80,7 @@ const Sidebar = (props) => {
                   {list.subItems.map((item) => {
                     return (
                       <ListItem button className={classes.nested} component={Link} to={item.link} key={item.id}>
-                        <ListItemIcon>
+                        <ListItemIcon className={classes.iconList}>
                           {item.icon}
                         </ListItemIcon>
                         <ListItemText primary={item.name} />
@@ -94,30 +96,26 @@ const Sidebar = (props) => {
     </>
   );
 
+  const container = window !== undefined ? () => window().document.body : undefined;
+
   return (
     <nav className={classes.drawer}>
-      {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
       <Hidden lgUp implementation='css'>
         <Drawer
+          container={container}
           variant='temporary'
           anchor='left'
           open={props.mobileState}
           onClose={props.mobileToggle}
-          classes={{
-            paper: classes.drawerPaper,
-          }}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
+          classes={{ paper: classes.drawerPaper }}
+          ModalProps={{ keepMounted: true }}
         >
           {drawer}
         </Drawer>
       </Hidden>
       <Hidden mdDown implementation='css'>
         <Drawer
-          classes={{
-            paper: classes.drawerPaper,
-          }}
+          classes={{ paper: classes.drawerPaper }}
           variant='permanent'
           open
         >

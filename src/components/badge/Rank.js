@@ -5,18 +5,15 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    background: theme.palette.gradient.main,
-    color: 'white',
+    background: theme.palette.appBar.background,
+    color: theme.palette.appBar.color,
     boxShadow: theme.shadows[3],
   },
 }));
 
 const RankBadge = (props) => {
   const classes = useStyles();
-
-  return (
-    <Chip size='small' label={<b>#{props.rank}</b>} className={classes.root} />
-  );
+  return <Chip size='small' label={<b>#{props.rank}</b>} className={classes.root} />;
 };
 
 RankBadge.propTypes = {

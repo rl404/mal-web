@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ScoreBadge = (props) => {
+const Score = (props) => {
   const classes = useStyles();
 
   var score = props.score;
@@ -54,13 +54,11 @@ const ScoreBadge = (props) => {
     colorClass = classes.red;
   }
 
-  return (
-    <Chip size="small" label={score} className={colorClass} />
-  );
+  return <Chip size="small" label={score} className={colorClass} />;
 };
 
-ScoreBadge.propTypes = {
+Score.propTypes = {
   score: PropTypes.number.isRequired,
 };
 
-export default ScoreBadge;
+export default Score;

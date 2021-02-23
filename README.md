@@ -13,14 +13,14 @@ Yes, everything is open-source and you can host both the backend and frontend by
 - Simple dashboard (total entries count and graph)
 - Simple and modern UI style
 - Details for every entries (anime, manga, character, and voice actor/staff)
-- Anime, manga, character, and people search
+- Anime, manga, character, and voice actor/staff search
 
 ## Development
 
 ### Requirement
 
 - [NodeJS](https://nodejs.org)
-- [Backend service](https://github.com/rl404/go-malscraper)
+- [Backend service](https://github.com/rl404/mal-db)
 - [Docker](https://docker.com) + [Docker compose](https://docs.docker.com/compose/) (optional)
 
 ### Step

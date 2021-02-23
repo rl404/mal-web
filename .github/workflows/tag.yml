@@ -1,0 +1,23 @@
+name: tag
+
+on :
+  push:
+    branches:
+      - master
+jobs:
+  tag:
+    name: Tag
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set up Node environment
+      uses: actions/setup-node@v2
+      with:
+        node-version: 12
+    - name: Check out code
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: Create tag
+      uses: mathieudutour/github-tag-action@v5.1
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}

@@ -4,6 +4,8 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
+import Grid from '@material-ui/core/Grid';
 
 const ThemeChanger = (props) => {
   const defaultThemeState = localStorage.getItem('themeState') ? localStorage.getItem('themeState') : 'lightTheme';
@@ -18,8 +20,18 @@ const ThemeChanger = (props) => {
   return (
     <FormControl component='fieldset'>
       <RadioGroup value={themeName} onChange={changeTheme}>
-      <FormControlLabel value="lightTheme" control={<Radio color='secondary' />} label="Light" />
-      <FormControlLabel value="darkTheme" control={<Radio color='secondary' />} label="Dark" />
+        <Grid container spacing={1}>
+          <Grid item xs={6}>
+            <FormLabel component="legend">Basic</FormLabel>
+            <FormControlLabel value="lightTheme" control={<Radio color='secondary' />} label="Light" />
+            <FormControlLabel value="darkTheme" control={<Radio color='secondary' />} label="Dark" />
+          </Grid>
+          <Grid item xs={6}>
+            <FormLabel component="legend">Re:Zero</FormLabel>
+            <FormControlLabel value="emiliaTheme" control={<Radio color='secondary' />} label="Emilia" />
+            <FormControlLabel value="echidnaTheme" control={<Radio color='secondary' />} label="Echidna" />
+          </Grid>
+        </Grid>
       </RadioGroup>
     </FormControl>
   );

@@ -12,7 +12,7 @@ import TableBody from '@material-ui/core/TableBody';
 import Table from '@material-ui/core/Table';
 import Divider from '@material-ui/core/Divider';
 import { Link } from 'react-router-dom';
-import { malToDate, capitalize, timeToDuration, parseClock, slugify } from '../../utils';
+import { malToDate, slugify } from '../../utils';
 
 const useStyles = makeStyles((theme) => ({
   info: {

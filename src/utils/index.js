@@ -63,9 +63,9 @@ const months = [
 ];
 
 export function malToDate(date) {
-  if (date.year != 0) {
-    if (date.month != 0) {
-      if (date.day != 0) {
+  if (date.year !== 0) {
+    if (date.month !== 0) {
+      if (date.day !== 0) {
         return date.day.toString() + ' ' + months[date.month].substring(0, 3) + ' ' + date.year.toString();
       } else {
         return months[date.month].substring(0, 3) + ' ' + date.year.toString();

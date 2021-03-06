@@ -4,7 +4,7 @@ import MenuBookIcon from '@material-ui/icons/MenuBook';
 import SearchIcon from '@material-ui/icons/Search';
 import PersonIcon from '@material-ui/icons/Person';
 
-export default [
+const navigation = [
   {
     id: 1,
     name: 'Anime',
@@ -58,3 +58,5 @@ export default [
     ],
   },
 ];
+
+export default navigation;

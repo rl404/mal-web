@@ -122,7 +122,7 @@ const Adv = (props) => {
       setYearState(year);
       if (year === '' || year.length === 4) {
         props.setQuery({ year: year });
-        if (year === '' && seasonState != '-') {
+        if (year === '' && seasonState !== '-') {
           setYearState(new Date().getFullYear());
         }
       }

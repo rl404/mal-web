@@ -35,7 +35,7 @@ const Header = (props) => {
           query={props.query} />
         <Divider className={classes.divider} />
       </Grid>
-      {props.sType != cons.ANIME_TYPE && props.sType != cons.MANGA_TYPE ? null :
+      {props.sType !== cons.ANIME_TYPE && props.sType !== cons.MANGA_TYPE ? null :
         <Grid item xs={12} style={{ display: !advState ? 'none' : null }}>
           <Adv
             sType={props.sType}

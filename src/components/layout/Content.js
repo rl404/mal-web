@@ -5,7 +5,6 @@ import {
   Switch
 } from 'react-router-dom';
 import routes from '../../routes';
-import PropTypes from 'prop-types';
 
 const Content = (props) => {
   return (

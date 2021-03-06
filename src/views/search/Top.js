@@ -80,7 +80,7 @@ const Top = (props) => {
           onChange={changeQuery}
           value={queryState}
           helperText={errorState}
-          error={errorState != ''}
+          error={errorState !== ''}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">

@@ -39,7 +39,7 @@ const Summary = React.forwardRef((props, ref) => {
 
   React.useEffect(() => {
     if (state.entryId > 0) getData();
-  }, [state.show]);
+  }, [state.entryId]);
 
   const showDrawer = (type, id) => {
     setState({ ...defaultState, show: true, entryType: type, entryId: id });

@@ -177,6 +177,7 @@ const Top = (props) => {
                     icon={<EqualizerIcon />}
                     data={'#' + state.data.rank.toLocaleString()}
                     name='Rank'
+                    onClick={() => props.showHistoryModal(cons.MANGA_TYPE, state.data.id)}
                   />
                 </Grid>
                 <Grid item xs>
@@ -187,6 +188,7 @@ const Top = (props) => {
                         <b>{Number(state.data.score).toFixed(2)}</b>
                       </Tooltip>}
                     name='Score'
+                    onClick={() => props.showHistoryModal(cons.MANGA_TYPE, state.data.id)}
                   />
                 </Grid>
                 <Grid item xs>
@@ -194,6 +196,7 @@ const Top = (props) => {
                     icon={<ThumbUpIcon />}
                     data={'#' + state.data.popularity.toLocaleString()}
                     name='Popularity'
+                    onClick={() => props.showHistoryModal(cons.MANGA_TYPE, state.data.id)}
                   />
                 </Grid>
                 <Grid item xs>
@@ -201,6 +204,7 @@ const Top = (props) => {
                     icon={<PersonIcon />}
                     data={state.data.member.toLocaleString()}
                     name='Members'
+                    onClick={() => props.showHistoryModal(cons.MANGA_TYPE, state.data.id)}
                   />
                 </Grid>
                 <Grid item xs>
@@ -208,6 +212,7 @@ const Top = (props) => {
                     icon={<FavoriteIcon />}
                     data={state.data.favorite.toLocaleString()}
                     name='Favorites'
+                    onClick={() => props.showHistoryModal(cons.MANGA_TYPE, state.data.id)}
                   />
                 </Grid>
               </Grid>

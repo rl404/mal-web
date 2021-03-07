@@ -3,7 +3,8 @@ import { getSummaryYear } from '../../api';
 import * as cons from '../../constant';
 import Skeleton from '@material-ui/lab/Skeleton';
 import Error from '../../components/error/Error';
-import { Grid, useMediaQuery, useTheme } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import { useMediaQuery, useTheme } from '@material-ui/core';
 import StyledTitle from '../../components/styled/Title';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import TimelineIcon from '@material-ui/icons/Timeline';
@@ -63,6 +64,7 @@ const YearChart = (props) => {
             <Grid item md={6} xs={12}>
               <StyledTitle icon={<TimelineIcon />} title='Anime Score' />
               <LineChart
+                float
                 data={state.data.slice(matches ? -5 : -10).map(d => {
                   return {
                     key: d.anime.year.toString(),
@@ -74,6 +76,7 @@ const YearChart = (props) => {
             <Grid item md={6} xs={12}>
               <StyledTitle icon={<TimelineIcon />} title='Manga Score' />
               <LineChart
+                float
                 data={state.data.slice(matches ? -5 : -10).map(d => {
                   return {
                     key: d.manga.year.toString(),

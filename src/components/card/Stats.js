@@ -47,7 +47,7 @@ const Stats = (props) => {
   const classes = useStyles(props);
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} onClick={props.onClick ? props.onClick : null}>
       <CardActionArea className={classes.details}>
         {!props.icon ? null :
           <CardContent className={classes.icon}>
@@ -71,6 +71,7 @@ Stats.propTypes = {
   icon: PropTypes.object.isRequired,
   name: PropTypes.string.isRequired,
   data: PropTypes.any.isRequired,
+  onClick: PropTypes.func,
 };
 
 export default Stats;

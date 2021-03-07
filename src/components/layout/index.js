@@ -8,6 +8,7 @@ import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import Summary from '../drawer/Summary';
+import History from '../modal/History';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,6 +41,11 @@ const Layout = (props) => {
     summaryRef.current.showDrawer(type, id);
   };
 
+  const historyRef = React.useRef(null);
+  const showHistoryModal = (type, id) => {
+    historyRef.current.showModal(type, id);
+  };
+
   return (
     <ThemeProvider theme={getTheme(themeState)}>
       <CssBaseline />
@@ -49,12 +55,13 @@ const Layout = (props) => {
         <main className={classes.content}>
           <div className={classes.toolbar} id='top-anchor' />
           <Container>
-            <Content showEntryDrawer={showEntryDrawer} />
+            <Content showEntryDrawer={showEntryDrawer} showHistoryModal={showHistoryModal} />
           </Container>
         </main>
         <ScrollTop {...props} />
       </div>
       <Summary ref={summaryRef} />
+      <History ref={historyRef} />
     </ThemeProvider>
   );
 }

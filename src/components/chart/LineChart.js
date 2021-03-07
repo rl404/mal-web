@@ -11,7 +11,8 @@ import {
 import {
   Animation,
   HoverState,
-  EventTracker
+  EventTracker,
+  ValueScale
 } from '@devexpress/dx-react-chart';
 
 const LineChart = (props) => {
@@ -25,20 +26,36 @@ const LineChart = (props) => {
   const [target, changeHover] = React.useState(null)
   const TooltipContent = (tooltipProps) => {
     const { targetItem, text, ...restProps } = tooltipProps;
+    var value = props.float ?
+      parseFloat(props.data[targetItem.point].value).toFixed(2) :
+      parseInt(props.data[targetItem.point].value).toLocaleString();
     return (
-      <div>
-        <Tooltip.Content
-          {...restProps}
-          text={parseFloat(props.data[targetItem.point].value).toFixed(2)}
-        />
-      </div>
+      <Tooltip.Content
+        {...restProps}
+        text={props.prefix + value}
+      />
     );
   };
+
+  const TooltipOverlay = (tooltipProps) => {
+    const { children, ...restProps } = tooltipProps;
+    return (
+      <Tooltip.Overlay
+        {...restProps}
+        style={{ zIndex: 2000 }}
+      >
+        {children}
+      </Tooltip.Overlay>
+    );
+  };
+
+  const invertedDomain = d => [d[1], d[0]];
 
   return (
     <Chart data={props.data} height={props.height}>
       <ArgumentAxis />
       <ValueAxis />
+      <ValueScale modifyDomain={props.inverted ? invertedDomain : null} />
       <Animation />
       <EventTracker />
       <LineSeries
@@ -52,6 +69,7 @@ const LineChart = (props) => {
       />
       <Tooltip
         targetItem={target}
+        overlayComponent={TooltipOverlay}
         contentComponent={TooltipContent}
       />
     </Chart>
@@ -67,10 +85,16 @@ LineChart.propTypes = {
   ),
   height: PropTypes.number,
   color: PropTypes.string,
+  float: PropTypes.bool,
+  prefix: PropTypes.string,
+  inverted: PropTypes.bool,
 };
 
 LineChart.defaultProps = {
   height: 200,
+  float: false,
+  prefix: '',
+  inverted: false,
 };
 
 export default LineChart;

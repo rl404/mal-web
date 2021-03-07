@@ -39,7 +39,7 @@ const Manga = (props) => {
   return (
     <Grid container spacing={1}>
       <Grid item xs={12}>
-        <Top state={state} />
+        <Top state={state} showHistoryModal={props.showHistoryModal} />
       </Grid>
       <Grid item xs={12}>
         <Paper>
@@ -69,6 +69,7 @@ const Manga = (props) => {
 
 Manga.propTypes = {
   showEntryDrawer: PropTypes.func.isRequired,
+  showHistoryModal: PropTypes.func.isRequired,
 };
 
 export default Manga;

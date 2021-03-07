@@ -116,6 +116,10 @@ export async function getEntryVA(type, id, page = 1, limit = 10) {
     return getCache(`${Host}/${type}/${id}/va?page=${page}&limit=${limit}`)
 }
 
+export async function getEntryStatsHistory(type,id) {
+    return getCache(`${Host}/stats/history/${type}/${id}`)
+}
+
 // Producer/magazine endpoints.
 
 export async function getProducers(type) {

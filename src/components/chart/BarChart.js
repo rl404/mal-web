@@ -11,7 +11,8 @@ import {
 import {
   Animation,
   HoverState,
-  EventTracker
+  EventTracker,
+  ValueScale
 } from '@devexpress/dx-react-chart';
 
 const BarChart = (props) => {
@@ -25,20 +26,36 @@ const BarChart = (props) => {
   const [target, changeHover] = React.useState(null);
   const tooltipContent = (tooltipProps) => {
     const { targetItem, text, ...restProps } = tooltipProps;
+    var value = props.float ?
+      parseFloat(props.data[targetItem.point].value).toFixed(2) :
+      parseInt(props.data[targetItem.point].value).toLocaleString();
     return (
-      <div>
-        <Tooltip.Content
-          {...restProps}
-          text={parseInt(props.data[targetItem.point].value).toLocaleString()}
-        />
-      </div>
+      <Tooltip.Content
+        {...restProps}
+        text={props.prefix + value}
+      />
     );
   };
+
+  const TooltipOverlay = (tooltipProps) => {
+    const { children, ...restProps } = tooltipProps;
+    return (
+      <Tooltip.Overlay
+        {...restProps}
+        style={{ zIndex: 2000 }}
+      >
+        {children}
+      </Tooltip.Overlay>
+    );
+  };
+
+  const invertedDomain = d => [d[1], d[0]];
 
   return (
     <Chart data={props.data} height={props.height}>
       <ArgumentAxis />
       <ValueAxis />
+      <ValueScale modifyDomain={props.inverted ? invertedDomain : null} />
       <Animation />
       <EventTracker />
       <BarSeries
@@ -52,6 +69,7 @@ const BarChart = (props) => {
       />
       <Tooltip
         targetItem={target}
+        overlayComponent={TooltipOverlay}
         contentComponent={tooltipContent}
       />
     </Chart>
@@ -67,10 +85,16 @@ BarChart.propTypes = {
   ),
   height: PropTypes.number,
   color: PropTypes.string,
+  float: PropTypes.bool,
+  prefix: PropTypes.string,
+  inverted: PropTypes.bool,
 };
 
 BarChart.defaultProps = {
   height: 200,
+  float: false,
+  prefix: '',
+  inverted: false,
 };
 
 export default BarChart;

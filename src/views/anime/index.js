@@ -40,7 +40,7 @@ const Anime = (props) => {
   return (
     <Grid container spacing={1}>
       <Grid item xs={12}>
-        <Top state={state} />
+        <Top state={state} showHistoryModal={props.showHistoryModal} />
       </Grid>
       <Grid item xs={12}>
         <Paper>
@@ -74,6 +74,7 @@ const Anime = (props) => {
 
 Anime.propTypes = {
   showEntryDrawer: PropTypes.func.isRequired,
+  showHistoryModal: PropTypes.func.isRequired,
 };
 
 export default Anime;

@@ -139,28 +139,31 @@ export const SEASONS = [SEASON_WINTER, SEASON_SPRING, SEASON_SUMMER, SEASON_FALL
 
 // Manga types.
 export const MANGA_MANGA_ID = 1
-export const MANGA_NOVEL_ID = 2
+export const MANGA_LIGHT_NOVEL_ID = 2
 export const MANGA_ONESHOT_ID = 3
 export const MANGA_DOUJINSHI_ID = 4
 export const MANGA_MANHWA_ID = 5
 export const MANGA_MANHUA_ID = 6
 export const MANGA_OEL_ID = 7
+export const MANGA_NOVEL_ID = 8
 export const MANGA_MANGA = 'Manga'
-export const MANGA_NOVEL = 'Novel'
+export const MANGA_LIGHT_NOVEL = 'Light Novel'
 export const MANGA_ONESHOT = 'One-shot'
 export const MANGA_DOUJINSHI = 'Doujinshi'
 export const MANGA_MANHWA = 'Manhwa'
 export const MANGA_MANHUA = 'Manhua'
 export const MANGA_OEL = 'OEL'
+export const MANGA_NOVEL = 'Novel'
 export const MANGA_TYPES = [
   '?',
   MANGA_MANGA,
-  MANGA_NOVEL,
+  MANGA_LIGHT_NOVEL,
   MANGA_ONESHOT,
   MANGA_DOUJINSHI,
   MANGA_MANHWA,
   MANGA_MANHUA,
   MANGA_OEL,
+  MANGA_NOVEL,
 ]
 
 // Manga status.

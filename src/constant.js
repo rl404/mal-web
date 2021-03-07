@@ -256,4 +256,10 @@ export const ORDERS = {
     'name': "Name asc",
     '-name': "Name desc",
   },
+  'comparison': {
+    'title': 'Title asc',
+    '-title': 'Title desc',
+    'score': 'Score asc',
+    '-score': 'Score desc',
+  }
 };

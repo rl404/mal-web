@@ -3,6 +3,7 @@ import TheatersIcon from '@material-ui/icons/Theaters';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import SearchIcon from '@material-ui/icons/Search';
 import PersonIcon from '@material-ui/icons/Person';
+import CompareArrowsIcon from '@material-ui/icons/CompareArrows';
 
 const navigation = [
   {
@@ -28,6 +29,12 @@ const navigation = [
         name: 'Manga Search',
         icon: <SearchIcon />,
         link: '/search/manga',
+      },
+      {
+        id: 2,
+        name: 'Score Comparison',
+        icon: <CompareArrowsIcon />,
+        link: '/compare/score',
       },
     ],
   },

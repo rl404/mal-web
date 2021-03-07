@@ -116,7 +116,7 @@ export async function getEntryVA(type, id, page = 1, limit = 10) {
     return getCache(`${Host}/${type}/${id}/va?page=${page}&limit=${limit}`)
 }
 
-export async function getEntryStatsHistory(type,id) {
+export async function getEntryStatsHistory(type, id) {
     return getCache(`${Host}/stats/history/${type}/${id}`)
 }
 
@@ -145,4 +145,10 @@ export async function reparse(type, id) {
         body: JSON.stringify({ type: type, id: parseInt(id) }),
     })
     return result.json()
+}
+
+// Score comparison endpoint.
+
+export async function compareScore(query, order, page = 1, limit = 20) {
+    return getCache(`${Host}/compare/score?title=${query}&order=${order}&page=${page}&limit=${limit}`)
 }

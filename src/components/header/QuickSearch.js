@@ -117,9 +117,9 @@ const QuickSearch = () => {
           return (
             <Tooltip placement='left' title={
               !option.image ? 'no image' :
-              <div style={{ width: 160, textAlign: 'center' }}>
-                <Img width={160} src={option.image} alt={option.name} />
-              </div>
+                <div style={{ width: 160, textAlign: 'center' }}>
+                  <Img width={160} src={option.image} alt={option.name} />
+                </div>
             }>
               <Link to={`/${option.type}/${option.id}/${slugify(option.name)}`} className={classes.link}>
                 {option.name}

@@ -4,9 +4,9 @@ import * as cons from '../constant';
 export function slugify(str) {
   return str
     .toString()
-    .trim()
     .toLowerCase()
-    .replace(/[^a-zA-Z0-9]\s+/g, ' ')
+    .replace(/[^a-zA-Z0-9]/g, ' ')
+    .trim()
     .replace(/\//g, "-")
     .replace(/\s+/g, "-");
 }

@@ -57,12 +57,19 @@ const Characters = (props) => {
                     id={c.id}
                     type={cons.CHAR_TYPE}
                     title={c.name}
-                    title2={c.voiceActors[0] ? c.voiceActors[0].name : null}
                     image={c.image}
-                    image2={c.voiceActors[0] ? c.voiceActors[0].image : null}
                     onClick={props.showEntryDrawer}
                     detail={c.role}
-                    detail2={c.voiceActors[0] ? c.voiceActors[0].role : null}
+                    more={c.voiceActors.map(v => {
+                      return {
+                        id: v.id,
+                        type: cons.PEOPLE_TYPE,
+                        title: v.name,
+                        image: v.image,
+                        onClick: props.showEntryDrawer,
+                        detail: v.role,
+                      }
+                    })}
                   />
                 </Grid>
               )

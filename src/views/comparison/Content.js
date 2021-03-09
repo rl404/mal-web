@@ -96,9 +96,9 @@ const Content = (props) => {
                       value:
                         <Grid container spacing={1}>
                           <Grid item xs={10}>
-                            <a onClick={() => props.showEntryDrawer(cons.MANGA_TYPE, d.novel[0].id)} className={classes.link}>
+                            <span onClick={() => props.showEntryDrawer(cons.MANGA_TYPE, d.novel[0].id)} className={classes.link}>
                               {d.novel[0].title}
-                            </a>
+                            </span>
                           </Grid>
                           <Grid item xs={2} align='right'>
                             {parseFloat(d.novel[0].score).toFixed(2)}
@@ -113,9 +113,9 @@ const Content = (props) => {
                             return (
                               <React.Fragment key={k}>
                                 <Grid item xs={8}>
-                                  <a onClick={() => props.showEntryDrawer(cons.ANIME_TYPE, a.id)} className={classes.link}>
+                                  <span onClick={() => props.showEntryDrawer(cons.ANIME_TYPE, a.id)} className={classes.link}>
                                     {a.title}
-                                  </a>
+                                  </span>
                                 </Grid>
                                 <Grid item xs={2} align='right'>
                                   {parseFloat(a.score).toFixed(2)}
@@ -139,9 +139,9 @@ const Content = (props) => {
                             return (
                               <React.Fragment key={k}>
                                 <Grid item xs={8}>
-                                  <a onClick={() => props.showEntryDrawer(cons.MANGA_TYPE, m.id)} className={classes.link}>
+                                  <span onClick={() => props.showEntryDrawer(cons.MANGA_TYPE, m.id)} className={classes.link}>
                                     {m.title}
-                                  </a>
+                                  </span>
                                 </Grid>
                                 <Grid item xs={2} align='right'>
                                   {parseFloat(m.score).toFixed(2)}
@@ -170,9 +170,9 @@ const Content = (props) => {
                             return (
                               <React.Fragment key={k}>
                                 <Grid item xs={8}>
-                                  <a onClick={() => props.showEntryDrawer(cons.ANIME_TYPE, a.id)} className={classes.link}>
+                                  <span onClick={() => props.showEntryDrawer(cons.ANIME_TYPE, a.id)} className={classes.link}>
                                     {a.title}
-                                  </a>
+                                  </span>
                                 </Grid>
                                 <Grid item xs={2} align='right'>
                                   {parseFloat(a.score).toFixed(2)}
@@ -195,9 +195,9 @@ const Content = (props) => {
                             return (
                               <React.Fragment key={k}>
                                 <Grid item xs={8}>
-                                  <a onClick={() => props.showEntryDrawer(cons.MANGA_TYPE, m.id)} className={classes.link}>
+                                  <span onClick={() => props.showEntryDrawer(cons.MANGA_TYPE, m.id)} className={classes.link}>
                                     {m.title}
-                                  </a>
+                                  </span>
                                 </Grid>
                                 <Grid item xs={2} align='right'>
                                   {parseFloat(m.score).toFixed(2)}
@@ -221,9 +221,9 @@ const Content = (props) => {
                             Novel/Light Novel
                           </Grid>
                           <Grid item xs={8}>
-                            <a onClick={() => props.showEntryDrawer(cons.MANGA_TYPE, d.novel[0].id)} className={classes.link}>
+                            <span onClick={() => props.showEntryDrawer(cons.MANGA_TYPE, d.novel[0].id)} className={classes.link}>
                               {d.novel[0].title}
-                            </a>
+                            </span>
                           </Grid>
                           <Grid item xs={4} align='right'>
                             {parseFloat(d.novel[0].score).toFixed(2)}
@@ -237,9 +237,9 @@ const Content = (props) => {
                             return (
                               <React.Fragment key={k}>
                                 <Grid item xs={8}>
-                                  <a onClick={() => props.showEntryDrawer(cons.ANIME_TYPE, a.id)} className={classes.link}>
+                                  <span onClick={() => props.showEntryDrawer(cons.ANIME_TYPE, a.id)} className={classes.link}>
                                     {a.title}
-                                  </a>
+                                  </span>
                                 </Grid>
                                 <Grid item xs={2} align='right'>
                                   {parseFloat(a.score).toFixed(2)}
@@ -262,9 +262,9 @@ const Content = (props) => {
                             return (
                               <React.Fragment key={k}>
                                 <Grid item xs={8}>
-                                  <a onClick={() => props.showEntryDrawer(cons.MANGA_TYPE, m.id)} className={classes.link}>
+                                  <span onClick={() => props.showEntryDrawer(cons.MANGA_TYPE, m.id)} className={classes.link}>
                                     {m.title}
-                                  </a>
+                                  </span>
                                 </Grid>
                                 <Grid item xs={2} align='right'>
                                   {parseFloat(m.score).toFixed(2)}

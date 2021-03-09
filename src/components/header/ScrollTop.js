@@ -33,7 +33,7 @@ const ScrollTop = (props) => {
   return (
     <Zoom in={trigger}>
       <div onClick={handleClick} role="presentation" className={classes.root}>
-        <Fab size='small' color='secondary'>
+        <Fab color='secondary'>
           <KeyboardArrowUpIcon />
         </Fab>
       </div>

@@ -58,11 +58,8 @@ const Characters = (props) => {
                     type={cons.CHAR_TYPE}
                     title={c.character.name}
                     image={c.character.image}
-                    title2={c.anime.name}
-                    image2={c.anime.image}
                     onClick={props.showEntryDrawer}
                     detail={c.character.role}
-                    detail2={c.anime.role}
                   />
                 </Grid>
               )

@@ -7,79 +7,122 @@ import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import * as cons from '../../constant';
 import { ellipsis } from '../../utils';
-import { CardContent } from '@material-ui/core';
+import CardContent from '@material-ui/core/CardContent';
 import LazyLoad from 'react-lazyload';
+import { CardActions, Collapse, useTheme } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     paddingTop: '35%',
     position: 'relative',
-    backgroundImage: props =>
-      props.props.image2 && props.props.image2 !== '' ?
-        !props.state ?
-          `url(${theme.overlay}), url(${props.props.image2})` :
-          `url(${theme.overlay}), url(${props.props.image})` :
-        `url(${theme.overlay}), url(${props.props.image})`,
+    backgroundImage: props => `url(${theme.overlay}), url(${props.props.image})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center center',
     overflow: 'hidden',
   },
-  content: {
+  grid: {
     position: 'absolute',
     top: 0,
     left: 0,
     bottom: 0,
     right: 0,
   },
-  grid: {
-    height: '100%',
-  },
   image: {
     background: theme.palette.primary.main,
-    backgroundImage: props =>
-      !props.state || !props.props.image2 || props.props.image2 === '' ?
-        `url(${props.props.image})` :
-        `url(${props.props.image2})`,
+    backgroundImage: props => `url(${props.props.image})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center center',
   },
-  data: {
-
+  actionArea: {
+    height: '100%',
+  },
+  content: {
+    position: 'absolute',
+    top: 0,
   },
   detail: {
     color: theme.palette.grey[500],
+  },
+  more: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+  },
+  moreButton: {
+    transform: props => props.state ? 'rotate(180deg)' : 'rotate(0deg)',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest,
+    }),
   },
 }));
 
 const Entry = (props) => {
   const [state, setState] = React.useState(false);
-  const hover = () => setState(true);
-  const unhover = () => setState(false);
+  const toggleState = () => {
+    setState(!state);
+  };
 
   const classes = useStyles({ props: props, state: state });
+  const theme = useTheme();
 
   return (
     <LazyLoad>
-      <Card className={classes.root} onMouseEnter={hover} onMouseLeave={unhover}>
-        <CardActionArea className={classes.content} onClick={() => !props.onClick ? null : props.onClick(props.type, props.id)}>
-          <Grid container className={classes.grid}>
-            <Grid item xs={4} className={classes.image} />
-            <Grid item xs={8}>
-              <CardContent className={classes.data}>
+      <Card className={classes.root}>
+        <Grid container className={classes.grid}>
+          <Grid item xs={4} className={classes.image} />
+          <Grid item xs={8}>
+            <CardActionArea className={classes.actionArea} onClick={() => !props.onClick ? null : props.onClick(props.type, props.id)}>
+              <CardContent className={classes.content}>
                 <Typography variant="subtitle2">
-                  <b>{ellipsis(!state || !props.title2 || props.title2 === '' ? props.title : props.title2, 25)}</b>
+                  <b>{ellipsis(props.title, 25)}</b>
                 </Typography>
                 {!props.detail ? null :
                   <Typography variant="caption" className={classes.detail}>
-                    {!state || !props.detail2 || props.detail2 === '' ? props.detail : props.detail2}
+                    {props.detail ? props.detail : ''}
                   </Typography>
                 }
               </CardContent>
-            </Grid>
+            </CardActionArea>
+            {!props.more || props.more.length === 0 ? null :
+              <CardActions className={classes.more}>
+                <IconButton onClick={toggleState} className={classes.moreButton}>
+                  <ExpandMoreIcon />
+                </IconButton>
+              </CardActions>
+            }
           </Grid>
-        </CardActionArea>
+        </Grid>
       </Card>
-    </LazyLoad>
+      {!props.more || props.more.length === 0 ? null :
+        <Collapse in={state} timeout="auto" unmountOnExit>
+          {props.more.map((m, i) => {
+            return (
+              <Card className={classes.root} style={{ marginTop: theme.spacing(1), backgroundImage: `url(${theme.overlay}), url(${m.image})` }} key={i}>
+                <Grid container className={classes.grid}>
+                  <Grid item xs={4} className={classes.image} style={{ backgroundImage: `url(${m.image})` }} />
+                  <Grid item xs={8}>
+                    <CardActionArea className={classes.actionArea} onClick={() => !m.onClick ? null : m.onClick(m.type, m.id)}>
+                      <CardContent className={classes.content}>
+                        <Typography variant="subtitle2">
+                          <b>{ellipsis(m.title, 25)}</b>
+                        </Typography>
+                        {!m.detail ? null :
+                          <Typography variant="caption" className={classes.detail}>
+                            {m.detail ? m.detail : ''}
+                          </Typography>
+                        }
+                      </CardContent>
+                    </CardActionArea>
+                  </Grid>
+                </Grid>
+              </Card>
+            )
+          })}
+        </Collapse>
+      }
+    </LazyLoad >
   );
 };
 
@@ -87,12 +130,17 @@ Entry.propTypes = {
   id: PropTypes.number,
   type: PropTypes.oneOf(cons.MAIN_TYPES),
   image: PropTypes.string,
-  image2: PropTypes.string,
   title: PropTypes.string.isRequired,
-  title2: PropTypes.string,
   detail: PropTypes.string,
-  detail2: PropTypes.string,
   onClick: PropTypes.func,
+  more: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    type: PropTypes.oneOf(cons.MAIN_TYPES),
+    image: PropTypes.string,
+    title: PropTypes.string.isRequired,
+    detail: PropTypes.string,
+    onClick: PropTypes.func,
+  })),
 };
 
 export default Entry;

@@ -56,12 +56,9 @@ const Character = (props) => {
                       id={c.id}
                       type={cons.CHAR_TYPE}
                       title={c.name}
-                      title2={c.voiceActors[0] ? c.voiceActors[0].name : null}
                       image={c.image}
-                      image2={c.voiceActors[0] ? c.voiceActors[0].image : null}
                       onClick={props.showEntryDrawer}
                       detail={c.role}
-                      detail2={c.voiceActors[0] ? c.voiceActors[0].role : null}
                     />
                   </Grid>
                 )

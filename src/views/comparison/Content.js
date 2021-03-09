@@ -63,6 +63,11 @@ const Content = (props) => {
 
   React.useEffect(() => {
     getData(true);
+  }, []);
+
+  React.useEffect(() => {
+    if (state.data.length === 0) return;
+    getData(true);
   }, [props.query]);
 
   return (

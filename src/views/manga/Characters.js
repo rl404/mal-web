@@ -18,11 +18,14 @@ const Characters = (props) => {
     error: null,
   });
 
-  const getData = async () => {
-    const result = await getEntryCharacters(cons.MANGA_TYPE, topState.data.id, state.page);
+  const getData = async (isNew = false) => {
+    const result = await getEntryCharacters(cons.MANGA_TYPE, topState.data.id, isNew ? 1 : state.page);
     if (result.status === cons.CODE_OK) {
       if (result.data.length > 0) {
-        setState({ ...state, page: state.page + 1, data: !state.data ? result.data : state.data.concat(result.data) });
+        setState({ ...state, page: isNew ? 2 : state.page + 1, data: !state.data || isNew ? result.data : state.data.concat(result.data) });
+      }
+      if (isNew && result.data.length === 0) {
+        setState({ ...state, data: result.data });
       }
     } else {
       setState({ ...state, error: { code: result.status, message: result.message } });
@@ -34,7 +37,7 @@ const Characters = (props) => {
 
   React.useEffect(() => {
     if (!topState.data) return;
-    getData();
+    getData(true);
   }, [topState.data]);
 
   return (

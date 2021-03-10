@@ -54,12 +54,23 @@ const Characters = (props) => {
               return (
                 <Grid item md={4} sm={6} xs={12} key={i}>
                   <Entry
-                    id={c.character.id}
+                    id={c.id}
                     type={cons.CHAR_TYPE}
-                    title={c.character.name}
-                    image={c.character.image}
+                    title={c.name}
+                    image={c.image}
                     onClick={props.showEntryDrawer}
-                    detail={c.character.role}
+                    detail={c.role}
+                    tooltip='Anime List'
+                    more={c.anime.map(a => {
+                      return {
+                        id: a.id,
+                        type: cons.ANIME_TYPE,
+                        title: a.name,
+                        image: a.image,
+                        onClick: props.showEntryDrawer,
+                        detail: a.role,
+                      }
+                    })}
                   />
                 </Grid>
               )

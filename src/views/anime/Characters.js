@@ -60,6 +60,7 @@ const Characters = (props) => {
                     image={c.image}
                     onClick={props.showEntryDrawer}
                     detail={c.role}
+                    tooltip='Voice Actor List'
                     more={c.voiceActors.map(v => {
                       return {
                         id: v.id,

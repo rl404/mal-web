@@ -9,7 +9,7 @@ import * as cons from '../../constant';
 import { ellipsis } from '../../utils';
 import CardContent from '@material-ui/core/CardContent';
 import LazyLoad from 'react-lazyload';
-import { CardActions, Collapse, useTheme } from '@material-ui/core';
+import { CardActions, Collapse, Tooltip, useTheme } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
@@ -86,11 +86,13 @@ const Entry = (props) => {
               </CardContent>
             </CardActionArea>
             {!props.more || props.more.length === 0 ? null :
-              <CardActions className={classes.more}>
-                <IconButton onClick={toggleState} className={classes.moreButton}>
-                  <ExpandMoreIcon />
-                </IconButton>
-              </CardActions>
+              <Tooltip title={props.tooltip ? props.tooltip : ''} placement='left'>
+                <CardActions className={classes.more}>
+                  <IconButton onClick={toggleState} className={classes.moreButton}>
+                    <ExpandMoreIcon />
+                  </IconButton>
+                </CardActions>
+              </Tooltip>
             }
           </Grid>
         </Grid>
@@ -133,6 +135,7 @@ Entry.propTypes = {
   title: PropTypes.string.isRequired,
   detail: PropTypes.string,
   onClick: PropTypes.func,
+  tooltip: PropTypes.string,
   more: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
     type: PropTypes.oneOf(cons.MAIN_TYPES),

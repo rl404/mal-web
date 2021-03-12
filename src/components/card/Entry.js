@@ -9,7 +9,10 @@ import * as cons from '../../constant';
 import { ellipsis } from '../../utils';
 import CardContent from '@material-ui/core/CardContent';
 import LazyLoad from 'react-lazyload';
-import { CardActions, Collapse, Tooltip, useTheme } from '@material-ui/core';
+import { useTheme } from '@material-ui/core';
+import CardActions from '@material-ui/core/CardActions';
+import Collapse from '@material-ui/core/Collapse';
+import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 

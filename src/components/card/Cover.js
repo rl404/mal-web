@@ -6,16 +6,19 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import * as cons from '../../constant';
-import Img from '../image/Img';
 import { ellipsis } from '../../utils';
 import Score from '../badge/Score';
 import Format from '../badge/Format';
-import Rank from '../badge/Rank';
+import LazyLoad from 'react-lazyload';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     paddingTop: '133%',
     position: 'relative',
+    backgroundImage: props => `url(${props.props.image})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center center',
+    overflow: 'hidden',
   },
   content: {
     position: 'absolute',
@@ -44,6 +47,13 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     top: 0,
   },
+  hover: {
+    display: 'block',
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    top: 0,
+  },
 }));
 
 const Cover = (props) => {
@@ -51,38 +61,33 @@ const Cover = (props) => {
   const hover = () => { setHoverState(true); };
   const unhover = () => { setHoverState(false); };
 
-  const classes = useStyles({ hoverState: hoverState });
+  const classes = useStyles({ hoverState: hoverState, props: props });
 
   return (
-    <Card
-      className={classes.root}
-      onMouseEnter={hover}
-      onMouseOut={unhover}
-      onClick={() => !props.onClick ? null : props.onClick(props.type, props.id)}
-    >
-      <CardActionArea className={classes.content}>
-        <Img
-          src={props.image}
-          alt={props.title}
-          width='100%'
-          filter={hoverState ? 'blur(1px)' : ''}
-        />
-        <CardContent className={classes.title}>
-          <Typography variant='caption'>
-            {hoverState ? props.title : ellipsis(props.title, 20)}
-          </Typography>
-        </CardContent>
-        <CardContent className={classes.score}>
-          {hoverState && props.score ? <Score score={props.score} /> : null}
-        </CardContent>
-        <CardContent className={classes.format}>
-          {hoverState && props.format ? <Format type={props.type} format={props.format} /> : null}
-        </CardContent>
-        <CardContent className={classes.format}>
-          {hoverState || !props.rank ? null : <Rank rank={props.rank} />}
-        </CardContent>
-      </CardActionArea>
-    </Card>
+    <LazyLoad>
+      <Card
+        className={classes.root}
+        raised={hoverState}
+        onClick={() => !props.onClick ? null : props.onClick(props.type, props.id)}>
+        <CardActionArea className={classes.content}>
+          <CardContent className={classes.title}>
+            <Typography variant='caption'>
+              {hoverState ? props.title : ellipsis(props.title, 20)}
+            </Typography>
+          </CardContent>
+          <CardContent className={classes.score}>
+            {hoverState && props.score ? <Score score={props.score} /> : null}
+          </CardContent>
+          <CardContent className={classes.format}>
+            {hoverState && props.format ? <Format type={props.type} format={props.format} /> : null}
+          </CardContent>
+          <CardContent
+            onMouseEnter={hover}
+            onMouseOut={unhover}
+            className={classes.hover} />
+        </CardActionArea>
+      </Card>
+    </LazyLoad>
   );
 };
 
@@ -94,7 +99,6 @@ Cover.propTypes = {
   format: PropTypes.number,
   score: PropTypes.number,
   onClick: PropTypes.func,
-  rank: PropTypes.number,
 };
 
 export default Cover;

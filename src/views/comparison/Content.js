@@ -59,7 +59,7 @@ const Content = (props) => {
     setIsLoading(false);
   };
 
-  const [isLoading, setIsLoading] = InfiniteScroll(getData);
+  const [isLoading, setIsLoading] = InfiniteScroll(getData, '#data-list table tbody', 'tr');
 
   React.useEffect(() => {
     getData(true);
@@ -73,7 +73,7 @@ const Content = (props) => {
   return (
     <>
       {state.error !== null ? <Error code={state.error.code} message={state.error.message} /> :
-        <Grid container spacing={1}>
+        <Grid container spacing={1} id='data-list'>
           <Grid item xs={12}>
             {state.data.length === 0 ?
               <Typography>

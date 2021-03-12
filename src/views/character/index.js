@@ -50,8 +50,8 @@ const Character = (props) => {
             variant='fullWidth'
             centered
           >
-            <Tab label='Animeography' {...a11yProps(0)} />
-            <Tab label='Mangaography' {...a11yProps(1)} />
+            <Tab label='Anime-ography' {...a11yProps(0)} />
+            <Tab label='Manga-ography' {...a11yProps(1)} />
             <Tab label='Voice actors' {...a11yProps(2)} />
           </Tabs>
         </Paper>

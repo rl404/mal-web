@@ -32,7 +32,7 @@ const Content = (props) => {
     setIsLoading(false);
   };
 
-  const [isLoading, setIsLoading] = InfiniteScroll(getData);
+  const [isLoading, setIsLoading] = InfiniteScroll(getData, '#data-list', '.MuiGrid-root');
 
   React.useEffect(() => {
     setState({
@@ -47,7 +47,7 @@ const Content = (props) => {
   return (
     <>
       {state.error !== null ? <Error code={state.error.code} message={state.error.message} /> :
-        <Grid container spacing={1} >
+        <Grid container spacing={1} id='data-list'>
           {state.data.length === 0 ?
             <Grid item xs={12}>
               <Typography>

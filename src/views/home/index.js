@@ -26,7 +26,8 @@ const Home = (props) => {
             order: '-score',
           }}
           link={`/search/anime?season=${getCurrentSeason()}&type=${cons.ANIME_TV_ID}&order=-score`}
-          showEntryDrawer={props.showEntryDrawer} />
+          showEntryDrawer={props.showEntryDrawer}
+          animelist={props.animelist} />
       </Grid>
       <Grid item xs={12}>
         <Top
@@ -36,7 +37,8 @@ const Home = (props) => {
             order: '-score',
           }}
           link={`/search/anime?status=${cons.ANIME_STATUS_AIRING_ID}&order=-score`}
-          showEntryDrawer={props.showEntryDrawer} />
+          showEntryDrawer={props.showEntryDrawer}
+          animelist={props.animelist} />
       </Grid>
       <Grid item xs={12}>
         <Top
@@ -46,7 +48,8 @@ const Home = (props) => {
             order: '-member',
           }}
           link={`/search/anime?status=${cons.ANIME_STATUS_NOT_ID}`}
-          showEntryDrawer={props.showEntryDrawer} />
+          showEntryDrawer={props.showEntryDrawer}
+          animelist={props.animelist} />
       </Grid>
     </Grid>
   )
@@ -54,6 +57,7 @@ const Home = (props) => {
 
 Home.propTypes = {
   showEntryDrawer: PropTypes.func.isRequired,
+  animelist: PropTypes.object,
 };
 
 export default Home;

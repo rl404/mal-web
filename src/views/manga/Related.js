@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import { splitCamel } from '../../utils';
+import * as cons from '../../constant';
 
 const useStyles = makeStyles((theme) => ({
   more: {
@@ -77,6 +78,10 @@ const Related = (props) => {
                           image={r.image}
                           onClick={props.showEntryDrawer}
                           detail={splitCamel(key) + ' · ' + r.type}
+                          user={r.type === cons.ANIME_TYPE ?
+                            props.animelist ? props.animelist[r.id] : null :
+                            props.mangalist ? props.mangalist[r.id] : null
+                          }
                         />
                       </Grid>
                     )
@@ -110,6 +115,8 @@ const Related = (props) => {
 Related.propTypes = {
   state: PropTypes.object.isRequired,
   showEntryDrawer: PropTypes.func.isRequired,
+  animelist: PropTypes.object,
+  mangalist: PropTypes.object,
 };
 
 export default Related;

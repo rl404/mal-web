@@ -46,7 +46,9 @@ const Search = (props) => {
         <Content
           sType={props.match.params.type}
           query={queryState}
-          showEntryDrawer={props.showEntryDrawer} />
+          showEntryDrawer={props.showEntryDrawer}
+          animelist={props.animelist}
+          mangalist={props.mangalist} />
       </Grid>
     </Grid>
   );
@@ -54,6 +56,8 @@ const Search = (props) => {
 
 Search.propTypes = {
   showEntryDrawer: PropTypes.func.isRequired,
+  animelist: PropTypes.object,
+  mangalist: PropTypes.object,
 };
 
 export default Search;

@@ -66,6 +66,10 @@ const Content = (props) => {
                       score={d.score}
                       format={d.type}
                       onClick={props.showEntryDrawer}
+                      user={state.type === cons.ANIME_TYPE ?
+                        props.animelist ? props.animelist[d.id] : null :
+                        props.mangalist ? props.mangalist[d.id] : null
+                      }
                     /> :
                     <Cover
                       id={d.id}
@@ -107,6 +111,8 @@ Content.propTypes = {
     genre2: PropTypes.arrayOf(PropTypes.number),
   }).isRequired,
   showEntryDrawer: PropTypes.func.isRequired,
+  animelist: PropTypes.object,
+  mangalist: PropTypes.object,
 };
 
 export default Content;

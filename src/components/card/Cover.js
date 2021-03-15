@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
@@ -47,6 +47,17 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     top: 0,
   },
+  user: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    borderTopWidth: 30,
+    borderTopStyle: 'solid',
+    borderTopColor: props => props.borderColor,
+    borderLeftWidth: 30,
+    borderLeftStyle: 'solid',
+    borderLeftColor: 'transparent',
+  },
   hover: {
     display: 'block',
     position: 'absolute',
@@ -61,7 +72,18 @@ const Cover = (props) => {
   const hover = () => { setHoverState(true); };
   const unhover = () => { setHoverState(false); };
 
-  const classes = useStyles({ hoverState: hoverState, props: props });
+  const theme = useTheme();
+
+  const statusColor = {
+    1: theme.palette.success.main,
+    2: theme.palette.info.main,
+    3: theme.palette.warning.main,
+    4: theme.palette.error.main,
+  };
+
+  const borderColor = props.user ? statusColor[props.user.status] : '';
+
+  const classes = useStyles({ hoverState: hoverState, props: props, borderColor: borderColor });
 
   return (
     <LazyLoad>
@@ -81,6 +103,7 @@ const Cover = (props) => {
           <CardContent className={classes.format}>
             {hoverState && props.format ? <Format type={props.type} format={props.format} /> : null}
           </CardContent>
+          {!props.user ? null : <div className={classes.user} />}
           <CardContent
             onMouseEnter={hover}
             onMouseOut={unhover}
@@ -99,6 +122,9 @@ Cover.propTypes = {
   format: PropTypes.number,
   score: PropTypes.number,
   onClick: PropTypes.func,
+  user: PropTypes.shape({
+    status: PropTypes.number.isRequired,
+  }),
 };
 
 export default Cover;

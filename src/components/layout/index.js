@@ -25,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
 const Layout = (props) => {
   const classes = useStyles();
 
+  const animelist = localStorage.getItem('animelist') ? JSON.parse(localStorage.getItem('animelist')) : null;
+  const mangalist = localStorage.getItem('mangalist') ? JSON.parse(localStorage.getItem('mangalist')) : null;
+
   const [mobileState, setMobileState] = React.useState(false);
   const mobileToggle = () => {
     setMobileState(!mobileState);
@@ -55,12 +58,16 @@ const Layout = (props) => {
         <main className={classes.content}>
           <div className={classes.toolbar} id='top-anchor' />
           <Container>
-            <Content showEntryDrawer={showEntryDrawer} showHistoryModal={showHistoryModal} />
+            <Content
+              showEntryDrawer={showEntryDrawer}
+              showHistoryModal={showHistoryModal}
+              animelist={animelist}
+              mangalist={mangalist} />
           </Container>
         </main>
         <ScrollTop {...props} />
       </div>
-      <Summary ref={summaryRef} />
+      <Summary ref={summaryRef} animelist={animelist} mangalist={mangalist} />
       <History ref={historyRef} />
     </ThemeProvider>
   );

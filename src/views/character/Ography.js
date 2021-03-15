@@ -60,6 +60,10 @@ const Ography = (props) => {
                     image={c.image}
                     onClick={props.showEntryDrawer}
                     detail={c.role}
+                    user={props.oType === cons.ANIME_TYPE ?
+                      props.animelist ? props.animelist[c.id] : null :
+                      props.mangalist ? props.mangalist[c.id] : null
+                    }
                   />
                 </Grid>
               )
@@ -79,6 +83,8 @@ Ography.propTypes = {
   state: PropTypes.object.isRequired,
   oType: PropTypes.oneOf([cons.ANIME_TYPE, cons.MANGA_TYPE]).isRequired,
   showEntryDrawer: PropTypes.func.isRequired,
+  animelist: PropTypes.object,
+  mangalist: PropTypes.object,
 };
 
 export default Ography;

@@ -48,6 +48,17 @@ const useStyles = makeStyles((theme) => ({
   detail: {
     color: theme.palette.grey[500],
   },
+  user: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    borderTopWidth: 20,
+    borderTopStyle: 'solid',
+    borderTopColor: props => props.borderColor,
+    borderLeftWidth: 20,
+    borderLeftStyle: 'solid',
+    borderLeftColor: 'transparent',
+  },
   more: {
     position: 'absolute',
     bottom: 0,
@@ -67,8 +78,18 @@ const Entry = (props) => {
     setState(!state);
   };
 
-  const classes = useStyles({ props: props, state: state });
   const theme = useTheme();
+
+  const statusColor = {
+    1: theme.palette.success.main,
+    2: theme.palette.info.main,
+    3: theme.palette.warning.main,
+    4: theme.palette.error.main,
+  };
+
+  const borderColor = props.user ? statusColor[props.user.status] : '';
+
+  const classes = useStyles({ props: props, state: state, borderColor: borderColor });
 
   return (
     <LazyLoad>
@@ -97,6 +118,7 @@ const Entry = (props) => {
                 </CardActions>
               </Tooltip>
             }
+            {!props.user ? null : <div className={classes.user} />}
           </Grid>
         </Grid>
       </Card>
@@ -119,6 +141,9 @@ const Entry = (props) => {
                           </Typography>
                         }
                       </CardContent>
+                      {!m.user ? null : <div className={classes.user} style={{
+                        borderTopColor: statusColor[m.user.status],
+                      }} />}
                     </CardActionArea>
                   </Grid>
                 </Grid>
@@ -146,7 +171,13 @@ Entry.propTypes = {
     title: PropTypes.string.isRequired,
     detail: PropTypes.string,
     onClick: PropTypes.func,
+    user: PropTypes.shape({
+      status: PropTypes.number.isRequired,
+    }),
   })),
+  user: PropTypes.shape({
+    status: PropTypes.number.isRequired,
+  }),
 };
 
 export default Entry;

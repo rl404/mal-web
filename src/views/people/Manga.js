@@ -60,6 +60,7 @@ const Manga = (props) => {
                     image={s.image}
                     onClick={props.showEntryDrawer}
                     detail={s.role}
+                    user={props.mangalist ? props.mangalist[s.id] : null}
                   />
                 </Grid>
               )
@@ -78,6 +79,7 @@ const Manga = (props) => {
 Manga.propTypes = {
   state: PropTypes.object.isRequired,
   showEntryDrawer: PropTypes.func.isRequired,
+  mangalist: PropTypes.object,
 };
 
 export default Manga;

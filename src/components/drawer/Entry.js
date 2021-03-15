@@ -1,6 +1,6 @@
 import React from 'react';
 import Error from '../error/Error';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import * as cons from '../../constant';
 import Grid from '@material-ui/core/Grid';
@@ -12,6 +12,7 @@ import Ellipsis from '../text/Ellipsis';
 import Chip from '@material-ui/core/Chip';
 import Skeleton from '@material-ui/lab/Skeleton';
 import { Link } from 'react-router-dom';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const useStyles = makeStyles((theme) => ({
   link: {
@@ -20,6 +21,17 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       color: theme.palette.link,
     },
+  },
+  user: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    borderTopWidth: 30,
+    borderTopStyle: 'solid',
+    borderTopColor: props => props.borderColor,
+    borderRightWidth: 30,
+    borderRightStyle: 'solid',
+    borderRightColor: 'transparent',
   },
   title: {
     lineHeight: theme.typography.body2.lineHeight,
@@ -42,13 +54,30 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Entry = (props) => {
-  const classes = useStyles();
   const state = props.state;
+
+  const theme = useTheme();
+
+  const statusColor = {
+    1: theme.palette.success.main,
+    2: theme.palette.info.main,
+    3: theme.palette.warning.main,
+    4: theme.palette.error.main,
+  };
+
+  const borderColor = props.user ? statusColor[props.user.status] : '';
+
+  const classes = useStyles({ borderColor: borderColor });
+
   return (
     <>
       {!state ? null : state.loading ? <Loading /> :
         state.error !== null ? <Error code={state.error.code} message={state.error.message} /> :
           <Grid container spacing={1}>
+            {!props.user ? null :
+              <Tooltip placement='left' title={state.entryType === cons.ANIME_TYPE ? cons.ANIME_USER_STATUS[props.user.status] : cons.MANGA_USER_STATUS[props.user.status]}>
+                <div className={classes.user} />
+              </Tooltip>}
             <Grid item xs={12}>
               <Link to={`/${state.entryType}/${state.entryId}/${slugify(state.data.title)}`} className={classes.link}>
                 <Typography variant='h6' align='center' className={classes.title}>
@@ -127,6 +156,9 @@ Entry.propTypes = {
     }),
     entryType: PropTypes.oneOf([cons.ANIME_TYPE, cons.MANGA_TYPE]).isRequired,
     entryId: PropTypes.number.isRequired,
+  }),
+  user: PropTypes.shape({
+    status: PropTypes.number.isRequired,
   }),
 };
 

@@ -4,6 +4,7 @@ import MenuBookIcon from '@material-ui/icons/MenuBook';
 import SearchIcon from '@material-ui/icons/Search';
 import PersonIcon from '@material-ui/icons/Person';
 import CompareArrowsIcon from '@material-ui/icons/CompareArrows';
+import BackupIcon from '@material-ui/icons/Backup';
 
 const navigation = [
   {
@@ -61,6 +62,25 @@ const navigation = [
         name: 'People Search',
         icon: <SearchIcon />,
         link: '/search/people',
+      },
+    ],
+  },
+  {
+    id: 5,
+    name: 'Upload',
+    icon: <BackupIcon />,
+    subItems: [
+      {
+        id: 1,
+        name: 'Anime List',
+        icon: <TheatersIcon />,
+        link: '/import/anime',
+      },
+      {
+        id: 2,
+        name: 'Manga List',
+        icon: <MenuBookIcon />,
+        link: '/import/manga',
       },
     ],
   },

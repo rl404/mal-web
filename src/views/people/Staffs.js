@@ -60,6 +60,7 @@ const Staffs = (props) => {
                     image={s.image}
                     onClick={props.showEntryDrawer}
                     detail={s.role}
+                    user={props.animelist ? props.animelist[s.id] : null}
                   />
                 </Grid>
               )
@@ -78,6 +79,7 @@ const Staffs = (props) => {
 Staffs.propTypes = {
   state: PropTypes.object.isRequired,
   showEntryDrawer: PropTypes.func.isRequired,
+  animelist: PropTypes.object,
 };
 
 export default Staffs;

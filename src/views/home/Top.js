@@ -62,6 +62,7 @@ const Top = (props) => {
                       score={anime.score}
                       format={anime.type}
                       onClick={props.showEntryDrawer}
+                      user={props.animelist ? props.animelist[anime.id] : null}
                     />
                   </Grid>
                 )
@@ -77,6 +78,7 @@ Top.propTypes = {
   advQuery: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
   showEntryDrawer: PropTypes.func.isRequired,
+  animelist: PropTypes.object,
 };
 
 export default Top;

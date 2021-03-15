@@ -59,13 +59,13 @@ const People = (props) => {
       </Grid>
       <Grid item xs={12}>
         <TabPanel value={tabState} index={0}>
-          <Characters state={state} showEntryDrawer={props.showEntryDrawer} />
+          <Characters state={state} showEntryDrawer={props.showEntryDrawer} animelist={props.animelist} />
         </TabPanel>
         <TabPanel value={tabState} index={1}>
-          <Staffs state={state} showEntryDrawer={props.showEntryDrawer} />
+          <Staffs state={state} showEntryDrawer={props.showEntryDrawer} animelist={props.animelist} />
         </TabPanel>
         <TabPanel value={tabState} index={2}>
-          <Manga state={state} showEntryDrawer={props.showEntryDrawer} />
+          <Manga state={state} showEntryDrawer={props.showEntryDrawer} mangalist={props.mangalist} />
         </TabPanel>
       </Grid>
     </Grid>
@@ -74,6 +74,8 @@ const People = (props) => {
 
 People.propTypes = {
   showEntryDrawer: PropTypes.func.isRequired,
+  animelist: PropTypes.object,
+  mangalist: PropTypes.object,
 };
 
 export default People;

@@ -58,10 +58,10 @@ const Character = (props) => {
       </Grid>
       <Grid item xs={12}>
         <TabPanel value={tabState} index={0}>
-          <Ography oType={cons.ANIME_TYPE} state={state} showEntryDrawer={props.showEntryDrawer} />
+          <Ography oType={cons.ANIME_TYPE} state={state} showEntryDrawer={props.showEntryDrawer} animelist={props.animelist} mangalist={props.mangalist} />
         </TabPanel>
         <TabPanel value={tabState} index={1}>
-          <Ography oType={cons.MANGA_TYPE} state={state} showEntryDrawer={props.showEntryDrawer} />
+          <Ography oType={cons.MANGA_TYPE} state={state} showEntryDrawer={props.showEntryDrawer} animelist={props.animelist} mangalist={props.mangalist} />
         </TabPanel>
         <TabPanel value={tabState} index={2}>
           <Va state={state} showEntryDrawer={props.showEntryDrawer} />
@@ -74,6 +74,8 @@ const Character = (props) => {
 Character.propTypes = {
   showEntryDrawer: PropTypes.func.isRequired,
   showHistoryModal: PropTypes.func.isRequired,
+  animelist: PropTypes.object,
+  mangalist: PropTypes.object,
 };
 
 export default Character;

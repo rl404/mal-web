@@ -8,9 +8,9 @@ import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import SearchIcon from '@material-ui/icons/Search';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import { ClickAwayListener } from '@material-ui/core';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 
 const useStyles = makeStyles((theme) => ({
@@ -79,7 +79,7 @@ const Header = (props) => {
       </Grid>
       <Grid item xs>
         <TextField
-        label='Novel/Light Novel Title'
+          label='Novel/Light Novel Title'
           placeholder='search...'
           variant='outlined'
           size='small'

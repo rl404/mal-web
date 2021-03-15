@@ -4,6 +4,7 @@ import {
   Route,
   Switch
 } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import routes from '../../routes';
 
 const Content = (props) => {
@@ -28,6 +29,10 @@ const Content = (props) => {
 }
 
 Content.propTypes = {
+  showEntryDrawer: PropTypes.func.isRequired,
+  showHistoryModal: PropTypes.func.isRequired,
+  animelist: PropTypes.object,
+  mangalist: PropTypes.object,
 };
 
 export default Content;

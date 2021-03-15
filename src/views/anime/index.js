@@ -59,7 +59,7 @@ const Anime = (props) => {
       </Grid>
       <Grid item xs={12}>
         <TabPanel value={tabState} index={0}>
-          <Details state={state} showEntryDrawer={props.showEntryDrawer} />
+          <Details state={state} showEntryDrawer={props.showEntryDrawer} animelist={props.animelist} mangalist={props.mangalist} />
         </TabPanel>
         <TabPanel value={tabState} index={1}>
           <Characters state={state} showEntryDrawer={props.showEntryDrawer} />
@@ -75,6 +75,8 @@ const Anime = (props) => {
 Anime.propTypes = {
   showEntryDrawer: PropTypes.func.isRequired,
   showHistoryModal: PropTypes.func.isRequired,
+  animelist: PropTypes.object,
+  mangalist: PropTypes.object,
 };
 
 export default Anime;

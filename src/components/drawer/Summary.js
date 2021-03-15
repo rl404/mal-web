@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { getEntryDetail } from '../../api';
 import * as cons from '../../constant';
@@ -67,7 +68,12 @@ const Summary = React.forwardRef((props, ref) => {
       }}
     >
       {state.entryType === cons.ANIME_TYPE || state.entryType === cons.MANGA_TYPE ?
-        <Entry state={state} /> : null
+        <Entry
+          state={state}
+          user={state.entryType === cons.ANIME_TYPE ?
+            props.animelist ? props.animelist[state.entryId] : null :
+            props.mangalist ? props.mangalist[state.entryId] : null
+          } /> : null
       }
       {state.entryType === cons.CHAR_TYPE ?
         <Character state={state} /> : null
@@ -78,5 +84,10 @@ const Summary = React.forwardRef((props, ref) => {
     </Drawer>
   );
 });
+
+Summary.propTypes = {
+  animelist: PropTypes.object,
+  mangalist: PropTypes.object,
+};
 
 export default Summary;

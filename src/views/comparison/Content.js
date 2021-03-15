@@ -80,7 +80,7 @@ const Content = (props) => {
                 No result.
               </Typography> :
               <Entry
-                size={isMD ? 'small' : 'medium'}
+                dense={isMD}
                 header={[
                   { value: 'No', align: 'left', hide: isSM || isXS },
                   { value: 'Novel/Light Novel', align: 'left', hide: isXS },
@@ -90,7 +90,7 @@ const Content = (props) => {
                 ]}
                 data={state.data.map((d, i) => {
                   return ([
-                    { value: i + 1 + '.', hide: isSM || isXS },
+                    { value: i + 1, label: i + 1 + '.', hide: isSM || isXS },
                     {
                       hide: isXS,
                       value:

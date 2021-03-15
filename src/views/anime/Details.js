@@ -21,7 +21,7 @@ const Details = (props) => {
             <Stats state={state} />
           </Grid>
           <Grid item xs={12}>
-            <Related state={state} showEntryDrawer={props.showEntryDrawer} />
+            <Related state={state} showEntryDrawer={props.showEntryDrawer} animelist={props.animelist} mangalist={props.mangalist} />
           </Grid>
           <Grid item xs={12}>
             <Character state={state} showEntryDrawer={props.showEntryDrawer} />
@@ -41,6 +41,8 @@ const Details = (props) => {
 Details.propTypes = {
   state: PropTypes.object.isRequired,
   showEntryDrawer: PropTypes.func.isRequired,
+  animelist: PropTypes.object,
+  mangalist: PropTypes.object,
 };
 
 export default Details;

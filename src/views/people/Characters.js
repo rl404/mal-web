@@ -69,6 +69,7 @@ const Characters = (props) => {
                         image: a.image,
                         onClick: props.showEntryDrawer,
                         detail: a.role,
+                        user: props.animelist ? props.animelist[a.id] : null,
                       }
                     })}
                   />
@@ -89,6 +90,7 @@ const Characters = (props) => {
 Characters.propTypes = {
   state: PropTypes.object.isRequired,
   showEntryDrawer: PropTypes.func.isRequired,
+  animelist: PropTypes.object,
 };
 
 export default Characters;

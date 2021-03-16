@@ -174,7 +174,7 @@ const Adv = (props) => {
     setSeasonState(props.query.season);
     setYearState('');
     setGenreIdState(!props.query.genre ? [] : props.query.genre);
-    setGenreId2State([]);
+    setGenreId2State(!props.query.genre2 ? [] : props.query.genre2);
   }, [props.sType]);
 
   React.useEffect(() => {

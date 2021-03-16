@@ -20,6 +20,7 @@ const Search = (props) => {
     season: season ? season : '-',
     producer: producer ? parseInt(producer) : null,
     genre: genre ? genre.split(',').map(g => parseInt(g)) : [],
+    genre2: [-12],
   }
 
   const [queryState, setQueryState] = React.useState(defaultQuery)

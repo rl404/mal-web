@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import * as cons from '../../constant';
 import { compareScore } from '../../api';
 import Typography from '@material-ui/core/Typography';
+import Tooltip from '@material-ui/core/Tooltip';
 import Error from '../../components/error/Error';
 import InfiniteScroll from '../../components/scroll/InfiniteScroll';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -23,6 +24,13 @@ const useStyles = makeStyles((theme) => ({
   adaptation: {
     color: theme.palette.grey[500],
   },
+  user: {
+    height: 10,
+    width: 10,
+    borderRadius: '50%',
+    display: 'inline-block',
+    marginLeft: theme.spacing(1),
+  },
   good: {
     color: theme.palette.success.main,
   },
@@ -37,6 +45,14 @@ const Content = (props) => {
   const isMD = useMediaQuery(theme.breakpoints.down('md'));
   const isSM = useMediaQuery(theme.breakpoints.down('sm'));
   const isXS = useMediaQuery(theme.breakpoints.down('xs'));
+
+  const statusColor = {
+    1: theme.palette.success.main,
+    2: theme.palette.info.main,
+    3: theme.palette.warning.main,
+    4: theme.palette.error.main,
+    6: theme.palette.text.primary,
+  };
 
   const [state, setState] = React.useState({
     page: 1,
@@ -99,6 +115,10 @@ const Content = (props) => {
                             <span onClick={() => props.showEntryDrawer(cons.MANGA_TYPE, d.novel[0].id)} className={classes.link}>
                               {d.novel[0].title}
                             </span>
+                            {props.mangalist && props.mangalist[d.novel[0].id] ?
+                              <Tooltip placement='right' arrow title={cons.MANGA_USER_STATUS[props.mangalist[d.novel[0].id].status]}>
+                                <span className={classes.user} style={{ backgroundColor: statusColor[props.mangalist[d.novel[0].id].status] }} />
+                              </Tooltip> : null}
                           </Grid>
                           <Grid item xs={2} align='right'>
                             {parseFloat(d.novel[0].score).toFixed(2)}
@@ -116,6 +136,10 @@ const Content = (props) => {
                                   <span onClick={() => props.showEntryDrawer(cons.ANIME_TYPE, a.id)} className={classes.link}>
                                     {a.title}
                                   </span>
+                                  {props.animelist && props.animelist[a.id] ?
+                                    <Tooltip placement='right' arrow title={cons.ANIME_USER_STATUS[props.animelist[a.id].status]}>
+                                      <span className={classes.user} style={{ backgroundColor: statusColor[props.animelist[a.id].status] }} />
+                                    </Tooltip> : null}
                                 </Grid>
                                 <Grid item xs={2} align='right'>
                                   {parseFloat(a.score).toFixed(2)}
@@ -142,6 +166,10 @@ const Content = (props) => {
                                   <span onClick={() => props.showEntryDrawer(cons.MANGA_TYPE, m.id)} className={classes.link}>
                                     {m.title}
                                   </span>
+                                  {props.mangalist && props.mangalist[m.id] ?
+                                    <Tooltip placement='right' arrow title={cons.MANGA_USER_STATUS[props.mangalist[m.id].status]}>
+                                      <span className={classes.user} style={{ backgroundColor: statusColor[props.mangalist[m.id].status] }} />
+                                    </Tooltip> : null}
                                 </Grid>
                                 <Grid item xs={2} align='right'>
                                   {parseFloat(m.score).toFixed(2)}
@@ -173,6 +201,10 @@ const Content = (props) => {
                                   <span onClick={() => props.showEntryDrawer(cons.ANIME_TYPE, a.id)} className={classes.link}>
                                     {a.title}
                                   </span>
+                                  {props.animelist && props.animelist[a.id] ?
+                                    <Tooltip placement='right' arrow title={cons.ANIME_USER_STATUS[props.animelist[a.id].status]}>
+                                      <span className={classes.user} style={{ backgroundColor: statusColor[props.animelist[a.id].status] }} />
+                                    </Tooltip> : null}
                                 </Grid>
                                 <Grid item xs={2} align='right'>
                                   {parseFloat(a.score).toFixed(2)}
@@ -198,6 +230,10 @@ const Content = (props) => {
                                   <span onClick={() => props.showEntryDrawer(cons.MANGA_TYPE, m.id)} className={classes.link}>
                                     {m.title}
                                   </span>
+                                  {props.mangalist && props.mangalist[m.id] ?
+                                    <Tooltip placement='right' arrow title={cons.MANGA_USER_STATUS[props.mangalist[m.id].status]}>
+                                      <span className={classes.user} style={{ backgroundColor: statusColor[props.mangalist[m.id].status] }} />
+                                    </Tooltip> : null}
                                 </Grid>
                                 <Grid item xs={2} align='right'>
                                   {parseFloat(m.score).toFixed(2)}
@@ -224,6 +260,10 @@ const Content = (props) => {
                             <span onClick={() => props.showEntryDrawer(cons.MANGA_TYPE, d.novel[0].id)} className={classes.link}>
                               {d.novel[0].title}
                             </span>
+                            {props.mangalist && props.mangalist[d.novel[0].id] ?
+                              <Tooltip placement='right' arrow title={cons.MANGA_USER_STATUS[props.mangalist[d.novel[0].id].status]}>
+                                <span className={classes.user} style={{ backgroundColor: statusColor[props.mangalist[d.novel[0].id].status] }} />
+                              </Tooltip> : null}
                           </Grid>
                           <Grid item xs={4} align='right'>
                             {parseFloat(d.novel[0].score).toFixed(2)}
@@ -240,6 +280,10 @@ const Content = (props) => {
                                   <span onClick={() => props.showEntryDrawer(cons.ANIME_TYPE, a.id)} className={classes.link}>
                                     {a.title}
                                   </span>
+                                  {props.animelist && props.animelist[a.id] ?
+                                    <Tooltip placement='right' arrow title={cons.ANIME_USER_STATUS[props.animelist[a.id].status]}>
+                                      <span className={classes.user} style={{ backgroundColor: statusColor[props.animelist[a.id].status] }} />
+                                    </Tooltip> : null}
                                 </Grid>
                                 <Grid item xs={2} align='right'>
                                   {parseFloat(a.score).toFixed(2)}
@@ -265,6 +309,10 @@ const Content = (props) => {
                                   <span onClick={() => props.showEntryDrawer(cons.MANGA_TYPE, m.id)} className={classes.link}>
                                     {m.title}
                                   </span>
+                                  {props.mangalist && props.mangalist[m.id] ?
+                                    <Tooltip placement='right' arrow title={cons.MANGA_USER_STATUS[props.mangalist[m.id].status]}>
+                                      <span className={classes.user} style={{ backgroundColor: statusColor[props.mangalist[m.id].status] }} />
+                                    </Tooltip> : null}
                                 </Grid>
                                 <Grid item xs={2} align='right'>
                                   {parseFloat(m.score).toFixed(2)}
@@ -303,6 +351,8 @@ Content.propTypes = {
     order: PropTypes.string,
   }).isRequired,
   showEntryDrawer: PropTypes.func.isRequired,
+  animelist: PropTypes.object,
+  mangalist: PropTypes.object,
 };
 
 export default Content;

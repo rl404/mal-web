@@ -68,7 +68,8 @@ const Header = (props) => {
               onClose={closeHelp}
               open={helpState}
               interactive
-              title='Comparing score between novel/light novel, anime, and manga adaptation.'
+              title='Comparing score between novel/light novel, anime, and manga adaptation.
+              Only contains adaptations that are adapted from novel/light novel.'
             >
               <IconButton onMouseEnter={openHelp} onClick={openHelp}>
                 <HelpOutlineIcon fontSize='small' />

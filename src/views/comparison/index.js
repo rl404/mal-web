@@ -37,7 +37,9 @@ const Comparison = (props) => {
       <Grid item xs={12}>
         <Content
           query={queryState}
-          showEntryDrawer={props.showEntryDrawer} />
+          showEntryDrawer={props.showEntryDrawer}
+          animelist={props.animelist}
+          mangalist={props.mangalist} />
       </Grid>
     </Grid>
   );
@@ -45,6 +47,8 @@ const Comparison = (props) => {
 
 Comparison.propTypes = {
   showEntryDrawer: PropTypes.func.isRequired,
+  animelist: PropTypes.object,
+  mangalist: PropTypes.object,
 };
 
 export default Comparison;

@@ -113,6 +113,7 @@ const QuickSearch = () => {
         options={state.options}
         groupBy={(option) => option.type}
         getOptionLabel={(option) => option.name}
+        filterOptions={() => state.options}
         renderOption={option => {
           return (
             <Tooltip placement='left' title={

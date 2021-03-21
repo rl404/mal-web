@@ -69,12 +69,13 @@ const Import = (props) => {
   const [state, setState] = React.useState({
     user: user,
     list: list,
+    error: null,
   });
   const deleteUser = () => {
     localStorage.removeItem(mainType + 'username');
     localStorage.removeItem(mainType + 'list');
     setStepState(0);
-    setState({ user: '', list: null });
+    setState({ user: '', list: null, error: null });
   };
 
   const [loadingState, setLoadingState] = React.useState(false);
@@ -114,7 +115,7 @@ const Import = (props) => {
       title: 'Upload',
       content:
         <Typography>
-          Now, upload the extracted file.
+          Now, upload the extracted file. {!state.error ? null : <span className={classes.statusDropped}>{state.error}</span>}
         </Typography>,
     },
   ];
@@ -123,6 +124,12 @@ const Import = (props) => {
   const handleUploadFile = (e) => {
     setLoadingState(true);
     var file = e.target.files[0]
+    if (file.type !== 'text/xml') {
+      setState({ ...state, error: 'Invalid file type.' });
+      setLoadingState(false);
+      return
+    }
+
     fileReader = new FileReader();
     fileReader.readAsText(file, 'UTF-8');
     fileReader.onloadend = handleReadFile;
@@ -159,7 +166,7 @@ const Import = (props) => {
     localStorage.setItem(mainType + 'username', username);
     localStorage.setItem(mainType + 'list', JSON.stringify(dataList));
 
-    setState({ user: username, list: dataList });
+    setState({ user: username, list: dataList, error: null });
     setLoadingState(false);
   };
 
@@ -175,7 +182,9 @@ const Import = (props) => {
     setState({
       user: user,
       list: list,
-    })
+      error: null,
+    });
+    setStepState(0);
   }, [mainType]);
 
   const [queryState, setQueryState] = React.useState('');
@@ -186,7 +195,7 @@ const Import = (props) => {
   React.useEffect(() => {
     const timeout = setTimeout(() => {
       if (queryState.length === 0) {
-        setState({ ...state, list: list });
+        setState({ ...state, list: list, error: null });
       } else {
         var queries = queryState.trim().split(" ");
         var tmp = list;
@@ -197,7 +206,7 @@ const Import = (props) => {
             }
           })
         });
-        setState({ ...state, list: tmp });
+        setState({ ...state, list: tmp, error: null });
       }
     }, 1000);
     return () => clearTimeout(timeout);

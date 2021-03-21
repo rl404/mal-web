@@ -31,7 +31,7 @@ const Stats = (props) => {
         'Plan to watch': d.summary.planned,
       };
       d.summary.total = d.summary.current + d.summary.completed + d.summary.onHold + d.summary.dropped + d.summary.planned;
-      setState({ ...state, data: d, loading: false });
+      setState({ ...state, data: d, loading: false, error: null });
     } else {
       setState({ ...state, error: { code: result.status, message: result.message }, loading: false });
     }
@@ -45,10 +45,10 @@ const Stats = (props) => {
   return (
     <>
       {!state ? null : state.loading ? <Loading /> :
-        state.error !== null ? <Error code={state.error.code} message={state.error.message} /> :
-          <Grid container spacing={1}>
-            <Grid item xs={12} sm={6}>
-              <StyledTitle icon={<BarChartIcon />} title='Summary' subtitle={state.data.summary.total.toLocaleString()} />
+        <Grid container spacing={1}>
+          <Grid item xs={12} sm={6}>
+            <StyledTitle icon={<BarChartIcon />} title='Summary' subtitle={state.data.summary.total.toLocaleString()} />
+            {state.error !== null ? <Error code={state.error.code} message={state.error.message} /> :
               <BarChart
                 data={Object.keys(state.data.orderedSummary).map(k => {
                   return {
@@ -57,9 +57,11 @@ const Stats = (props) => {
                   }
                 })}
               />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <StyledTitle icon={<BarChartIcon />} title='Score' subtitle={Number(topState.data.score).toFixed(2)} />
+            }
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <StyledTitle icon={<BarChartIcon />} title='Score' subtitle={Number(topState.data.score).toFixed(2)} />
+            {state.error !== null ? <Error code={state.error.code} message={state.error.message} /> :
               <BarChart
                 data={Object.keys(state.data.score).map(k => {
                   return {
@@ -68,8 +70,9 @@ const Stats = (props) => {
                   }
                 })}
               />
-            </Grid>
+            }
           </Grid>
+        </Grid>
       }
     </>
   );

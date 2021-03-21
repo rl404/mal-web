@@ -24,7 +24,7 @@ const Character = (props) => {
   const getData = async () => {
     const result = await getEntryCharacters(cons.ANIME_TYPE, topState.data.id, 1, 6);
     if (result.status === cons.CODE_OK) {
-      setState({ ...state, data: result.data, meta: result.meta, loading: false });
+      setState({ ...state, data: result.data, meta: result.meta, loading: false, error: null });
     } else {
       setState({ ...state, error: { code: result.status, message: result.message }, loading: false });
     }
@@ -38,12 +38,15 @@ const Character = (props) => {
   return (
     <>
       {!state ? null : state.loading ? <Loading /> :
-        state.error !== null ? <Error code={state.error.code} message={state.error.message} /> :
-          <Grid container spacing={1}>
+        <Grid container spacing={1}>
+          <Grid item xs={12}>
+            <StyledTitle icon={<PersonIcon />} title='Characters' subtitle={!state.meta ? null : state.meta.count.toLocaleString()} />
+          </Grid>
+          {state.error !== null ?
             <Grid item xs={12}>
-              <StyledTitle icon={<PersonIcon />} title='Characters' subtitle={state.meta.count.toLocaleString()} />
-            </Grid>
-            {state.data.length === 0 ?
+              <Error code={state.error.code} message={state.error.message} />
+            </Grid> :
+            state.data.length === 0 ?
               <Grid item xs={12}>
                 <Typography>
                   No related character.
@@ -63,8 +66,8 @@ const Character = (props) => {
                   </Grid>
                 )
               })
-            }
-          </Grid>
+          }
+        </Grid>
       }
     </>
   );

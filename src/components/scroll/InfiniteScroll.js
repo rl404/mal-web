@@ -15,6 +15,7 @@ const InfiniteScroll = (callback, parentElement, childElement) => {
 
   function handleScroll() {
     var lastEl = document.querySelector(parentElement + ' > ' + childElement + ':last-child');
+    if (lastEl === null) return
     var lastElOffset = lastEl.offsetTop + lastEl.clientHeight;
     var pageOffset = window.pageYOffset + window.innerHeight;
     if (pageOffset <= lastElOffset || isFetching) return;

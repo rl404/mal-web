@@ -21,7 +21,7 @@ const Character = (props) => {
   const getData = async () => {
     const result = await getEntryDetail(cons.CHAR_TYPE, props.match.params.id);
     if (result.status === cons.CODE_OK) {
-      setState({ ...state, data: result.data, meta: result.meta, loading: false });
+      setState({ ...state, data: result.data, meta: result.meta, loading: false, error: null });
     } else {
       setState({ ...state, error: { code: result.status, message: result.message }, loading: false });
     }
@@ -41,32 +41,36 @@ const Character = (props) => {
       <Grid item xs={12}>
         <Top state={state} showHistoryModal={props.showHistoryModal} />
       </Grid>
-      <Grid item xs={12}>
-        <Paper>
-          <Tabs
-            value={tabState}
-            onChange={changeTab}
-            indicatorColor='primary'
-            variant='fullWidth'
-            centered
-          >
-            <Tab label='Anime-ography' {...a11yProps(0)} />
-            <Tab label='Manga-ography' {...a11yProps(1)} />
-            <Tab label='Voice actors' {...a11yProps(2)} />
-          </Tabs>
-        </Paper>
-      </Grid>
-      <Grid item xs={12}>
-        <TabPanel value={tabState} index={0}>
-          <Ography oType={cons.ANIME_TYPE} state={state} showEntryDrawer={props.showEntryDrawer} animelist={props.animelist} mangalist={props.mangalist} />
-        </TabPanel>
-        <TabPanel value={tabState} index={1}>
-          <Ography oType={cons.MANGA_TYPE} state={state} showEntryDrawer={props.showEntryDrawer} animelist={props.animelist} mangalist={props.mangalist} />
-        </TabPanel>
-        <TabPanel value={tabState} index={2}>
-          <Va state={state} showEntryDrawer={props.showEntryDrawer} />
-        </TabPanel>
-      </Grid>
+      {state.error !== null ? null :
+        <>
+          <Grid item xs={12}>
+            <Paper>
+              <Tabs
+                value={tabState}
+                onChange={changeTab}
+                indicatorColor='primary'
+                variant='fullWidth'
+                centered
+              >
+                <Tab label='Anime-ography' {...a11yProps(0)} />
+                <Tab label='Manga-ography' {...a11yProps(1)} />
+                <Tab label='Voice actors' {...a11yProps(2)} />
+              </Tabs>
+            </Paper>
+          </Grid>
+          <Grid item xs={12}>
+            <TabPanel value={tabState} index={0}>
+              <Ography oType={cons.ANIME_TYPE} state={state} showEntryDrawer={props.showEntryDrawer} animelist={props.animelist} mangalist={props.mangalist} />
+            </TabPanel>
+            <TabPanel value={tabState} index={1}>
+              <Ography oType={cons.MANGA_TYPE} state={state} showEntryDrawer={props.showEntryDrawer} animelist={props.animelist} mangalist={props.mangalist} />
+            </TabPanel>
+            <TabPanel value={tabState} index={2}>
+              <Va state={state} showEntryDrawer={props.showEntryDrawer} />
+            </TabPanel>
+          </Grid>
+        </>
+      }
     </Grid>
   );
 };

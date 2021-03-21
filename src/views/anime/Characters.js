@@ -22,10 +22,10 @@ const Characters = (props) => {
     const result = await getEntryCharacters(cons.ANIME_TYPE, topState.data.id, isNew ? 1 : state.page);
     if (result.status === cons.CODE_OK) {
       if (result.data.length > 0) {
-        setState({ ...state, page: isNew ? 2 : state.page + 1, data: !state.data || isNew ? result.data : state.data.concat(result.data) });
+        setState({ ...state, page: isNew ? 2 : state.page + 1, data: !state.data || isNew ? result.data : state.data.concat(result.data), error: null });
       }
       if (isNew && result.data.length === 0) {
-        setState({ ...state, data: result.data });
+        setState({ ...state, data: result.data, error: null });
       }
     } else {
       setState({ ...state, error: { code: result.status, message: result.message } });

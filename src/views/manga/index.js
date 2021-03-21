@@ -21,7 +21,7 @@ const Manga = (props) => {
   const getData = async () => {
     const result = await getEntryDetail(cons.MANGA_TYPE, props.match.params.id);
     if (result.status === cons.CODE_OK) {
-      setState({ ...state, data: result.data, meta: result.meta, loading: false });
+      setState({ ...state, data: result.data, meta: result.meta, loading: false, error: null });
     } else {
       setState({ ...state, error: { code: result.status, message: result.message }, loading: false });
     }
@@ -41,28 +41,32 @@ const Manga = (props) => {
       <Grid item xs={12}>
         <Top state={state} showHistoryModal={props.showHistoryModal} />
       </Grid>
-      <Grid item xs={12}>
-        <Paper>
-          <Tabs
-            value={tabState}
-            onChange={changeTab}
-            indicatorColor='primary'
-            variant='fullWidth'
-            centered
-          >
-            <Tab label='Details' {...a11yProps(0)} />
-            <Tab label='Characters' {...a11yProps(1)} />
-          </Tabs>
-        </Paper>
-      </Grid>
-      <Grid item xs={12}>
-        <TabPanel value={tabState} index={0}>
-          <Details state={state} showEntryDrawer={props.showEntryDrawer} animelist={props.animelist} mangalist={props.mangalist} />
-        </TabPanel>
-        <TabPanel value={tabState} index={1}>
-          <Characters state={state} showEntryDrawer={props.showEntryDrawer} />
-        </TabPanel>
-      </Grid>
+      {state.error !== null ? null :
+        <>
+          <Grid item xs={12}>
+            <Paper>
+              <Tabs
+                value={tabState}
+                onChange={changeTab}
+                indicatorColor='primary'
+                variant='fullWidth'
+                centered
+              >
+                <Tab label='Details' {...a11yProps(0)} />
+                <Tab label='Characters' {...a11yProps(1)} />
+              </Tabs>
+            </Paper>
+          </Grid>
+          <Grid item xs={12}>
+            <TabPanel value={tabState} index={0}>
+              <Details state={state} showEntryDrawer={props.showEntryDrawer} animelist={props.animelist} mangalist={props.mangalist} />
+            </TabPanel>
+            <TabPanel value={tabState} index={1}>
+              <Characters state={state} showEntryDrawer={props.showEntryDrawer} />
+            </TabPanel>
+          </Grid>
+        </>
+      }
     </Grid>
   );
 };

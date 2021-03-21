@@ -24,7 +24,7 @@ const YearChart = (props) => {
   const getData = async () => {
     const result = await getSummaryYear();
     if (result.status === cons.CODE_OK) {
-      setState({ ...state, data: result.data, loading: false });
+      setState({ ...state, data: result.data, loading: false, error: null });
     } else {
       setState({ ...state, error: { code: result.status, message: result.message }, loading: false });
     }
@@ -37,10 +37,10 @@ const YearChart = (props) => {
   return (
     <>
       {state.loading ? <Loading /> :
-        state.error !== null ? <Error code={state.error.code} message={state.error.message} /> :
-          <Grid container spacing={1}>
-            <Grid item md={6} xs={12}>
-              <StyledTitle icon={<BarChartIcon />} title='Anime Count' />
+        <Grid container spacing={1}>
+          <Grid item md={6} xs={12}>
+            <StyledTitle icon={<BarChartIcon />} title='Anime Count' />
+            {state.error !== null ? <Error code={state.error.code} message={state.error.message} /> :
               <BarChart
                 data={state.data.slice(matches ? -5 : -10).map(d => {
                   return {
@@ -49,9 +49,11 @@ const YearChart = (props) => {
                   };
                 })}
               />
-            </Grid>
-            <Grid item md={6} xs={12}>
-              <StyledTitle icon={<BarChartIcon />} title='Manga Count' />
+            }
+          </Grid>
+          <Grid item md={6} xs={12}>
+            <StyledTitle icon={<BarChartIcon />} title='Manga Count' />
+            {state.error !== null ? <Error code={state.error.code} message={state.error.message} /> :
               <BarChart
                 data={state.data.slice(matches ? -5 : -10).map(d => {
                   return {
@@ -60,9 +62,11 @@ const YearChart = (props) => {
                   };
                 })}
               />
-            </Grid>
-            <Grid item md={6} xs={12}>
-              <StyledTitle icon={<TimelineIcon />} title='Anime Score' />
+            }
+          </Grid>
+          <Grid item md={6} xs={12}>
+            <StyledTitle icon={<TimelineIcon />} title='Anime Score' />
+            {state.error !== null ? <Error code={state.error.code} message={state.error.message} /> :
               <LineChart
                 float
                 data={state.data.slice(matches ? -5 : -10).map(d => {
@@ -72,9 +76,11 @@ const YearChart = (props) => {
                   };
                 })}
               />
-            </Grid>
-            <Grid item md={6} xs={12}>
-              <StyledTitle icon={<TimelineIcon />} title='Manga Score' />
+            }
+          </Grid>
+          <Grid item md={6} xs={12}>
+            <StyledTitle icon={<TimelineIcon />} title='Manga Score' />
+            {state.error !== null ? <Error code={state.error.code} message={state.error.message} /> :
               <LineChart
                 float
                 data={state.data.slice(matches ? -5 : -10).map(d => {
@@ -84,8 +90,9 @@ const YearChart = (props) => {
                   };
                 })}
               />
-            </Grid>
+            }
           </Grid>
+        </Grid>
       }
     </>
   );

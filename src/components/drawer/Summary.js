@@ -32,7 +32,7 @@ const Summary = React.forwardRef((props, ref) => {
   const getData = async () => {
     const result = await getEntryDetail(state.entryType, state.entryId);
     if (result.status === cons.CODE_OK) {
-      setState({ ...state, data: result.data, loading: false });
+      setState({ ...state, data: result.data, loading: false, error: null });
     } else {
       setState({ ...state, error: { code: result.status, message: result.message }, loading: false });
     }

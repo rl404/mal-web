@@ -20,7 +20,7 @@ const Total = () => {
   const getData = async () => {
     const result = await getSummaryTotal()
     if (result.status === cons.CODE_OK) {
-      setState({ ...state, data: result.data, loading: false });
+      setState({ ...state, data: result.data, loading: false, error: null });
     } else {
       setState({ ...state, error: { code: result.status, message: result.message }, loading: false });
     }

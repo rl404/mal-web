@@ -27,7 +27,7 @@ const Top = (props) => {
   const getData = async () => {
     const result = await getSearch(cons.ANIME_TYPE, '', 1, 10, props.advQuery);
     if (result.status === cons.CODE_OK) {
-      setState({ ...state, data: result.data, loading: false });
+      setState({ ...state, data: result.data, loading: false, error: null });
     } else {
       setState({ ...state, error: { code: result.status, message: result.message }, loading: false });
     }
@@ -40,16 +40,16 @@ const Top = (props) => {
   return (
     <>
       {!state ? null : state.loading ? <Loading limit={coverLimit} /> :
-        state.error !== null ? <Error code={state.error.code} message={state.error.message} /> :
-          <>
-            <StyledTitle
-              icon={<EventAvailableIcon />}
-              title={props.title}
-              more={{
-                text: 'view more',
-                link: props.link,
-              }}
-            />
+        <>
+          <StyledTitle
+            icon={<EventAvailableIcon />}
+            title={props.title}
+            more={{
+              text: 'view more',
+              link: props.link,
+            }}
+          />
+          {state.error !== null ? <Error code={state.error.code} message={state.error.message} /> :
             <Grid container spacing={1}>
               {state.data.slice(0, coverLimit).map(anime => {
                 return (
@@ -68,7 +68,8 @@ const Top = (props) => {
                 )
               })}
             </Grid>
-          </>
+          }
+        </>
       }
     </>
   );

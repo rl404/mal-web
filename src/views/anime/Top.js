@@ -5,7 +5,7 @@ import * as cons from '../../constant';
 import Error from '../../components/error/Error';
 import Img from '../../components/image/Img';
 import Ellipsis from '../../components/text/Ellipsis';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles,useTheme } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import IconButton from '@material-ui/core/IconButton';
@@ -52,6 +52,15 @@ const useStyles = makeStyles((theme) => ({
       fontWeight: 'bold',
     },
   },
+  user: {
+    height: 15,
+    width: 15,
+    borderRadius: '50%',
+    display: 'block',
+    position: 'relative',
+    top: 7.5,
+    marginLeft: theme.spacing(1),
+  },
   message: {
     marginTop: theme.spacing(0.6),
   },
@@ -65,8 +74,16 @@ const useStyles = makeStyles((theme) => ({
 
 const Top = (props) => {
   const state = props.state
-
+  const theme = useTheme();
   var classes = useStyles(!state.data ? [] : state.data);
+
+  const statusColor = {
+    1: theme.palette.success.main,
+    2: theme.palette.info.main,
+    3: theme.palette.warning.main,
+    4: theme.palette.error.main,
+    6: theme.palette.text.primary,
+  };
 
   const [altState, setAltState] = React.useState(false);
   const toggleAlt = () => {
@@ -112,6 +129,13 @@ const Top = (props) => {
                     }
                   </Typography>
                 </Grid>
+                {props.animelist && props.animelist[state.data.id] ?
+                  <Grid item>
+                    <Tooltip placement='bottom' title={cons.ANIME_USER_STATUS[props.animelist[state.data.id].status]}>
+                      <span className={classes.user} style={{ backgroundColor: statusColor[props.animelist[state.data.id].status] }} />
+                    </Tooltip>
+                  </Grid>
+                  : null}
                 <Grid item>
                   <Typography variant='subtitle2' className={classes.message}>
                     {refreshState.message}
@@ -226,6 +250,7 @@ const Top = (props) => {
 Top.propTypes = {
   state: PropTypes.object.isRequired,
   showHistoryModal: PropTypes.func.isRequired,
+  animelist: PropTypes.object,
 };
 
 export default Top;

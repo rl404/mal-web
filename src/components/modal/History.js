@@ -30,6 +30,11 @@ const useStyles = makeStyles((theme) => ({
     width: '80%',
     maxHeight: '90%',
     overflow: 'scroll',
+    scrollbarWidth: 'none',
+    msOverflowStyle: 'none',
+    '&::-webkit-scrollbar': {
+      display: 'none',
+    },
   },
 }));
 

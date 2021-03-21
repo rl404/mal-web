@@ -40,7 +40,10 @@ const Anime = (props) => {
   return (
     <Grid container spacing={1}>
       <Grid item xs={12}>
-        <Top state={state} showHistoryModal={props.showHistoryModal} />
+        <Top
+          state={state}
+          showHistoryModal={props.showHistoryModal}
+          animelist={props.animelist} />
       </Grid>
       {state.error !== null ? null :
         <>

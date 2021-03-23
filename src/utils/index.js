@@ -1,6 +1,20 @@
 import moment from 'moment';
 import * as cons from '../constant';
 
+export function setHeadMeta(loading, title, desc, image) {
+  title = loading ? 'loading...' : !title ? 'MyAnimeList Drive-Thru' : title;
+  desc = loading ? 'loading...' : !desc ? '' : ellipsis(desc, 150);
+  image = loading ? 'loading...' : !image ? '/images/logo.svg' : image;
+
+  document.title = title + ' | MAL-DT';
+  document.head.querySelector('meta[name="title"]').content = title;
+  document.head.querySelector('meta[name="description"]').content = desc;
+
+  document.head.querySelector('meta[property="og:title"]').content = title;
+  document.head.querySelector('meta[property="og:description"]').content = desc;
+  document.head.querySelector('meta[property="og:image"]').content = image;
+}
+
 export function slugify(str) {
   return str
     .toString()

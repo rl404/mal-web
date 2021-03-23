@@ -2,7 +2,7 @@
   "name": "mal-web",
   "version": "0.1.0",
   "private": true,
-  "description": "mal-web description",
+  "description": "Quick access to MyAnimeList content with simpler and more modern style.",
   "author": {
     "name": "mal-web",
     "url": "https://mal.rl404.com",

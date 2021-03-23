@@ -9,6 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import Tab from '@material-ui/core/Tab';
 import Ography from './Ography';
 import Va from './Va';
+import { setHeadMeta } from '../../utils';
 
 const Character = (props) => {
   const [state, setState] = React.useState({
@@ -35,6 +36,8 @@ const Character = (props) => {
   const changeTab = (event, newValue) => {
     setTabState(newValue);
   };
+
+  setHeadMeta(state.loading, state.data?.name, state.data?.about, state.data?.image);
 
   return (
     <Grid container spacing={1}>

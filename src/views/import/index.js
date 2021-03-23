@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import * as cons from '../../constant';
-import { capitalize } from '../../utils';
+import { capitalize, setHeadMeta } from '../../utils';
 import Entry from '../../components/table/Table';
 import Button from '@material-ui/core/Button';
 import Stepper from '@material-ui/core/Stepper';
@@ -211,6 +211,8 @@ const Import = (props) => {
     }, 1000);
     return () => clearTimeout(timeout);
   }, [queryState]);
+
+  setHeadMeta(false, 'Import', `Import your ${mainType} list and get additional feature to show your current ${mainType} status/progress on this website.`, '');
 
   return (
     <Grid container spacing={1}>

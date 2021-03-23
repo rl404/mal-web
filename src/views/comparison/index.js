@@ -5,6 +5,7 @@ import Header from './Header';
 import Content from './Content';
 import { makeStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
+import { setHeadMeta } from '../../utils';
 
 const useStyles = makeStyles((theme) => ({
   divider: {
@@ -25,6 +26,8 @@ const Comparison = (props) => {
       ...query,
     });
   };
+
+  setHeadMeta(false, 'Score Comparison', 'Comparing score between novel/light novel, anime, and manga adaptation. Only contains adaptations that are adapted from novel/light novel.', '');
 
   return (
     <Grid container spacing={1}>

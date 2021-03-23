@@ -4,10 +4,11 @@ import Grid from '@material-ui/core/Grid';
 import YearChart from './YearChart';
 import PropTypes from 'prop-types';
 import Top from './Top';
-import { getCurrentSeason } from '../../utils';
+import { getCurrentSeason, setHeadMeta } from '../../utils';
 import * as cons from '../../constant';
 
 const Home = (props) => {
+  setHeadMeta(false, 'MyAnimeList Drive-Thru', 'Quick access to MyAnimeList content with simpler and more modern style.', '');
   return (
     <Grid container spacing={1}>
       <Grid item xs={12}>

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import Header from './Header';
 import Content from './Content';
+import { setHeadMeta } from '../../utils';
 
 const Search = (props) => {
   const order = new URLSearchParams(props.location.search).get('order');
@@ -34,6 +35,8 @@ const Search = (props) => {
   React.useEffect(() => {
     setQueryState(defaultQuery);
   }, [props.match.params.type]);
+
+  setHeadMeta(false, 'Search', '', '');
 
   return (
     <Grid container spacing={1}>

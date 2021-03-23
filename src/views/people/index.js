@@ -10,6 +10,7 @@ import Tab from '@material-ui/core/Tab';
 import Characters from './Characters';
 import Staffs from './Staffs';
 import Manga from './Manga';
+import { setHeadMeta } from '../../utils';
 
 const People = (props) => {
   const [state, setState] = React.useState({
@@ -36,6 +37,8 @@ const People = (props) => {
   const changeTab = (event, newValue) => {
     setTabState(newValue);
   };
+
+  setHeadMeta(state.loading, state.data?.name, state.data?.more, state.data?.image);
 
   return (
     <Grid container spacing={1}>

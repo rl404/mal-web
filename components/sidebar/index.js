@@ -45,6 +45,8 @@ const useStyles = makeStyles((theme) => ({
   link: {
     display: 'flex',
     width: '100%',
+    textDecoration: 'none',
+    color: theme.palette.text.primary,
   },
 }))
 

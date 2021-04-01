@@ -1,4 +1,4 @@
-version: '2.4'
+version: "2.4"
 
 services:
   mal-web:
@@ -6,4 +6,4 @@ services:
     image: mal-web:latest
     build: .
     ports:
-      - 3001:80
+      - 3000:3000

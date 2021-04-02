@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Grid from '@material-ui/core/Grid'
-import Header from '../../views/compare/score/Header'
-import Content from '../../views/compare/score/Content'
+import Header from '../../../views/compare/score/Header'
+import Content from '../../../views/compare/score/Content'
 import { makeStyles } from '@material-ui/core/styles'
 import Divider from '@material-ui/core/Divider'
-import { setHeadMeta } from '../../lib/utils'
+import { setHeadMeta } from '../../../lib/utils'
 
 const useStyles = makeStyles((theme) => ({
   divider: {
@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Score = (props) => {
+const Comparison = (props) => {
   const classes = useStyles()
 
   const [queryState, setQueryState] = React.useState({
@@ -29,7 +29,7 @@ const Score = (props) => {
 
   return (
     <>
-      {setHeadMeta('Score Comparison', 'Comparing score between novel/light novel, anime, and manga adaptation. Only contains adaptations that are adapted from novel/light novel.', '')}
+      {setHeadMeta, 'Score Comparison', 'Comparing score between novel/light novel, anime, and manga adaptation. Only contains adaptations that are adapted from novel/light novel.', ''}
       <Grid container spacing={1}>
         <Grid item xs={12}>
           <Header
@@ -49,10 +49,10 @@ const Score = (props) => {
   )
 }
 
-Score.propTypes = {
+Comparison.propTypes = {
   showEntryDrawer: PropTypes.func.isRequired,
   animelist: PropTypes.object,
   mangalist: PropTypes.object,
 }
 
-export default Score
+export default Comparison

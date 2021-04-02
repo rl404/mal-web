@@ -2,61 +2,22 @@
   "name": "mal-web",
   "version": "0.1.0",
   "private": true,
-  "description": "Quick access to MyAnimeList content with simpler and more modern style.",
-  "author": {
-    "name": "mal-web",
-    "url": "https://mal.rl404.com",
-    "github": "https://github.com/rl404/mal-web"
-  },
-  "contributors": [
-    {
-      "name": "rl404",
-      "url": "https://github.com/rl404"
-    }
-  ],
-  "copyright": "Copyright 2021 Axel",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:rl404/mal-web.git"
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
   "dependencies": {
-    "@devexpress/dx-react-chart": "^2.7.4",
-    "@devexpress/dx-react-chart-material-ui": "^2.7.4",
-    "@devexpress/dx-react-core": "^2.7.4",
+    "@devexpress/dx-react-chart": "^2.7.5",
+    "@devexpress/dx-react-chart-material-ui": "^2.7.5",
+    "@devexpress/dx-react-core": "^2.7.5",
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.57",
     "moment": "^2.29.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-lazyload": "^3.2.0",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.3",
-    "web-vitals": "^1.1.1"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "next": "10.0.9",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-lazyload": "^3.2.0"
   }
 }

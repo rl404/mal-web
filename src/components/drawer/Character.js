@@ -46,7 +46,7 @@ const Character = (props) => {
         state.error !== null ? <Error code={state.error.code} message={state.error.message} /> :
           <Grid container spacing={1}>
             <Grid item xs={12}>
-              <Link to={`/${state.entryType}/${state.entryId}/${slugify(state.data.name)}`} className={classes.link}>
+              <Link to={`/${state.entryType}/${state.entryId}/${slugify(state.data.name)}`} className={classes.link} onClick={props.hideDrawer}>
                 <Typography variant='h6' align='center' className={classes.title}>
                   <b>{state.data.name}</b>
                 </Typography>
@@ -89,6 +89,7 @@ Character.propTypes = {
     entryType: PropTypes.oneOf([cons.CHAR_TYPE]).isRequired,
     entryId: PropTypes.number.isRequired,
   }),
+  hideDrawer: PropTypes.func.isRequired,
 };
 
 export default Character;

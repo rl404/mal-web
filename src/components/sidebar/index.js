@@ -79,7 +79,7 @@ const Sidebar = (props) => {
                 <List component='div' disablePadding>
                   {list.subItems.map((item) => {
                     return (
-                      <ListItem button className={classes.nested} component={Link} to={item.link} key={item.id}>
+                      <ListItem button className={classes.nested} component={Link} to={item.link} key={item.id} onClick={props.mobileState ? props.mobileToggle : null}>
                         <ListItemIcon className={classes.iconList}>
                           {item.icon}
                         </ListItemIcon>

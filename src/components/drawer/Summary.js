@@ -70,16 +70,17 @@ const Summary = React.forwardRef((props, ref) => {
       {state.entryType === cons.ANIME_TYPE || state.entryType === cons.MANGA_TYPE ?
         <Entry
           state={state}
+          hideDrawer={hideDrawer}
           user={state.entryType === cons.ANIME_TYPE ?
             props.animelist ? props.animelist[state.entryId] : null :
             props.mangalist ? props.mangalist[state.entryId] : null
           } /> : null
       }
       {state.entryType === cons.CHAR_TYPE ?
-        <Character state={state} /> : null
+        <Character state={state} hideDrawer={hideDrawer} /> : null
       }
       {state.entryType === cons.PEOPLE_TYPE ?
-        <People state={state} /> : null
+        <People state={state} hideDrawer={hideDrawer} /> : null
       }
     </Drawer>
   );

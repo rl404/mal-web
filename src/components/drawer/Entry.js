@@ -79,7 +79,7 @@ const Entry = (props) => {
                 <div className={classes.user} />
               </Tooltip>}
             <Grid item xs={12}>
-              <Link to={`/${state.entryType}/${state.entryId}/${slugify(state.data.title)}`} className={classes.link}>
+              <Link to={`/${state.entryType}/${state.entryId}/${slugify(state.data.title)}`} className={classes.link} onClick={props.hideDrawer}>
                 <Typography variant='h6' align='center' className={classes.title}>
                   <b>{state.data.title}</b>
                 </Typography>
@@ -157,6 +157,7 @@ Entry.propTypes = {
     entryType: PropTypes.oneOf([cons.ANIME_TYPE, cons.MANGA_TYPE]).isRequired,
     entryId: PropTypes.number.isRequired,
   }),
+  hideDrawer: PropTypes.func.isRequired,
   user: PropTypes.shape({
     status: PropTypes.number.isRequired,
   }),

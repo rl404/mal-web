@@ -13,6 +13,7 @@ import Manga from '../../views/people/Manga'
 import { setHeadMeta } from '../../lib/utils'
 import { useRouter } from 'next/router'
 import BackdropLoading from '../../components/loading/Backdrop'
+import Error from '../../components/error/Error'
 
 const People = (props) => {
   if (useRouter().isFallback) {
@@ -20,7 +21,12 @@ const People = (props) => {
   }
 
   if (props.peopleData.status !== cons.CODE_OK) {
-    return <Error code={props.peopleData.status} message={props.peopleData.message} />
+    return (
+      <>
+        {setHeadMeta(props.peopleData.message, '', '')}
+        <Error code={props.peopleData.status} message={props.peopleData.message} />
+      </>
+    )
   }
 
   const [tabState, setTabState] = React.useState(0)
@@ -71,7 +77,8 @@ export async function getStaticProps({ params }) {
   return {
     props: {
       peopleData,
-    }
+    },
+    revalidate: 86400,
   }
 }
 

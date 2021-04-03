@@ -12,6 +12,7 @@ import Characters from '../../views/manga/Characters'
 import { setHeadMeta } from '../../lib/utils'
 import { useRouter } from 'next/router'
 import BackdropLoading from '../../components/loading/Backdrop'
+import Error from '../../components/error/Error'
 
 const Manga = (props) => {
   if (useRouter().isFallback) {
@@ -19,7 +20,12 @@ const Manga = (props) => {
   }
 
   if (props.mangaData.status !== cons.CODE_OK) {
-    return <Error code={props.mangaData.status} message={props.mangaData.message} />
+    return (
+      <>
+        {setHeadMeta(props.mangaData.message, '', '')}
+        <Error code={props.mangaData.status} message={props.mangaData.message} />
+      </>
+    )
   }
 
   const [tabState, setTabState] = React.useState(0)
@@ -70,7 +76,8 @@ export async function getStaticProps({ params }) {
   return {
     props: {
       mangaData,
-    }
+    },
+    revalidate: 86400,
   }
 }
 

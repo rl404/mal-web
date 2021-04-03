@@ -76,7 +76,8 @@ export async function getStaticProps() {
       seasonData,
       airingData,
       upcomingData,
-    }
+    },
+    revalidate: 86400,
   }
 }
 

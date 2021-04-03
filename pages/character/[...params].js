@@ -12,6 +12,7 @@ import Va from '../../views/character/Va'
 import { setHeadMeta } from '../../lib/utils'
 import { useRouter } from 'next/router'
 import BackdropLoading from '../../components/loading/Backdrop'
+import Error from '../../components/error/Error'
 
 const Character = (props) => {
   if (useRouter().isFallback) {
@@ -19,7 +20,12 @@ const Character = (props) => {
   }
 
   if (props.charData.status !== cons.CODE_OK) {
-    return <Error code={props.charData.status} message={props.charData.message} />
+    return (
+      <>
+        {setHeadMeta(props.charData.message, '', '')}
+        <Error code={props.charData.status} message={props.charData.message} />
+      </>
+    )
   }
 
   const [tabState, setTabState] = React.useState(0)
@@ -73,7 +79,8 @@ export async function getStaticProps({ params }) {
   return {
     props: {
       charData,
-    }
+    },
+    revalidate: 86400,
   }
 }
 

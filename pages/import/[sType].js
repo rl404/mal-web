@@ -374,7 +374,7 @@ export async function getStaticPaths() {
       { params: { sType: 'anime' }, },
       { params: { sType: 'manga' }, },
     ],
-    fallback: true,
+    fallback: false,
   }
 }
 

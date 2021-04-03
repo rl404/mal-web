@@ -13,6 +13,7 @@ import Staffs from '../../views/anime/Staffs'
 import { setHeadMeta } from '../../lib/utils'
 import { useRouter } from 'next/router'
 import BackdropLoading from '../../components/loading/Backdrop'
+import Error from '../../components/error/Error'
 
 const Anime = (props) => {
   if (useRouter().isFallback) {
@@ -20,7 +21,12 @@ const Anime = (props) => {
   }
 
   if (props.animeData.status !== cons.CODE_OK) {
-    return <Error code={props.animeData.status} message={props.animeData.message} />
+    return (
+      <>
+        {setHeadMeta(props.animeData.message, '', '')}
+        <Error code={props.animeData.status} message={props.animeData.message} />
+      </>
+    )
   }
 
   const [tabState, setTabState] = React.useState(0)
@@ -75,7 +81,8 @@ export async function getStaticProps({ params }) {
   return {
     props: {
       animeData,
-    }
+    },
+    revalidate: 86400,
   }
 }
 

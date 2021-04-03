@@ -93,7 +93,7 @@ export async function getStaticPaths() {
       { params: { sType: 'character' }, },
       { params: { sType: 'people' }, },
     ],
-    fallback: true,
+    fallback: false,
   }
 }
 

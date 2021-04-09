@@ -43,10 +43,10 @@ const Top = (props) => {
   React.useEffect(() => {
     const timeout = setTimeout(() => {
       if (queryState.length === 0 || queryState.length > 2) {
+        setError('')
         if (props.ready) {
           props.setQuery({ query: queryState })
         }
-        setError('')
       } else {
         setError('at least 3 letters')
       }
@@ -64,8 +64,10 @@ const Top = (props) => {
   }
 
   React.useEffect(() => {
+    if (props.readyTop) return
     setQueryState(props.query.query)
     setOrderState(props.query.order)
+    props.setReadyTop(true)
   }, [props.query])
 
   return (

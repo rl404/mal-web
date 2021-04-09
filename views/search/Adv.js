@@ -72,35 +72,45 @@ const Adv = (props) => {
   const changeScore = (e) => {
     const score = e.target.value
     setScoreState(score)
-    props.setQuery({ score: score })
+    if (props.ready) {
+      props.setQuery({ score: score })
+    }
   }
 
   const [typeState, setTypeState] = React.useState(0)
   const changeType = (e) => {
     const type = e.target.value
     setTypeState(type)
-    props.setQuery({ type: type })
+    if (props.ready) {
+      props.setQuery({ type: type })
+    }
   }
 
   const [statusState, setStatusState] = React.useState(props.query.status)
   const changeStatus = (e) => {
     const status = e.target.value
     setStatusState(status)
-    props.setQuery({ status: status })
+    if (props.ready) {
+      props.setQuery({ status: status })
+    }
   }
 
   const [ratingState, setRatingState] = React.useState(0)
   const changeRating = (e) => {
     const rating = e.target.value
     setRatingState(rating)
-    props.setQuery({ rating: rating })
+    if (props.ready) {
+      props.setQuery({ rating: rating })
+    }
   }
 
   const [sourceState, setSourceState] = React.useState(0)
   const changeSource = (e) => {
     const source = e.target.value
     setSourceState(source)
-    props.setQuery({ source: source })
+    if (props.ready) {
+      props.setQuery({ source: source })
+    }
   }
 
   const [seasonState, setSeasonState] = React.useState('-')
@@ -109,11 +119,13 @@ const Adv = (props) => {
     const season = e.target.value
     var year = yearState
     if (year.length < 4) {
-      year = new Date().getFullYear()
+      year = new Date().getFullYear().toString()
     }
     setSeasonState(season)
     setYearState(year)
-    props.setQuery({ season: season, year: year })
+    if (props.ready) {
+      props.setQuery({ season: season, year: year })
+    }
   }
   const changeYear = (e) => {
     const rex = /^[0-9\b]+$/
@@ -121,9 +133,11 @@ const Adv = (props) => {
     if (year === '' || rex.test(year)) {
       setYearState(year)
       if (year === '' || year.length === 4) {
-        props.setQuery({ year: year })
+        if (props.ready) {
+          props.setQuery({ year: year })
+        }
         if (year === '' && seasonState !== '-') {
-          setYearState(new Date().getFullYear())
+          setYearState(new Date().getFullYear().toString())
         }
       }
     }
@@ -137,10 +151,12 @@ const Adv = (props) => {
       id: pid,
       name: producerState.optionMap[pid],
     })
-    props.setQuery({
-      producer: props.sType === cons.ANIME_TYPE ? pid : null,
-      magazine: props.sType === cons.MANGA_TYPE ? pid : null,
-    })
+    if (props.ready) {
+      props.setQuery({
+        producer: props.sType === cons.ANIME_TYPE ? pid : null,
+        magazine: props.sType === cons.MANGA_TYPE ? pid : null,
+      })
+    }
   }
 
   const [genreIdState, setGenreIdState] = React.useState([])
@@ -150,7 +166,9 @@ const Adv = (props) => {
       gid = v.map(g => g.id)
     }
     setGenreIdState(gid)
-    props.setQuery({ genre: gid })
+    if (props.ready) {
+      props.setQuery({ genre: gid })
+    }
   }
 
   const [genreId2State, setGenreId2State] = React.useState([])
@@ -160,10 +178,13 @@ const Adv = (props) => {
       gid = v.map(g => g.id)
     }
     setGenreId2State(gid)
-    props.setQuery({ genre2: gid })
+    if (props.ready) {
+      props.setQuery({ genre2: gid })
+    }
   }
 
   React.useEffect(() => {
+    if (props.readyAdv) return
     getProducerData()
     getGenreData()
     setScoreState(0)
@@ -172,10 +193,9 @@ const Adv = (props) => {
     setRatingState(0)
     setSourceState(0)
     setSeasonState(props.query.season)
-    setYearState('')
-    setGenreIdState(!props.query.genre ? [] : props.query.genre)
-    setGenreId2State(!props.query.genre2 ? [] : props.query.genre2)
-  }, [props.query, props.sType])
+    setYearState(props.query.year)
+    props.setReadyAdv(true)
+  }, [props.query])
 
   React.useEffect(() => {
     setProducerIdState(!props.query.producer ? null : {
@@ -183,6 +203,14 @@ const Adv = (props) => {
       name: producerState.optionMap[props.query.producer],
     })
   }, [producerState])
+
+  React.useEffect(() => {
+    setGenreIdState(!props.query.genre ? [] : props.query.genre)
+  }, [genreState])
+
+  React.useEffect(() => {
+    setGenreId2State(!props.query.genre2 ? [] : props.query.genre2)
+  }, [genre2State])
 
   return (
     <Grid container spacing={1}>

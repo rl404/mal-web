@@ -43,7 +43,7 @@ const Content = (props) => {
       error: null,
     })
     getData(true)
-  }, [props.query, props.sType])
+  }, [props.ready, props.query, props.sType])
 
   return (
     <>

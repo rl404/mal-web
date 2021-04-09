@@ -31,6 +31,8 @@ const Header = (props) => {
         <Top
           sType={props.sType}
           ready={props.ready}
+          readyTop={props.readyTop}
+          setReadyTop={props.setReadyTop}
           toggleAdv={toggleAdv}
           setQuery={props.setQuery}
           query={props.query} />
@@ -41,6 +43,8 @@ const Header = (props) => {
           <Adv
             sType={props.sType}
             ready={props.ready}
+            readyAdv={props.readyAdv}
+            setReadyAdv={props.setReadyAdv}
             setQuery={props.setQuery}
             query={props.query} />
           <Divider className={classes.divider} />

@@ -65,7 +65,7 @@ const Sidebar = (props) => {
       <div className={classes.toolbar} >
         <Grid className={classes.logoArea} container justify='center' alignItems='center'>
           <Link href='/'>
-            <a>
+            <a onClick={props.mobileState ? props.mobileToggle : null}>
               <img src={theme.logo.image} alt='home' className={classes.logo} />
             </a>
           </Link>

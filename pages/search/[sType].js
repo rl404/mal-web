@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Grid from '@material-ui/core/Grid'
 import Header from '../../views/search/Header'
 import Content from '../../views/search/Content'
+import * as cons from '../../lib/constant'
 import { capitalize, setHeadMeta } from '../../lib/utils'
 
 const Search = (props) => {
@@ -12,6 +13,7 @@ const Search = (props) => {
     type: 0,
     status: 0,
     season: '-',
+    year: '',
     genre: [],
     genre2: [-12],
   }
@@ -25,8 +27,17 @@ const Search = (props) => {
   }
 
   const [readyState, setReadyState] = React.useState(false)
-  const setReady = () => setReadyState(true)
-  const setUnready = () => setReadyState(false)
+  const [readyTop, setReadyTop] = React.useState(false)
+  const [readyAdv, setReadyAdv] = React.useState(false)
+
+  React.useEffect(() => {
+    setReadyTop(false)
+    setReadyAdv(false)
+  }, [props.sType])
+
+  React.useEffect(() => {
+    setReadyState(readyTop && (readyAdv || props.sType == cons.CHAR_TYPE || props.sType == cons.PEOPLE_TYPE))
+  }, [readyTop, readyAdv])
 
   React.useEffect(() => {
     const order = new URLSearchParams(window.location.search).get('order')
@@ -41,15 +52,12 @@ const Search = (props) => {
       type: type ? parseInt(type) : 0,
       status: status ? parseInt(status) : 0,
       season: season ? season : '-',
+      year: season ? new Date().getFullYear().toString() : '',
       producer: producer ? parseInt(producer) : null,
       genre: genre ? genre.split(',').map(g => parseInt(g)) : [],
       genre2: [-12],
     })
   }, [props.sType])
-
-  React.useEffect(() => {
-    setReady()
-  }, [queryState])
 
   return (
     <>
@@ -59,6 +67,10 @@ const Search = (props) => {
           <Header
             sType={props.sType}
             ready={readyState}
+            readyTop={readyTop}
+            setReadyTop={setReadyTop}
+            readyAdv={readyAdv}
+            setReadyAdv={setReadyAdv}
             setQuery={setQuery}
             query={queryState} />
         </Grid>

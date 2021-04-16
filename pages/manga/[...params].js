@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Grid from '@material-ui/core/Grid'
 import Top from '../../views/manga/Top'
 import * as cons from '../../lib/constant'
-import { getEntryDetail } from '../../lib/api'
+import { Host, getEntryDetail } from '../../lib/api'
 import Details from '../../views/manga/Details'
 import Tabs from '@material-ui/core/Tabs'
 import Paper from '@material-ui/core/Paper'
@@ -35,7 +35,7 @@ const Manga = (props) => {
 
   return (
     <>
-      {setHeadMeta(props.mangaData.data.title, props.mangaData.data.synopsis, props.mangaData.data.image)}
+      {setHeadMeta(props.mangaData.data.title, props.mangaData.data.synopsis, `${Host}/image/manga/${props.mangaData.data.id}`)}
       <Grid container spacing={1}>
         <Grid item xs={12}>
           <Top

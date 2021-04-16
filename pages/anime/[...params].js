@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Grid from '@material-ui/core/Grid'
 import Top from '../../views/anime/Top'
 import * as cons from '../../lib/constant'
-import { getEntryDetail } from '../../lib/api'
+import { Host, getEntryDetail } from '../../lib/api'
 import Tabs from '@material-ui/core/Tabs'
 import Paper from '@material-ui/core/Paper'
 import Tab from '@material-ui/core/Tab'
@@ -36,7 +36,7 @@ const Anime = (props) => {
 
   return (
     <>
-      {setHeadMeta(props.animeData.data.title, props.animeData.data.synopsis, props.animeData.data.image)}
+      {setHeadMeta(props.animeData.data.title, props.animeData.data.synopsis, `${Host}/image/anime/${props.animeData.data.id}`)}
       <Grid container spacing={1}>
         <Grid item xs={12}>
           <Top

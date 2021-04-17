@@ -10,7 +10,7 @@ import IconButton from '@material-ui/core/IconButton'
 import Divider from '@material-ui/core/Divider'
 import Typography from '@material-ui/core/Typography'
 import RefreshIcon from '@material-ui/icons/Refresh'
-import { parseTime } from '../../lib/utils'
+import { malToDate, parseTime } from '../../lib/utils'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import PropTypes from 'prop-types'
 import OpenInNewIcon from '@material-ui/icons/OpenInNew'
@@ -25,6 +25,13 @@ const useStyles = makeStyles((theme) => ({
     backgroundSize: 'cover',
     backgroundPosition: 'center center',
     overflow: 'hidden',
+  },
+  link: {
+    textDecoration: 'none',
+    color: theme.palette.text.primary,
+    '&:hover': {
+      color: theme.palette.link,
+    },
   },
   content: {
     paddingLeft: theme.spacing(1),
@@ -123,6 +130,16 @@ const Top = (props) => {
             {data.alternativeNames.length === 0 ? null :
               <Typography >
                 <span>Alternative names:</span> {data.alternativeNames.join(", ")}
+              </Typography>
+            }
+            {malToDate(data.birthday) === '?' ? null :
+              <Typography >
+                <span>Birthday:</span> {malToDate(data.birthday)}
+              </Typography>
+            }
+            {data.website === '' ? null :
+              <Typography >
+                <span>Website:</span> <a href={data.website} className={classes.link} target='_blank' rel='noopener noreferrer'>{data.website}</a>
               </Typography>
             }
             <Typography className={classes.synopsis}>

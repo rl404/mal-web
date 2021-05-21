@@ -53,9 +53,9 @@ const History = React.forwardRef((props, ref) => {
   const [state, setState] = React.useState(defaultState)
 
   const getData = async () => {
-    const result = await getEntryStatsHistory(state.entryType, state.entryId)
+    const result = await getEntryStatsHistory(state.entryType, state.entryId, 1, 6)
     if (result.status === cons.CODE_OK) {
-      setState({ ...state, data: result.data, loading: false })
+      setState({ ...state, data: result.data.reverse(), loading: false })
     } else {
       setState({ ...state, error: { code: result.status, message: result.message }, loading: false })
     }

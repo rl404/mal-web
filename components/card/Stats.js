@@ -7,6 +7,11 @@ import { makeStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    '&:hover': {
+      marginTop: -theme.spacing(0.3),
+    },
+  },
   details: {
     display: 'flex',
     height: 80,

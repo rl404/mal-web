@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundSize: 'cover',
     backgroundPosition: 'center center',
     overflow: 'hidden',
+    '&:hover': {
+      marginTop: -theme.spacing(0.3),
+    },
   },
   grid: {
     position: 'absolute',
